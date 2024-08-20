@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/18 19:16:00 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/20 18:52:33 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 # include <stdio.h>
 # include <fcntl.h>
 
-// typedef struct s_mhell
-// {
-// 	t_env *env;
-// 	int	   exit_code;
-// } t_mshell;
+typedef struct s_mhell
+{
+	// t_env *env;
+	int	   exit_code;
+} t_mshell;
 
 typedef enum e_token_type
 {
