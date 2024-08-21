@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/20 19:13:39 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:11:39 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,15 @@ void	if_dollar(char *pos)
 	t_mshell	e_code;
 	
 	if (*pos == '$' && *(pos + 1) == '$')
+	{
+		e_code.exit_code = getpid();
 		printf("Your pid: %d\n", e_code.exit_code);
+	}
 	else if (*pos == '$' && *(pos + 1) == '?')
+	{
+		e_code.exit_code = 0;	
 		printf("Your last completed command: %d\n", e_code.exit_code);
+	}
 }
 
 char	*expand_env_variables(const char *input, t_env *env)
@@ -39,7 +45,7 @@ char	*expand_env_variables(const char *input, t_env *env)
 		// printf("here_is_expand\n");
 		if (*(pos + 1) == '$' || *(pos + 1) == '?')
 		{
-			e_code.exit_code = 885475;
+			e_code.exit_code = getpid();
 			printf("%d\n", e_code.exit_code);
 			// return (0);
 			break ;
@@ -54,6 +60,8 @@ char	*expand_env_variables(const char *input, t_env *env)
 		free(result);
 		result = new_result;
 	}
+	printf("result: %s\n", result);
+	printf("new_result: %s\n", new_result);
 	return (result);
 }
 

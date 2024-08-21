@@ -6,41 +6,11 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/17 15:51:21 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:12:12 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// t_env	*parse_env_var(const char *env_str)
-// {
-// 	char	*equal_sign;
-// 	t_env	*env_var;
-
-// 	equal_sign = ft_strchr(env_str, '=');
-// 	if (!equal_sign || equal_sign == env_str)	
-// 		return (NULL);
-// 	env_var = malloc(sizeof(t_env));
-// 	if (!env_var)
-// 		return (NULL);
-// 	env_var->name = strndup(env_str, equal_sign - env_str);
-// 	env_var->val = strdup(equal_sign + 1);
-// 	if (!env_var->name || !env_var->val)
-// 	{
-// 		free(env_var->name);
-// 		free(env_var->val);
-// 		free(env_var);
-// 		return (NULL);
-// 	}
-// 	return (env_var);
-// }
-
-// void	free_env_var(t_env *env_var)
-// {
-// 	free(env_var->name);
-// 	free(env_var->val);
-// 	free(env_var);
-// }
 
 t_env	*create_env_node(char *env_str)
 {

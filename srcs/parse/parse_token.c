@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:14:26 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/18 19:19:21 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:16:12 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ t_token	*parse_token(const char *input)
 		{
 			tokens[token_count].token = strndup(input + i, 2);
 			i++;
-			
 		}
 		else if (input[i] == '<' && input[i + 1] == '<')
 		{
 			tokens[token_count].token = strndup(input + i, 2);
 			i++;
-			
 		}
 		else
 			tokens[token_count].token = strndup(input + i, 1);
