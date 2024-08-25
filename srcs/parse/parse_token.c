@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:14:26 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/21 21:16:12 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/25 21:09:28 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ int		is_token(char *str)
 	return (_word);
 }
 
-t_token	*parse_token(const char *input)
+t_token	**parse_token(const char *input)
 {
 	size_t		i;
+	size_t		j;
 	size_t		token_count;
-	t_token		*tokens;
+	// t_token		*token;
+	t_token		**tokens;
 
 	i = 0;
 	token_count = 0;
@@ -44,26 +46,56 @@ t_token	*parse_token(const char *input)
 	{
 		while (input[i] == ' ')
 			i++;
-		if (input[i])
+		if (!input[i])
 			break ;
+		tokens[token_count] = malloc(sizeof(t_token));
+		if (!tokens[token_count])
+			return (NULL);
 		if (input[i] == '>' && input[i + 1] == '>')
 		{
-			tokens[token_count].token = strndup(input + i, 2);
-			i++;
+			tokens[token_count]->token = strdup(">>");
+			i += 2;
 		}
 		else if (input[i] == '<' && input[i + 1] == '<')
 		{
-			tokens[token_count].token = strndup(input + i, 2);
+			tokens[token_count]->token = strdup(">>");
+			i += 2;
+		}
+		else if (input[i] == '<')
+		{
+			tokens[token_count]->token = strdup("<");
+			i++;
+		}
+		else if (input[i] == '>')
+		{
+			tokens[token_count]->token = strdup(">");
+			i++;
+		}
+		else if (input[i] == '|')
+		{
+			tokens[token_count]->token = strdup("|");
 			i++;
 		}
 		else
-			tokens[token_count].token = strndup(input + i, 1);
-		tokens[token_count].type = is_token(tokens[token_count].token);
+		{
+			j = 0;
+			while (input[i] != ' ' && input[i])
+			{
+				j++;
+				i++;	
+			}
+			tokens[token_count]->token = strndup(&input[i - j], j + 1);
+			// i += ft_strlenn(input + i + j) - 1;
+			// printf("strlenn: %zu\n", ft_strlenn(input + i + j));
+		}
+		tokens[token_count]->type = is_token(tokens[token_count]->token);
 		token_count++;
-		i++;
+		// i++;
 	}
-	tokens[token_count].type = _null;
-	tokens[token_count].token = NULL;
+	// printf("input: %s\n", tokens[token_count]->token);
+	// tokens[token_count]->type = _null;
+	// tokens[token_count]->token = NULL;
+	tokens[token_count] = NULL;
 	return (tokens);
 }
 

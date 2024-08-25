@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/21 21:12:12 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/23 12:04:19 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,33 +70,3 @@ char	*get_env_val(const char *name, t_env *env)
 	}
 	return (NULL);
 }
-
-char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
-{
-	char	*new_input;
-	char	*value;
-	char	var_name[256];
-	size_t	var_len;
-	size_t	new_len;
-	
-	pos++;
-	var_len = 0;
-	while (pos[var_len] && pos[var_len] != ' ' && pos[var_len] != '\t' && pos[var_len] != '\n')
-		var_len++;
-	strncpy(var_name, pos, var_len);
-	var_name[var_len] = '\0';
-	value = get_env_val(var_name, env);
-	if (!value)
-		return (strdup(input));
-	new_len = (pos - input - 1) + strlen(value) + strlen(pos + var_len) + 1;
-	new_input = malloc(new_len);
-	if (!new_input)
-		return (NULL);
-	// printf("here\n");
-	memcpy(new_input, input, pos - input - 1);
-	new_input[pos - input - 1] = '\0';
-	strcat(new_input, value);
-	strcat(new_input, pos + var_len);
-	return (new_input);
-}
-

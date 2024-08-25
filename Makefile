@@ -18,8 +18,8 @@ SRCS			= ${SRCSDIR}main.c \
 					${PARSEDIR}parse_env.c \
 					${PARSEDIR}parse_dollar.c \
 				  	${PARSEDIR}parse_token.c \
+				  	${UTILDIR}ft_strlenn.c \
 				#   ${PARSEDIR}ft_cmd_parse.c \
-				#   ${UTILDIR}ft_error_parse.c \
 				#   ${UTILDIR}ft_error_parse_ext.c \
 				#   ${UTILDIR}ft_str_utils.c \
 				#   ${UTILDIR}ft_utils.c \
