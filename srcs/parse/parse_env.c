@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/23 12:04:19 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/28 20:21:59 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,16 @@ char	*get_env_val(const char *name, t_env *env)
 	while (env)
 	{
 		if (strncmp(env->name, name, name_len) == 0 && env->name[name_len] == '\0')
+		{
+			
 			// printf("env->val: %s\n", env->val);
+			// printf("env->name: %s\n", env->name);
+			// printf("name: %s\n", name);
+			// printf("name_len: %zu\n", name_len);
 			return (env->val);
+		}
+		// else
+		// 	return (NULL);
 		env = env->next;
 	}
 	return (NULL);

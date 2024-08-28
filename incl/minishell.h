@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/25 21:06:33 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/28 19:43:58 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_cmd
+{
+	char			**args;	// An array of command arguments["ls", "-l", NULL]
+	char			*in_rd;	// Input redirection file, e.g., "input.txt"
+	char			*out_rd;// Output redirection file, e.g., "output.txt"
+	int				append;	// Flag for append mode (1 for >>, 0 for >)
+	int				heredoc;
+	struct s_cmd	*next;	// Pointer to the next command in case of pipes
+}	t_cmd;
+
 t_env	*create_env_node(char *env_str);
 t_env	*init_new_list(char **envp);
 char	*get_env_val(const char *name, t_env *env);
@@ -69,6 +79,9 @@ char	*expand_env_variables(const char *input, t_env *env);
 int		is_token(char *str);
 t_token	**parse_token(const char *input);
 void	free_tokens(char **tokens);
+char	if_dollar(char *pos);
+char	*parse_quotes(char *input);
+char	*parse_quotes1(char *input);
 
 // Utils
 size_t	ft_strlenn(const char *str);

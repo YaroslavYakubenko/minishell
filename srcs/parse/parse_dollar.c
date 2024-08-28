@@ -6,31 +6,32 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/23 16:19:46 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/28 20:38:49 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	if_dollar(char *pos)
+char	if_dollar(char *pos)
 {
 	t_mshell	e_code;
 	
-	while(1)
-	{	
-		if (*pos == '$' && *(pos + 1) == '$')
-		{
-			e_code.exit_code = getpid();
-			printf("Your pid: %d\n", e_code.exit_code);
-			break ;
-		}
-		else if (*pos == '$' && *(pos + 1) == '?')
-		{
-			e_code.exit_code = 0;	
-			printf("Your last completed command: %d\n", e_code.exit_code);
-			break ;
-		}
+	// while(1)
+	// {	
+	if (*pos == '$' && *(pos + 1) == '$')
+	{
+		e_code.exit_code = getpid();
+		printf("Your pid: %d\n", e_code.exit_code);
+		return (0);
 	}
+	else if (*pos == '$' && *(pos + 1) == '?')
+	{
+		e_code.exit_code = 0;	
+		printf("Your last completed command: %d\n", e_code.exit_code);
+		return (0);
+	}
+	return (*pos);
+	// }
 }
 
 char	*expand_env_variables(const char *input, t_env *env)
@@ -47,25 +48,18 @@ char	*expand_env_variables(const char *input, t_env *env)
 	while ((pos = strchr(pos, '$')))
 	{
 		new_result = replace_var_with_value(result, pos, env);
-		// if (*(pos + 1) == '$' || *(pos + 1) == '?')
-		// {
-		// 	e_code.exit_code = getpid();
-		// 	printf("%d\n", e_code.exit_code);
-		// 	// return (0);
-		// 	break ;
-		// }
 		if (!new_result)
 		{
 			free(result);
 			return (NULL);
 		}
-		pos = new_result + (pos - result) + strlen(new_result) - strlen(result);
+		if (new_result == result)
+			pos++;
+		else
+			pos = new_result + (pos - result) + (strlen(new_result) - strlen(result));
 		free(result);
 		result = new_result;
 	}
-	if (!result)
-		if_dollar(result);
-	// printf("Result: %s\n", result);
 	return (result);
 }
 
@@ -95,6 +89,7 @@ char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
 	new_input[pos - input - 1] = '\0';
 	strcat(new_input, value);
 	strcat(new_input, pos + var_len);
+	// printf("new_input: %s\n", new_input);
 	return (new_input);
 }
 

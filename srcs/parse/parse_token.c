@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:14:26 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/25 21:09:28 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/28 19:46:57 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_token	**parse_token(const char *input)
 		}
 		else if (input[i] == '<' && input[i + 1] == '<')
 		{
-			tokens[token_count]->token = strdup(">>");
+			tokens[token_count]->token = strdup("<<");
 			i += 2;
 		}
 		else if (input[i] == '<')
@@ -78,19 +78,34 @@ t_token	**parse_token(const char *input)
 		}
 		else
 		{
-			j = 0;
-			while (input[i] != ' ' && input[i])
+			if (input[i] == '\'' && input[i])
 			{
-				j++;
-				i++;	
+				tokens[token_count]->token = parse_quotes((char *)&input[i]);
+				if (tokens[token_count]->token == NULL)
+					return (0);
+				i += ft_strlen(tokens[token_count]->token) + 2;
 			}
-			tokens[token_count]->token = strndup(&input[i - j], j + 1);
-			// i += ft_strlenn(input + i + j) - 1;
-			// printf("strlenn: %zu\n", ft_strlenn(input + i + j));
+			else if (input[i] == '\"' && input[i])
+			{
+				tokens[token_count]->token = parse_quotes1((char *)&input[i]);
+				if (tokens[token_count]->token == NULL)
+					return (0);
+				i += ft_strlen(tokens[token_count]->token) + 2;
+			}
+			else
+			{
+				j = 0;
+				while (input[i] != ' ' && input[i])
+				{
+					j++;
+					i++;	
+				}
+				tokens[token_count]->token = strndup(&input[i - j], j + 1);
+				
+			}
 		}
 		tokens[token_count]->type = is_token(tokens[token_count]->token);
 		token_count++;
-		// i++;
 	}
 	// printf("input: %s\n", tokens[token_count]->token);
 	// tokens[token_count]->type = _null;
