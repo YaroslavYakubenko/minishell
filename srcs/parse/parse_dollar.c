@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/29 22:58:09 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/30 18:44:29 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
 	value = get_env_val(var_name, env);
 	if (!value)
 	{
-		new_len = strlen(input) + 1;
+		new_len = (pos - input) + strlen(pos + var_len) + 1;
 		new_input = malloc(new_len);
 		if (!new_input)
 			return (NULL);
 		new_input[0] = '\0';
-		strcpy(new_input, input);
-		memcpy(new_input, input, pos - input);
+		// strcpy(new_input, input);
+		memcpy(new_input, input, pos - input - 1);
 		new_input[pos - input] = '\0';
-		strcat(new_input, pos);
+		strcat(new_input, pos + var_len);
 		// printf("here__\n");
 		// printf("new_input: %s\n", new_input);
 		return (new_input);
@@ -141,7 +141,7 @@ char	*expand_env_variables(const char *input, t_env *env)
 		free(result);
 		result = new_result;
 		// printf("here\n");
-		printf("result: %s\n", result);
+		// printf("result: %s\n", result);
 	}
 	return (result);
 }
