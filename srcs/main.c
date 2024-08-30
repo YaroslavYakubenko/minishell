@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/28 19:59:45 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:20:48 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int main (int ac, char **av, char **envp)
 			}
 
 		}
-		// printf("here_is\n");
 		expanded_input = expand_env_variables(input, env_list);
+		printf("here_is\n");
 		if (expanded_input != NULL)
 		{
 			printf("expanded: %s\n", expanded_input);

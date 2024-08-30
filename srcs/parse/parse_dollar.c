@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/28 20:38:49 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/29 22:58:09 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,46 @@ char	if_dollar(char *pos)
 	// }
 }
 
-char	*expand_env_variables(const char *input, t_env *env)
+char	*append_var_to_result(char *result, const char *pos, size_t len)
 {
-	char	*result;
-	char	*pos;
 	char	*new_result;
-	// t_mshell		e_code;
+	size_t	var_name_len;
+	char	*space_pos;
 
-	result = strdup(input);
-	if (!result)
-		return (NULL);
-	pos = result;
-	while ((pos = strchr(pos, '$')))
+	space_pos = strchr(pos + 1, ' ');
+	if (space_pos != NULL)
+		var_name_len = space_pos - (pos + 1);
+	else
+		var_name_len = strlen(pos + 1);
+	new_result = malloc(len + 1 + strlen(pos + var_name_len) + 1);
+	if (!new_result)
 	{
-		new_result = replace_var_with_value(result, pos, env);
-		if (!new_result)
-		{
-			free(result);
-			return (NULL);
-		}
-		if (new_result == result)
-			pos++;
-		else
-			pos = new_result + (pos - result) + (strlen(new_result) - strlen(result));
 		free(result);
-		result = new_result;
+		return (NULL);
 	}
-	return (result);
+	memcpy(new_result, result, len);
+	new_result[len] = '\0';
+	strncat(new_result, pos, var_name_len + 1);
+	if (space_pos != NULL)
+		strcat(new_result, space_pos);
+	free(result);
+	// printf("here_is\n");
+	return (new_result);
+}
+
+size_t	extract_var_name(const char *pos, char *var_name)
+{
+	size_t	i;
+
+	i = 0;
+	// pos++;
+	while (pos[i] && pos[i] != ' ' && pos[i] != '\t' && pos[i] != '\n')
+	{
+		var_name[i] = pos[i];
+		i++;
+	}
+	var_name[i] = '\0';
+	return (i);
 }
 
 char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
@@ -72,24 +85,64 @@ char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
 	size_t	new_len;
 	
 	pos++;
-	var_len = 0;
-	while (pos[var_len] && pos[var_len] != ' ' && pos[var_len] != '\t' && pos[var_len] != '\n')
-		var_len++;
-	strncpy(var_name, pos, var_len);
-	var_name[var_len] = '\0';
+	var_len = extract_var_name(pos, var_name);
 	value = get_env_val(var_name, env);
 	if (!value)
-		return (strdup(input));
-	new_len = (pos - input - 1) + strlen(value) + strlen(pos + var_len) + 1;
-	new_input = malloc(new_len);
+	{
+		new_len = strlen(input) + 1;
+		new_input = malloc(new_len);
+		if (!new_input)
+			return (NULL);
+		new_input[0] = '\0';
+		strcpy(new_input, input);
+		memcpy(new_input, input, pos - input);
+		new_input[pos - input] = '\0';
+		strcat(new_input, pos);
+		// printf("here__\n");
+		// printf("new_input: %s\n", new_input);
+		return (new_input);
+	}
+	new_len = (pos - input - 1) + strlen(value) + strlen(pos + var_len);
+	new_input = malloc(new_len + 1);
 	if (!new_input)
 		return (NULL);
-	// printf("here\n");
 	memcpy(new_input, input, pos - input - 1);
 	new_input[pos - input - 1] = '\0';
 	strcat(new_input, value);
 	strcat(new_input, pos + var_len);
 	// printf("new_input: %s\n", new_input);
 	return (new_input);
+}
+
+char	*expand_env_variables(const char *input, t_env *env)
+{
+	char	*result;
+	char	*pos;
+	char	*new_result;
+	size_t	len;
+
+	result = strdup(input);
+	if (!result)
+		return (NULL);
+	pos = result;
+	while ((pos = strchr(pos, '$')))
+	{
+		len = pos - result;
+		new_result = replace_var_with_value(result, pos, env);
+		if (!new_result)
+		{
+			free(result);
+			return (NULL);
+		}
+		if (new_result == result)
+			pos = result + len + 1;
+		else
+			pos = new_result + (pos - result) + (strlen(new_result) - strlen(result));
+		free(result);
+		result = new_result;
+		// printf("here\n");
+		printf("result: %s\n", result);
+	}
+	return (result);
 }
 

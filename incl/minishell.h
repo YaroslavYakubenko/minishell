@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/28 19:43:58 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:52:48 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_cmd
 	struct s_cmd	*next;	// Pointer to the next command in case of pipes
 }	t_cmd;
 
+// Parse
 t_env	*create_env_node(char *env_str);
 t_env	*init_new_list(char **envp);
 char	*get_env_val(const char *name, t_env *env);
@@ -82,6 +83,8 @@ void	free_tokens(char **tokens);
 char	if_dollar(char *pos);
 char	*parse_quotes(char *input);
 char	*parse_quotes1(char *input);
+char	*append_var_to_result(char *result, const char *pos, size_t len);
+size_t	extract_var_name(const char *pos, char *var_name);
 
 // Utils
 size_t	ft_strlenn(const char *str);
