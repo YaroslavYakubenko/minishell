@@ -6,33 +6,41 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 19:12:19 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/02 22:28:47 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	if_dollar(const char *pos)
-{
-	t_mshell	e_code;
+// char	if_dollar(const char *pos, const char *input)
+// {
+// 	t_mshell	e_code;
+// 	char		*new_input;
+// 	size_t		new_len;
 	
-	// while(1)
-	// {	
-	if (*pos == '$' && *(pos + 1) == '$')
-	{
-		e_code.exit_code = getpid();
-		printf("Your pid: %d\n", e_code.exit_code);
-		// return (0);
-	}
-	else if (*pos == '$' && *(pos + 1) == '?')
-	{
-		e_code.exit_code = 0;	
-		printf("Your last completed command: %d\n", e_code.exit_code);
-		// return (0);
-	}
-	// return (0);
-	// }
-}
+// 	// while(1)
+// 	// {	
+// 	// printf("here\n");
+// 	// printf("pos: %s, pos + 1: %s\n", pos - 1, pos);
+// 	// pos++;
+// 	// printf("pos++: %s\n", pos);
+	
+// 	if (*pos == '$' && *(pos - 1) == '$')
+// 	{
+// 		e_code.exit_code = getpid();
+// 		printf("Your pid: %d\n", e_code.exit_code);
+// 		// return (0);
+// 	}
+// 	else if (*pos == '?' && *(pos - 1) == '$')
+// 	{
+// 		e_code.exit_code = 0;	
+// 		printf("Your last completed command: %d\n", e_code.exit_code);
+// 		// return (0);
+// 	}
+// 	new_len = (pos - input) + ft_strlen(pos + 1) + 1;
+// 	return (*new_input);
+// 	// }
+// }
 
 char	*append_var_to_result(char *result, const char *pos, size_t len)
 {
@@ -89,9 +97,10 @@ char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
 	value = get_env_val(var_name, env);
 	if (!value)
 	{
-		if (*pos == '$' && (*(pos + 1) == '$' || *(pos + 1) == '?'))
-			if_dollar(pos);
-		printf("pos: %s%s\n", pos, pos + 1);
+		// if (*pos == '$' && (*(pos + 1) == '$' || *(pos + 1) == '?'))
+		// if_dollar(pos);
+		// printf("pos: %s", pos);
+		// printf("%s\n", pos + 1);
 		new_len = (pos - input) + ft_strlen(pos + var_len) + 1;
 		new_input = malloc(new_len);
 		if (!new_input)
