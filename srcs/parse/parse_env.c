@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 15:45:49 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/02 22:31:58 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,13 @@ t_env	*init_new_list(char **envp)
 char	*get_env_val(const char *name, t_env *env)
 {
 	size_t	name_len;
+	t_mshell	e_code;
+	char	*str;
 
 	name_len = ft_strlen(name);
 	while (env)
 	{
+		// printf("env->name: %s\n", env->name);
 		if (ft_strncmp(env->name, name, name_len) == 0 && env->name[name_len] == '\0')
 		{
 			
@@ -72,8 +75,18 @@ char	*get_env_val(const char *name, t_env *env)
 			// printf("name_len: %zu\n", name_len);
 			return (env->val);
 		}
-		// else
-		// 	return (NULL);
+		else if (name[0] == '$')
+		{
+			// printf("Your last completed command: %d\n", e_code.exit_code);
+			str = ft_itoa(e_code.exit_code);
+			return (str);
+		}
+		else if (name[0] == '?')
+		{
+			// printf("Your pid: %d\n", getpid());
+			str = ft_itoa(getpid());
+			return (str);
+		}
 		env = env->next;
 	}
 	return (NULL);

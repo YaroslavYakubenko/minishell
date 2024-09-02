@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 15:22:23 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/02 22:28:31 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*expand_env_variables(const char *input, t_env *env);
 int		is_token(char *str);
 t_token	**parse_token(const char *input);
 void	free_tokens(char **tokens);
-void	if_dollar(const char *pos);
+// void	if_dollar(const char *pos);
 char	*parse_quotes(char *input);
 char	*parse_quotes1(char *input);
 char	*append_var_to_result(char *result, const char *pos, size_t len);
