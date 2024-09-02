@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/28 20:21:59 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:45:49 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ t_env	*create_env_node(char *env_str)
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
-	equal_sign = strchr(env_str, '=');
+	equal_sign = ft_strchr(env_str, '=');
 	if (!equal_sign)
 	{
 		free(new_node);
 		return (NULL);
 	}
-	new_node->name = strndup(env_str, equal_sign - env_str);
-	new_node->val = strdup(equal_sign + 1);
+	new_node->name = ft_strndup(env_str, equal_sign - env_str);
+	new_node->val = ft_strdup(equal_sign + 1);
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -60,10 +60,10 @@ char	*get_env_val(const char *name, t_env *env)
 {
 	size_t	name_len;
 
-	name_len = strlen(name);
+	name_len = ft_strlen(name);
 	while (env)
 	{
-		if (strncmp(env->name, name, name_len) == 0 && env->name[name_len] == '\0')
+		if (ft_strncmp(env->name, name, name_len) == 0 && env->name[name_len] == '\0')
 		{
 			
 			// printf("env->val: %s\n", env->val);

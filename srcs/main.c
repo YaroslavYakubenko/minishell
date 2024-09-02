@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/30 18:41:54 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:23:04 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int main (int ac, char **av, char **envp)
 	{
 		if (*input)
 			add_history(input);
-		if_dollar(input);
+		// if_dollar(input);
 		tokens = parse_token(input);
 		if (tokens != NULL)
 		{

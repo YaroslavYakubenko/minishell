@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:14:26 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/28 19:46:57 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:45:14 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ int		is_token(char *str)
 {
 	if (!str || !*str)
 		return (_null);
-	else if (strcmp(str, "|") == 0)
+	else if (ft_strcmp(str, "|") == 0)
 		return (_pipe);
-	else if (strcmp(str, "<") == 0)
+	else if (ft_strcmp(str, "<") == 0)
 		return (_redir_in);
-	else if (strcmp(str, ">") == 0)
+	else if (ft_strcmp(str, ">") == 0)
 		return (_redir_out);
-	else if (strcmp(str, ">>") == 0)
+	else if (ft_strcmp(str, ">>") == 0)
 		return (_append);
-	else if (strcmp(str, "<<") == 0)
+	else if (ft_strcmp(str, "<<") == 0)
 		return (_heredoc);
 	return (_word);
 }
@@ -53,27 +53,27 @@ t_token	**parse_token(const char *input)
 			return (NULL);
 		if (input[i] == '>' && input[i + 1] == '>')
 		{
-			tokens[token_count]->token = strdup(">>");
+			tokens[token_count]->token = ft_strdup(">>");
 			i += 2;
 		}
 		else if (input[i] == '<' && input[i + 1] == '<')
 		{
-			tokens[token_count]->token = strdup("<<");
+			tokens[token_count]->token = ft_strdup("<<");
 			i += 2;
 		}
 		else if (input[i] == '<')
 		{
-			tokens[token_count]->token = strdup("<");
+			tokens[token_count]->token = ft_strdup("<");
 			i++;
 		}
 		else if (input[i] == '>')
 		{
-			tokens[token_count]->token = strdup(">");
+			tokens[token_count]->token = ft_strdup(">");
 			i++;
 		}
 		else if (input[i] == '|')
 		{
-			tokens[token_count]->token = strdup("|");
+			tokens[token_count]->token = ft_strdup("|");
 			i++;
 		}
 		else
@@ -100,7 +100,7 @@ t_token	**parse_token(const char *input)
 					j++;
 					i++;	
 				}
-				tokens[token_count]->token = strndup(&input[i - j], j + 1);
+				tokens[token_count]->token = ft_strndup(&input[i - j], j + 1);
 				
 			}
 		}

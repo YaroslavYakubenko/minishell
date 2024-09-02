@@ -6,13 +6,13 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/30 18:53:19 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:22:17 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	if_dollar(char *pos)
+void	if_dollar(const char *pos)
 {
 	t_mshell	e_code;
 	
@@ -22,15 +22,15 @@ char	if_dollar(char *pos)
 	{
 		e_code.exit_code = getpid();
 		printf("Your pid: %d\n", e_code.exit_code);
-		return (0);
+		// return (0);
 	}
 	else if (*pos == '$' && *(pos + 1) == '?')
 	{
 		e_code.exit_code = 0;	
 		printf("Your last completed command: %d\n", e_code.exit_code);
-		return (0);
+		// return (0);
 	}
-	return (*pos);
+	// return (0);
 	// }
 }
 
@@ -40,18 +40,18 @@ char	*append_var_to_result(char *result, const char *pos, size_t len)
 	size_t	var_name_len;
 	char	*space_pos;
 
-	space_pos = strchr(pos + 1, ' ');
+	space_pos = ft_strchr(pos + 1, ' ');
 	if (space_pos != NULL)
 		var_name_len = space_pos - (pos + 1);
 	else
-		var_name_len = strlen(pos + 1);
-	new_result = malloc(len + 1 + strlen(pos + var_name_len) + 1);
+		var_name_len = ft_strlen(pos + 1);
+	new_result = malloc(len + 1 + ft_strlen(pos + var_name_len) + 1);
 	if (!new_result)
 	{
 		free(result);
 		return (NULL);
 	}
-	memcpy(new_result, result, len);
+	ft_memcpy(new_result, result, len);
 	new_result[len] = '\0';
 	strncat(new_result, pos, var_name_len + 1);
 	if (space_pos != NULL)
@@ -89,24 +89,27 @@ char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
 	value = get_env_val(var_name, env);
 	if (!value)
 	{
-		new_len = (pos - input) + strlen(pos + var_len) + 1;
+		if (*pos == '$' && (*(pos + 1) == '$' || *(pos + 1) == '?'))
+			if_dollar(pos);
+		printf("pos: %s%s\n", pos, pos + 1);
+		new_len = (pos - input) + ft_strlen(pos + var_len) + 1;
 		new_input = malloc(new_len);
 		if (!new_input)
 			return (NULL);
 		new_input[0] = '\0';
 		// strcpy(new_input, input);
-		memcpy(new_input, input, pos - input - 1);
+		ft_memcpy(new_input, input, pos - input - 1);
 		new_input[pos - input] = '\0';
 		strcat(new_input, pos + var_len);
 		// printf("here__\n");
 		// printf("new_input: %s\n", new_input);
 		return (new_input);
 	}
-	new_len = (pos - input - 1) + strlen(value) + strlen(pos + var_len);
+	new_len = (pos - input - 1) + ft_strlen(value) + ft_strlen(pos + var_len);
 	new_input = malloc(new_len + 1);
 	if (!new_input)
 		return (NULL);
-	memcpy(new_input, input, pos - input - 1);
+	ft_memcpy(new_input, input, pos - input - 1);
 	new_input[pos - input - 1] = '\0';
 	strcat(new_input, value);
 	strcat(new_input, pos + var_len);
@@ -121,11 +124,11 @@ char	*expand_env_variables(const char *input, t_env *env)
 	char	*new_result;
 	size_t	len;
 
-	result = strdup(input);
+	result = ft_strdup(input);
 	if (!result)
 		return (NULL);
 	pos = result;
-	while ((pos = strchr(pos, '$')))
+	while ((pos = ft_strchr(pos, '$')))
 	{
 		len = pos - result;
 		new_result = replace_var_with_value(result, pos, env);
@@ -137,7 +140,7 @@ char	*expand_env_variables(const char *input, t_env *env)
 		if (new_result == result)
 			pos = result + len + 1;
 		else
-			pos = new_result + (pos - result) + (strlen(new_result) - strlen(result));
+			pos = new_result + (pos - result) + (ft_strlen(new_result) - ft_strlen(result));
 		free(result);
 		result = new_result;
 		// printf("here\n");
