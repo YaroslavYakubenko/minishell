@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 15:22:17 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:12:19 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ char	*append_var_to_result(char *result, const char *pos, size_t len)
 	}
 	ft_memcpy(new_result, result, len);
 	new_result[len] = '\0';
-	strncat(new_result, pos, var_name_len + 1);
+	ft_strncat(new_result, pos, var_name_len + 1);
 	if (space_pos != NULL)
-		strcat(new_result, space_pos);
+		ft_strcat(new_result, space_pos);
 	free(result);
 	// printf("here_is\n");
 	return (new_result);
