@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 22:12:38 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 15:51:38 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:37:05 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
+// add new functions
 int		ft_strcmp(const char *str1, const char *str2);
 char	*ft_strndup(const char *src, size_t n);
 size_t	ft_strnlen(const char *s, size_t maxlen);
