@@ -6,41 +6,11 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 22:28:47 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:52:12 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// char	if_dollar(const char *pos, const char *input)
-// {
-// 	t_mshell	e_code;
-// 	char		*new_input;
-// 	size_t		new_len;
-	
-// 	// while(1)
-// 	// {	
-// 	// printf("here\n");
-// 	// printf("pos: %s, pos + 1: %s\n", pos - 1, pos);
-// 	// pos++;
-// 	// printf("pos++: %s\n", pos);
-	
-// 	if (*pos == '$' && *(pos - 1) == '$')
-// 	{
-// 		e_code.exit_code = getpid();
-// 		printf("Your pid: %d\n", e_code.exit_code);
-// 		// return (0);
-// 	}
-// 	else if (*pos == '?' && *(pos - 1) == '$')
-// 	{
-// 		e_code.exit_code = 0;	
-// 		printf("Your last completed command: %d\n", e_code.exit_code);
-// 		// return (0);
-// 	}
-// 	new_len = (pos - input) + ft_strlen(pos + 1) + 1;
-// 	return (*new_input);
-// 	// }
-// }
 
 char	*append_var_to_result(char *result, const char *pos, size_t len)
 {
@@ -65,7 +35,6 @@ char	*append_var_to_result(char *result, const char *pos, size_t len)
 	if (space_pos != NULL)
 		ft_strcat(new_result, space_pos);
 	free(result);
-	// printf("here_is\n");
 	return (new_result);
 }
 
@@ -74,7 +43,6 @@ size_t	extract_var_name(const char *pos, char *var_name)
 	size_t	i;
 
 	i = 0;
-	// pos++;
 	while (pos[i] && pos[i] != ' ' && pos[i] != '\t' && pos[i] != '\n')
 	{
 		var_name[i] = pos[i];
@@ -97,21 +65,14 @@ char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
 	value = get_env_val(var_name, env);
 	if (!value)
 	{
-		// if (*pos == '$' && (*(pos + 1) == '$' || *(pos + 1) == '?'))
-		// if_dollar(pos);
-		// printf("pos: %s", pos);
-		// printf("%s\n", pos + 1);
 		new_len = (pos - input) + ft_strlen(pos + var_len) + 1;
 		new_input = malloc(new_len);
 		if (!new_input)
 			return (NULL);
 		new_input[0] = '\0';
-		// strcpy(new_input, input);
 		ft_memcpy(new_input, input, pos - input - 1);
 		new_input[pos - input] = '\0';
 		strcat(new_input, pos + var_len);
-		// printf("here__\n");
-		// printf("new_input: %s\n", new_input);
 		return (new_input);
 	}
 	new_len = (pos - input - 1) + ft_strlen(value) + ft_strlen(pos + var_len);
@@ -122,7 +83,6 @@ char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
 	new_input[pos - input - 1] = '\0';
 	strcat(new_input, value);
 	strcat(new_input, pos + var_len);
-	// printf("new_input: %s\n", new_input);
 	return (new_input);
 }
 
@@ -152,8 +112,6 @@ char	*expand_env_variables(const char *input, t_env *env)
 			pos = new_result + (pos - result) + (ft_strlen(new_result) - ft_strlen(result));
 		free(result);
 		result = new_result;
-		// printf("here\n");
-		// printf("result: %s\n", result);
 	}
 	return (result);
 }

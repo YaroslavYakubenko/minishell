@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:14:26 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 19:16:08 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:53:46 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_token	**parse_token(const char *input)
 	size_t		i;
 	size_t		j;
 	size_t		token_count;
-	// t_token		*token;
 	t_token		**tokens;
 
 	i = 0;
@@ -107,9 +106,6 @@ t_token	**parse_token(const char *input)
 		tokens[token_count]->type = is_token(tokens[token_count]->token);
 		token_count++;
 	}
-	// printf("input: %s\n", tokens[token_count]->token);
-	// tokens[token_count]->type = _null;
-	// tokens[token_count]->token = NULL;
 	tokens[token_count] = NULL;
 	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 22:31:58 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:51:38 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,16 @@ char	*get_env_val(const char *name, t_env *env)
 	name_len = ft_strlen(name);
 	while (env)
 	{
-		// printf("env->name: %s\n", env->name);
 		if (ft_strncmp(env->name, name, name_len) == 0 && env->name[name_len] == '\0')
-		{
-			
-			// printf("env->val: %s\n", env->val);
-			// printf("env->name: %s\n", env->name);
-			// printf("name: %s\n", name);
-			// printf("name_len: %zu\n", name_len);
 			return (env->val);
-		}
-		else if (name[0] == '$')
+		else if (name[0] == '?')
 		{
-			// printf("Your last completed command: %d\n", e_code.exit_code);
+			e_code.exit_code = 0;
 			str = ft_itoa(e_code.exit_code);
 			return (str);
 		}
-		else if (name[0] == '?')
+		else if (name[0] == '$')
 		{
-			// printf("Your pid: %d\n", getpid());
 			str = ft_itoa(getpid());
 			return (str);
 		}
