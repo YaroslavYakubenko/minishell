@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/29 16:52:48 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:23:18 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@
 # include <termios.h>
 # include <termcap.h>  
 # include <stdbool.h>
+# include <unistd.h>
 # include <signal.h>
 # include <dirent.h>
+# include <errno.h>
 # include <stdio.h>
 # include <fcntl.h>
 
@@ -80,11 +82,20 @@ char	*expand_env_variables(const char *input, t_env *env);
 int		is_token(char *str);
 t_token	**parse_token(const char *input);
 void	free_tokens(char **tokens);
-char	if_dollar(char *pos);
+// void	if_dollar(const char *pos);
 char	*parse_quotes(char *input);
 char	*parse_quotes1(char *input);
 char	*append_var_to_result(char *result, const char *pos, size_t len);
 size_t	extract_var_name(const char *pos, char *var_name);
+
+// Execution
+void	ft_execute(char **cmd, char **envp);
+char	*ft_get_evn(char **envp, char *keyword, char *cmd);
+void	ft_input(char *file_name);
+void	ft_output(char *file_name);
+void	ft_append(char *file_name);
+void	ft_heredocs(char *end);
+void	ft_pipe(void);
 
 // Utils
 size_t	ft_strlenn(const char *str);

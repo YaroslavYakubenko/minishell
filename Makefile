@@ -1,7 +1,7 @@
 NAME 			= minishell
 HDRDIR			= incl/
 
-EXECDIR			= exec/
+EXECDIR			= ${SRCSDIR}execution/
 # EXECSRCS		= ${EXECDIR}executor.c
 
 PARSEDIR		= ${SRCSDIR}parse/
@@ -15,6 +15,9 @@ SUCCES			= @echo "minishell compiled successfully"
 
 SRCSDIR			= srcs/
 SRCS			= ${SRCSDIR}main.c \
+					${EXECDIR}execute.c \
+					${EXECDIR}ft_get_path_own.c \
+					${EXECDIR}symbols.c \
 					${PARSEDIR}parse_env.c \
 					${PARSEDIR}parse_dollar.c \
 				  	${PARSEDIR}parse_token.c \

@@ -6,7 +6,7 @@
 #    By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/15 16:55:59 by yyakuben          #+#    #+#              #
-#    Updated: 2024/08/18 22:33:14 by yyakuben         ###   ########.fr        #
+#    Updated: 2024/09/02 15:50:11 by yyakuben         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS			=	ft_atoi.c ft_isalnum.c ft_isprint.c\
 				ft_strjoin.c ft_strtrim.c ft_split.c\
 				ft_itoa.c ft_strmapi.c ft_striteri.c\
 				ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c\
-				ft_putnbr_fd.c ft_lstnew.c\
+				ft_putnbr_fd.c ft_lstnew.c ft_strcmp.c ft_strndup.c\
+				ft_strnlen.c ft_strcat.c ft_strncat.c\
 
 OBJS			= $(SRCS:.c=.o)
 
