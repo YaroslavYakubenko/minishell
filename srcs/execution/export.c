@@ -6,20 +6,52 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 18:07:58 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/08 12:52:09 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/08 16:04:33 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_strcmp(const char *s1, const char *s2)
+char	*ft_output_single_evnp(char *evnp)
 {
-	while (*s1 && *s2 && *s1 == *s2)
+	int		i;
+	char	*output_evnp;
+	char	*new_evnp;
+
+	i = 0;
+	while (evnp[i] && evnp[i] != '=')
+		i++;
+	new_evnp = malloc((i + 1) * sizeof(char));
+	i = 0;
+	while (evnp[i] && evnp[i] != '=')
+		new_evnp[i] = evnp[i++];
+	new_evnp[i] = '\0';
+	output_evnp = getenv(new_evnp);
+	new_evnp = ft_strjoin(new_evnp, "=");
+	new_evnp = ft_strjoin(new_evnp, output_evnp);
+	return (new_evnp);
+}
+
+char	**ft_renew_evnp(char **evnp)
+{
+	int		i;
+	int		j;
+	char	**new_evnp;
+	char	*single_evnp;
+	char	*output_evnp;
+
+	while (evnp[i])
+		i++;
+	new_evnp = malloc(i * sizeof(char *));
+	i = 0;
+	j = 0;
+	while (evnp[i])
 	{
-		s1++;
-		s2++;
+		single_evnp = ft_output_single_evnp(evnp[i]);
+		new_evnp[i] = single_evnp;
+		i++;
 	}
-	return ((unsigned char )*s1 - (unsigned char)*s2);
+	return (new_evnp);
 }
 
 char	**ft_sort_the_evnp(char **evnp)
@@ -45,33 +77,6 @@ char	**ft_sort_the_evnp(char **evnp)
 	return (store);
 }
 
-char	*ft_output_final(char *final, char *str)
-{
-	int		k;
-	int		j;
-
-	k = 0;
-	while (str[k] != '=' && str[k])
-	{
-		final[k] = str[k];
-		k++;
-	}
-	if (str[k] == '=')
-	{
-		final[k] = str[k];
-		k++;
-		j = k;
-		final[j++] = '"';
-		while (str[k])
-			final[j++] = str[k++];
-		final[j++] = '"';
-		final[j] = '\0';
-	}
-	else
-		final[k] = '\0';
-	return (final);
-}
-
 void	ft_print_double_pointer(char **str)
 {
 	int	i;
@@ -86,16 +91,20 @@ void	ft_print_double_pointer(char **str)
 	}
 }
 
-void		ft_export(char	**argv, char **evnp)
+void	ft_export(char	**argv, char **evnp)
 {
 	char		**store;
 	static char	*record[255];
-	int 		argc;
+	int			argc;
 	static int	i;
 
+	argc = 0;
+	while (argv[argc])
+		argc++;
 	if (argc == 2 && ft_strcmp(argv[1], "export") == 0)
 	{
-		store = ft_sort_the_evnp(evnp);
+		store = ft_renew_evnp(evnp);
+		store = ft_sort_the_evnp(store);
 		ft_print_double_pointer(store);
 		ft_print_double_pointer(record);
 	}
