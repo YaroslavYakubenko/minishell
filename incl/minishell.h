@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/07 18:23:18 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/08 12:48:47 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ void	ft_output(char *file_name);
 void	ft_append(char *file_name);
 void	ft_heredocs(char *end);
 void	ft_pipe(void);
+void	ft_export(char	**argv, char **evnp);
+void	ft_cd(char *dest_dir);
+void	ft_unset(char **record, char *str);
+void	ft_record(char *str, char *result);
+
 
 // Utils
 size_t	ft_strlenn(const char *str);

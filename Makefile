@@ -18,6 +18,9 @@ SRCS			= ${SRCSDIR}main.c \
 					${EXECDIR}execute.c \
 					${EXECDIR}ft_get_path_own.c \
 					${EXECDIR}symbols.c \
+					${EXECDIR}cd.c \
+					${EXECDIR}export.c \
+					${EXECDIR}export_ults.c \
 					${PARSEDIR}parse_env.c \
 					${PARSEDIR}parse_dollar.c \
 				  	${PARSEDIR}parse_token.c \
