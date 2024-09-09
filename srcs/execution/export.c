@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 18:07:58 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/08 16:04:33 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/09 14:36:53 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ char	*ft_output_single_evnp(char *evnp)
 	new_evnp = malloc((i + 1) * sizeof(char));
 	i = 0;
 	while (evnp[i] && evnp[i] != '=')
-		new_evnp[i] = evnp[i++];
+	{
+		new_evnp[i] = evnp[i];
+		i++;
+	}
 	new_evnp[i] = '\0';
 	output_evnp = getenv(new_evnp);
 	new_evnp = ft_strjoin(new_evnp, "=");
@@ -38,8 +41,8 @@ char	**ft_renew_evnp(char **evnp)
 	int		j;
 	char	**new_evnp;
 	char	*single_evnp;
-	char	*output_evnp;
 
+	i = 0;
 	while (evnp[i])
 		i++;
 	new_evnp = malloc(i * sizeof(char *));
@@ -111,7 +114,7 @@ void	ft_export(char	**argv, char **evnp)
 	else if (argc > 2 && ft_strcmp(argv[1], "export") == 0)
 		ft_record(argv[2], record[i++]);
 	else if (argc == 2 && ft_strcmp(argv[1], "unset") == 0)
-		printf("\n");
+		printf("unset: not enough arguments\n");
 	else if (argc > 2 && ft_strcmp(argv[1], "unset") == 0)
 		ft_unset(record, argv[2]);
 }

@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/08 16:05:12 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/09 14:30:31 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	ft_cd(char *dest_dir);
 void	ft_unset(char **record, char *str);
 void	ft_record(char *str, char *result);
 int		ft_strcmp(const char *s1, const char *s2);
+void	ft_build_in(char **cmd, char **envp);
 
 // Utils
 size_t	ft_strlenn(const char *str);

@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:16:45 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/08 12:55:54 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/09 14:43:36 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	ft_heredocs(char *end)
 	char	*input;
 	char	*output_str;
 
-	while ((input = readline(">")) != NULL)
+	input = readline(">");
+	while (input != NULL)
 	{
 		if (ft_strcmp(input, end) == 0)
 		{
@@ -58,9 +59,11 @@ void	ft_heredocs(char *end)
 			output_str = ft_strjoin(output_str, "\n");
 			output_str = ft_strjoin(output_str, input);
 		}
+		input = readline(">");
 	}
 	printf("%s", output_str);
-	ft_pipe;
+	free (output_str);
+	ft_pipe();
 }
 
 void	ft_pipe(void)
