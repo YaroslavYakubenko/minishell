@@ -6,11 +6,21 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:14:26 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 19:16:08 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/09 23:43:26 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_token	**init_token(size_t len)
+{
+	t_token	**tokens;
+
+	tokens = malloc(sizeof(t_token *) * (len / 2 + 2));
+	if (!tokens)
+		return (NULL);
+	return (tokens);
+}
 
 int		is_token(char *str)
 {
@@ -29,17 +39,87 @@ int		is_token(char *str)
 	return (_word);
 }
 
+int	parse_special_token(const char *input, size_t *i, t_token **tokens, size_t *token_count)
+{
+	if (input[*i] == '>' && input[*i + 1] == '>')
+	{
+		tokens[*token_count]->token = ft_strdup(">>");
+		*i += 2;
+	}
+	else if (input[*i] == '<' && input[*i + 1] == '<')
+	{
+		tokens[*token_count]->token = ft_strdup("<<");
+		*i += 2;
+	}
+	else if (input[*i] == '<')
+	{
+		tokens[*token_count]->token = ft_strdup("<");
+		*i += 1;
+	}
+	else if (input[*i] == '>')
+	{
+		tokens[*token_count]->token = ft_strdup(">");
+		*i += 1;
+	}
+	else if (input[*i] == '|')
+	{
+		tokens[*token_count]->token = ft_strdup("|");
+		*i += 1;
+	}
+	else
+		return (0);
+	tokens[*token_count]->type = is_token(tokens[*token_count]->token);
+	*token_count += 1;
+	return (1);
+}
+
+int	parse_qoutes_token(const char *input, size_t *i, t_token **tokens, size_t *token_count)
+{
+	if (input[*i] == '\'' && input[*i])
+	{
+		tokens[*token_count]->token = parse_single_quotes((char *)&input[*i]);
+		if (!tokens[*token_count]->token)
+			return (0);
+		*i += ft_strlen(tokens[*token_count]->token) + 2;
+	}
+	else if (input[*i] == '\"' && input[*i])
+	{
+		tokens[*token_count]->token = parse_double_quotes((char *)&input[*i]);
+		if (!tokens[*token_count]->token)
+			return (0);
+		*i += ft_strlen(tokens[*token_count]->token) + 2;
+	}
+	else
+		return (0);
+	tokens[*token_count]->type = is_token(tokens[*token_count]->token);
+	*token_count += 1;
+	return (1);
+}
+
+void	parse_word_token(const char *input, size_t *i, t_token **tokens, size_t *token_count)
+{
+	size_t	j;
+
+	j = 0;
+	while (input[*i] != ' ' && input[*i] && input[*i] != '|' && input[*i] != '<' && input[*i] != '>' && input[*i] != '\'' && input[*i] != '\"')
+	{
+		j++;
+		*i += 1;
+	}
+	tokens[*token_count]->token = ft_strndup(&input[*i - j], j);
+	tokens[*token_count]->type = is_token(tokens[*token_count]->token);
+	*token_count += 1;
+}
+
 t_token	**parse_token(const char *input)
 {
 	size_t		i;
-	size_t		j;
 	size_t		token_count;
-	// t_token		*token;
 	t_token		**tokens;
 
 	i = 0;
 	token_count = 0;
-	tokens = malloc(sizeof(t_token) * (ft_strlen(input) / 2 + 2));
+	tokens = init_token(ft_strlen(input));
 	if (!tokens)
 		return (NULL);
 	while (input[i])
@@ -51,69 +131,15 @@ t_token	**parse_token(const char *input)
 		tokens[token_count] = malloc(sizeof(t_token));
 		if (!tokens[token_count])
 			return (NULL);
-		if (input[i] == '>' && input[i + 1] == '>')
-		{
-			tokens[token_count]->token = ft_strdup(">>");
-			i += 2;
-		}
-		else if (input[i] == '<' && input[i + 1] == '<')
-		{
-			tokens[token_count]->token = ft_strdup("<<");
-			i += 2;
-		}
-		else if (input[i] == '<')
-		{
-			tokens[token_count]->token = ft_strdup("<");
-			i++;
-		}
-		else if (input[i] == '>')
-		{
-			tokens[token_count]->token = ft_strdup(">");
-			i++;
-		}
-		else if (input[i] == '|')
-		{
-			tokens[token_count]->token = ft_strdup("|");
-			i++;
-		}
-		else
-		{
-			if (input[i] == '\'' && input[i])
-			{
-				tokens[token_count]->token = parse_quotes((char *)&input[i]);
-				if (tokens[token_count]->token == NULL)
-					return (0);
-				i += ft_strlen(tokens[token_count]->token) + 2;
-			}
-			else if (input[i] == '\"' && input[i])
-			{
-				tokens[token_count]->token = parse_quotes1((char *)&input[i]);
-				if (tokens[token_count]->token == NULL)
-					return (0);
-				i += ft_strlen(tokens[token_count]->token) + 2;
-			}
-			else
-			{
-				j = 0;
-				while (input[i] != ' ' && input[i] && input[i] != '|' && input[i] != '<' && input[i] != '>' && input[i] != '\'' && input[i] != '\"')
-				{
-					j++;
-					i++;	
-				}
-				tokens[token_count]->token = ft_strndup(&input[i - j], j);
-				
-			}
-		}
-		tokens[token_count]->type = is_token(tokens[token_count]->token);
-		token_count++;
+		if (parse_special_token(input, &i, tokens, &token_count))
+			continue ;
+		if (parse_qoutes_token(input, &i, tokens, &token_count))
+			continue ;
+		parse_word_token(input, &i, tokens, &token_count);
 	}
-	// printf("input: %s\n", tokens[token_count]->token);
-	// tokens[token_count]->type = _null;
-	// tokens[token_count]->token = NULL;
 	tokens[token_count] = NULL;
 	return (tokens);
 }
-
 
 void	free_tokens(char **tokens)
 {
