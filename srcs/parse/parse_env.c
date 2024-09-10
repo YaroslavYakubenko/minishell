@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/03 15:51:38 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/09 23:44:58 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*get_env_val(const char *name, t_env *env)
 	name_len = ft_strlen(name);
 	while (env)
 	{
-		if (ft_strncmp(env->name, name, name_len) == 0 && env->name[name_len] == '\0')
+		if (ft_strncmp(env->name, name, name_len) == 0 && env->name[name_len] == '\0')	
 			return (env->val);
 		else if (name[0] == '?')
 		{
@@ -81,4 +81,27 @@ char	*get_env_val(const char *name, t_env *env)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+char	*process_variable(char *result, char *pos, t_env *env, int in_single_quote)
+{
+	char	*var_value;
+	char	var_name[256];
+	size_t	var_len;
+
+	var_len = extract_var_name(pos + 1, var_name);
+	if (in_single_quote)
+		return (append_var_to_result(result, pos,var_len + 1));
+	var_value = get_env_val(var_name, env);
+	if (!var_value)
+		return (create_new_str(result, var_len + 1, pos));
+	return (replace_var_with_value(result, pos, var_value, var_len + 1));
+}
+
+char	*update_position(char *result, char *new_result, char *pos)
+{
+	if (new_result == result)
+		return (result + (pos - result) + 1);
+	else
+		return (new_result + (pos - result) + (ft_strlen(new_result) - ft_strlen(result)));
 }

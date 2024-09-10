@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 22:12:38 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/02 18:37:05 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:02:08 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*ft_strndup(const char *src, size_t n);
 size_t	ft_strnlen(const char *s, size_t maxlen);
 char	*ft_strcat(char *dest, const char *src);
 char	*ft_strncat(char *dest, const char *src, size_t n);
+char	*create_new_str(const char *input, size_t var_len, const char *pos);
 
 
 #endif

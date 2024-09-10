@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/03 15:52:12 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:55:00 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*append_var_to_result(char *result, const char *pos, size_t len)
 	new_result = malloc(len + 1 + ft_strlen(pos + var_name_len) + 1);
 	if (!new_result)
 	{
-		free(result);
+		if (result)
+			free(result);
 		return (NULL);
 	}
 	ft_memcpy(new_result, result, len);
@@ -34,7 +35,8 @@ char	*append_var_to_result(char *result, const char *pos, size_t len)
 	ft_strncat(new_result, pos, var_name_len + 1);
 	if (space_pos != NULL)
 		ft_strcat(new_result, space_pos);
-	free(result);
+	if (result)
+		free(result);
 	return (new_result);
 }
 
@@ -43,7 +45,7 @@ size_t	extract_var_name(const char *pos, char *var_name)
 	size_t	i;
 
 	i = 0;
-	while (pos[i] && pos[i] != ' ' && pos[i] != '\t' && pos[i] != '\n')
+	while (pos[i] && pos[i] != ' ' && pos[i] != '\t' && pos[i] != '\n' && pos[i] != '$' && pos[i] != '\'' && pos[i] != '\"')
 	{
 		var_name[i] = pos[i];
 		i++;
@@ -52,67 +54,72 @@ size_t	extract_var_name(const char *pos, char *var_name)
 	return (i);
 }
 
-char	*replace_var_with_value(const char *input, const char *pos, t_env *env)
+char	*replace_var_with_value(const char *input, const char *pos, char *value, size_t var_len)
 {
 	char	*new_input;
-	char	*value;
-	char	var_name[256];
-	size_t	var_len;
 	size_t	new_len;
-	
-	pos++;
-	var_len = extract_var_name(pos, var_name);
-	value = get_env_val(var_name, env);
+
 	if (!value)
-	{
-		new_len = (pos - input) + ft_strlen(pos + var_len) + 1;
-		new_input = malloc(new_len);
-		if (!new_input)
-			return (NULL);
-		new_input[0] = '\0';
-		ft_memcpy(new_input, input, pos - input - 1);
-		new_input[pos - input] = '\0';
-		strcat(new_input, pos + var_len);
-		return (new_input);
-	}
-	new_len = (pos - input - 1) + ft_strlen(value) + ft_strlen(pos + var_len);
-	new_input = malloc(new_len + 1);
-	if (!new_input)
-		return (NULL);
-	ft_memcpy(new_input, input, pos - input - 1);
-	new_input[pos - input - 1] = '\0';
-	strcat(new_input, value);
-	strcat(new_input, pos + var_len);
+		value = "";
+	new_len = (pos - input) + ft_strlen(value) + ft_strlen(pos + var_len);
+	new_input = allocate_new_input(new_len);
+	ft_memcpy(new_input, input, pos - input);
+	new_input[pos - input] = '\0';
+	ft_strcat(new_input, value);
+	ft_strcat(new_input, pos + var_len);
 	return (new_input);
 }
 
 char	*expand_env_variables(const char *input, t_env *env)
 {
 	char	*result;
-	char	*pos;
+	char	*pos[2];
 	char	*new_result;
-	size_t	len;
+	int		quotes[2];
 
-	result = ft_strdup(input);
-	if (!result)
+	quotes[0] = 0;
+	quotes[1] = 0;
+	if (!(result = ft_strdup(input)))
 		return (NULL);
-	pos = result;
-	while ((pos = ft_strchr(pos, '$')))
+	pos[0] = result;
+	while (*pos[0])
 	{
-		len = pos - result;
-		new_result = replace_var_with_value(result, pos, env);
-		if (!new_result)
+		check_quotes(*pos[0], &quotes[0], &quotes[1]);
+		if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
 		{
+			pos[1] = pos[0] + 1;
+			if (*pos[1] == '\0' || *pos[1] == ' ' || *pos[1] == '\'' || *pos[1] == '"')
+			{
+				pos[0]++;
+				continue ;
+			}
+			new_result = process_variable(result, pos[0], env, quotes[0]);
+			if (!new_result)
+			{
+				free(result);
+				return (NULL);
+			}
+			pos[0] = new_result + (pos[0] - result) + 1;
 			free(result);
-			return (NULL);
+			result = new_result;
 		}
-		if (new_result == result)
-			pos = result + len + 1;
 		else
-			pos = new_result + (pos - result) + (ft_strlen(new_result) - ft_strlen(result));
-		free(result);
-		result = new_result;
+			pos[0]++;
 	}
 	return (result);
 }
 
+char	*create_new_str(const char *input, size_t var_len, const char *pos)
+{
+	char	*new_input;
+	size_t	new_len;
+
+	new_len = (pos - input) + ft_strlen(pos + var_len) + 1;
+	new_input = malloc(new_len);
+	if (!new_input)
+		return (NULL);
+	ft_memcpy(new_input, input, pos - input);
+	new_input[pos - input] = '\0';
+	ft_strcat(new_input, pos + var_len);
+	return (new_input);
+}

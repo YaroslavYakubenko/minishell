@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/03 15:54:42 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:43:39 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,32 @@ typedef struct s_cmd
 t_env	*create_env_node(char *env_str);
 t_env	*init_new_list(char **envp);
 char	*get_env_val(const char *name, t_env *env);
-char	*replace_var_with_value(const char *input, const char *pos, t_env *env);
+char	*replace_var_with_value(const char *input, const char *pos, char *value, size_t var_len);
 char	*expand_env_variables(const char *input, t_env *env);
+t_token	**init_token(size_t len);
 int		is_token(char *str);
+int		parse_special_token(const char *input, size_t *i, t_token **tokens, size_t *token_count);
+int		parse_qoutes_token(const char *input, size_t *i, t_token **tokens, size_t *token_count);
+void	parse_word_token(const char *input, size_t *i, t_token **tokens, size_t *token_count);
 t_token	**parse_token(const char *input);
 void	free_tokens(char **tokens);
-char	*parse_quotes(char *input);
-char	*parse_quotes1(char *input);
+char	*parse_single_quotes(char *input);
+char	*parse_double_quotes(char *input);
 char	*append_var_to_result(char *result, const char *pos, size_t len);
 size_t	extract_var_name(const char *pos, char *var_name);
+void	check_quotes(char c, int *in_single_quote, int *in_double_quote);
+char	*process_variable(char *result, char *pos, t_env *env, int in_single_quote);
+char	*create_new_str(const char *input, size_t var_len, const char *pos);
+char	*update_position(char *result, char *new_result, char *pos);
+char	*compress_spaces(char *input);
+char	*expand_and_compress(char *input, t_env *env);
+
 
 // Utils
 size_t	ft_strlenn(const char *str);
+char	*allocate_new_input(size_t len);
+// void	copy_parts(const char *input, char *new_input, const char *pos, size_t var_len, char *value);
+// char	*process_expansion(char *result, char *pos, t_env *env, int in_double_quote);
+
 
 #endif
