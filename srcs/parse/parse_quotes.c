@@ -6,69 +6,13 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 18:07:25 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/28 19:55:49 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/09 23:47:03 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int		is_quote(char c)
-// {
-// 	if (c == '\'' || c == '\"')
-// 		return (1);
-// 	return (0);
-// }
-
-// int		is_escape(char c)
-// {
-// 	if (c == '\\')
-// 		return (1);
-// 	return (0);
-// }
-
-// int		is_quote_end(char c, char quote)
-// {
-// 	if (c == quote)
-// 		return (1);
-// 	return (0);
-// }
-
-// int		is_quote_start(char c)
-// {
-// 	if (c == '\'' || c == '\"')
-// 		return (1);
-// 	return (0);
-// }
-
-
-// void	parse_quotes(char *input)
-// {
-// 	size_t	i;
-// 	size_t	j;
-// 	char	quote;
-
-// 	i = 0;
-// 	j = 0;
-// 	quote = 0;
-// 	while (input[i])
-// 	{
-// 		if (is_quote_start(input[i]))
-// 		{
-// 			quote = input[i];
-// 			i++;
-// 		}
-// 		if (is_quote_end(input[i], quote))
-// 		{
-// 			quote = 0;
-// 			i++;
-// 		}
-// 		if (is_escape(input[i]))
-// 			i++;
-// 		i++;
-// 	}
-// }
-
-char	*parse_quotes(char *input)
+char	*parse_single_quotes(char *input)
 {
 	size_t	i;
 	size_t	j;
@@ -98,7 +42,7 @@ char	*parse_quotes(char *input)
 	return (str);
 }
 
-char	*parse_quotes1(char *input)
+char	*parse_double_quotes(char *input)
 {
 	size_t	i;
 	size_t	j;
@@ -126,4 +70,12 @@ char	*parse_quotes1(char *input)
 		}
 	}
 	return (str);
+}
+
+void	check_quotes(char c, int *in_single_quote, int *in_double_quote)
+{
+	if (c == '"' && !(*in_single_quote))
+		*in_double_quote = !(*in_double_quote);
+	else if (c == '\'' && !(*in_double_quote))
+			*in_single_quote = !(*in_single_quote);
 }
