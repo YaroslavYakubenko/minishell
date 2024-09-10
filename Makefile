@@ -22,6 +22,7 @@ SRCS			= ${SRCSDIR}main.c \
 					${EXECDIR}export.c \
 					${EXECDIR}export_ults.c \
 					${EXECDIR}build_in.c \
+					${EXECDIR}ft_start.c \
 					${PARSEDIR}parse_env.c \
 					${PARSEDIR}parse_dollar.c \
 				  	${PARSEDIR}parse_token.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/10 18:03:36 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/10 19:18:18 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,22 @@ int main (int ac, char **av, char **envp)
 			add_history(input);
 		expanded_input = expand_and_compress(input, env_list);
 		tokens = parse_token(expanded_input);
-		if (tokens != NULL)
-		{
-			i = 0;
-			while (tokens[i])
-			{
-				printf("Type: %d\t", tokens[i]->type);
-				printf("Token: %s\n", tokens[i]->token);
-				i++;
-			}
-		}
-		if (expanded_input != NULL)
-		{
-			printf("expanded: %s\n", expanded_input);
-			free(expanded_input);
-		}
+		// if (tokens != NULL)
+		// {
+		// 	i = 0;
+		// 	while (tokens[i])
+		// 	{
+		// 		printf("Type: %d\t", tokens[i]->type);
+		// 		printf("Token: %s\n", tokens[i]->token);
+		// 		i++;
+		// 	}
+		// }
+		ft_start(tokens, envp);
+		// if (expanded_input != NULL)
+		// {
+		// 	printf("expanded: %s\n", expanded_input);
+		// 	free(expanded_input);
+		// }
 		free(input);
 	}
 	rl_clear_history();
