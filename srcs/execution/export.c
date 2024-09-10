@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 18:07:58 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/09 14:36:53 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/10 20:40:39 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,17 @@ char	**ft_renew_evnp(char **evnp)
 		new_evnp[i] = single_evnp;
 		i++;
 	}
+	new_evnp[i] = NULL;
 	return (new_evnp);
 }
 
-char	**ft_sort_the_evnp(char **evnp)
+char	**ft_sort_the_evnp(char **store)
 {
-	char	**store;
 	char	*temp;
 	int		i;
 
 	i = 0;
-	store = evnp;
-	while (store[i + 1])
+	while (store[i + 1] != NULL)
 	{
 		if (ft_strcmp(store[i], store[i + 1]) > 0)
 		{
@@ -84,12 +83,13 @@ void	ft_print_double_pointer(char **str)
 {
 	int	i;
 
-	if (!str)
+	if (!str || !str[0])
 		return ;
 	i = 0;
 	while (str[i] != NULL)
 	{
-		printf("%s\n", str[i]);
+		if (str[i][0] != '_')
+			printf("%s\n", str[i]);
 		i++;
 	}
 }
@@ -102,19 +102,21 @@ void	ft_export(char	**argv, char **evnp)
 	static int	i;
 
 	argc = 0;
+	if (!record[0])
+		ft_put_null(record);
 	while (argv[argc])
 		argc++;
-	if (argc == 2 && ft_strcmp(argv[1], "export") == 0)
+	if (argc == 1 && ft_strcmp(argv[0], "export") == 0)
 	{
 		store = ft_renew_evnp(evnp);
 		store = ft_sort_the_evnp(store);
 		ft_print_double_pointer(store);
 		ft_print_double_pointer(record);
 	}
-	else if (argc > 2 && ft_strcmp(argv[1], "export") == 0)
-		ft_record(argv[2], record[i++]);
-	else if (argc == 2 && ft_strcmp(argv[1], "unset") == 0)
+	else if (argc > 1 && ft_strcmp(argv[0], "export") == 0)
+		record[i++] = ft_record(argv[1]);
+	else if (argc == 1 && ft_strcmp(argv[0], "unset") == 0)
 		printf("unset: not enough arguments\n");
-	else if (argc > 2 && ft_strcmp(argv[1], "unset") == 0)
-		ft_unset(record, argv[2]);
+	else if (argc > 1 && ft_strcmp(argv[0], "unset") == 0)
+		i = ft_unset(record, argv[1], i);
 }

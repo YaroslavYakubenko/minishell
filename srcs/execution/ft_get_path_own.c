@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:49:48 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/07 18:23:29 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/10 18:37:27 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*ft_get_evn(char **envp, char *keyword, char *cmd)
 	temp = ft_output_cmd(path, cmd);
 	if (temp == NULL)
 	{
-		write(2, "Pipex: command not found: ", 27);
+		write(2, "shell: command not found: ", 27);
 		write(2, cmd, sizeof(cmd));
 		exit (EXIT_FAILURE);
 	}

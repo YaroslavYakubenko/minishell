@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 12:14:50 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/08 16:04:46 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/10 20:47:59 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char )*s1 - (unsigned char)*s2);
 }
 
-void	ft_unset(char **record, char *str)
+int	ft_unset(char **record, char *str, int j)
 {
 	int	i;
 
 	i = 0;
 	while (record[i])
 	{
-		if (ft_strcmp(record[i], str) == 0)
+		if (ft_strcmp(record[i], str) == 0 || ft_strcmp(record[i], str) == 61)
 		{
 			free(record[i]);
+			record[i] = NULL;
 			while (record[i + 1])
 			{
 				record[i] = record[i + 1];
@@ -41,6 +42,7 @@ void	ft_unset(char **record, char *str)
 		else
 			i++;
 	}
+	return (--j);
 }
 
 char	*ft_output_final(char *final, char *str)
@@ -70,15 +72,27 @@ char	*ft_output_final(char *final, char *str)
 	return (final);
 }
 
-void	ft_record(char *str, char *result)
+char	*ft_record(char *str)
 {
 	int			j;
 	char		*final;
 
 	j = ft_strlen(str);
-	final = malloc((j + 3) * sizeof(char));
+	final = malloc((j + 4) * sizeof(char));
 	if (!final)
-		return ;
+		return (NULL);
 	final = ft_output_final(final, str);
-	result = final;
+	return (final);
+}
+
+void	ft_put_null(char **record)
+{
+	int	i;
+
+	i = 0;
+	while (i <= 254)
+	{
+		record[i] = NULL;
+		i++;
+	}
 }

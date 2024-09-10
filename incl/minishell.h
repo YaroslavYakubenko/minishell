@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/10 18:06:13 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/10 19:51:12 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,12 @@ void	ft_heredocs(char *end);
 void	ft_pipe(void);
 void	ft_export(char	**argv, char **evnp);
 void	ft_cd(char *dest_dir);
-void	ft_unset(char **record, char *str);
-void	ft_record(char *str, char *result);
+int		ft_unset(char **record, char *str, int j);
+char	*ft_record(char *str);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_build_in(char **cmd, char **envp);
+void	ft_start(t_token **tokens, char **evnp);
+void	ft_put_null(char **record);
 
 // Utils
 size_t	ft_strlenn(const char *str);
