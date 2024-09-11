@@ -7,7 +7,10 @@ PARSEDIR		= ${SRCSDIR}parse/
 
 UTILDIR			= ${SRCSDIR}utils/
 
-SUCCES			= @echo "minishell compiled successfully"
+GREEN			= \033[0;92m
+COLOR			= \033[0m
+
+SUCCES			= @echo "$(GREEN)minishell compiled successfully$(COLOR)"
 
 SRCSDIR			= srcs/
 SRCS			= ${SRCSDIR}main.c \
