@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/07 18:07:55 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/08/07 18:08:09 by yyakuben         ###   ########.fr       */
+/*   Created: 2024/09/11 22:10:33 by yyakuben          #+#    #+#             */
+/*   Updated: 2024/09/11 22:15:56 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_alloc.h"
+#include "minishell.h"
 
-bool	ft_alloc_init(void)
+int	check_pipe_error(const char *input, size_t i)
 {
-	t_allocs	*lst;
+	if (i == 0 || input[i + 1] == '\0')
+		return (1);
+	if (input[i + 1] == '|')
+		return (1);
+	return (0);
+}
 
-	lst = ft_calloc(1, sizeof(t_allocs));
-	if (lst == NULL)
-		return (false);
-	ft_allocs(lst);
-	return (true);
+int	check_redirect_error(const char *input, size_t i)
+{
+	if (input[i + 1] == '>' || input[i + 1] == '<' || input[i + 1] == '|')
+		return (1);
+	return (0);
 }
