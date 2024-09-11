@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:49:48 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/10 18:37:27 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/11 15:24:41 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ char	*ft_get_evn(char **envp, char *keyword, char *cmd)
 	{
 		write(2, "shell: command not found: ", 27);
 		write(2, cmd, sizeof(cmd));
+		write(2, "\n", 1);
 		exit (EXIT_FAILURE);
 	}
 	return (temp);

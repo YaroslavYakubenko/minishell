@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/10 19:51:12 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/11 15:42:10 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	ft_build_in(char **cmd, char **envp);
 void	ft_start(t_token **tokens, char **evnp);
 void	ft_put_null(char **record);
+void	ft_wait_pid(pid_t pid_first);
 
 // Utils
 size_t	ft_strlenn(const char *str);

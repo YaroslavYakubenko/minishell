@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 12:14:50 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/10 20:47:59 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/11 14:32:40 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 int	ft_unset(char **record, char *str, int j)
 {
-	int	i;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	while (record[i])
@@ -35,14 +36,17 @@ int	ft_unset(char **record, char *str, int j)
 			record[i] = NULL;
 			while (record[i + 1])
 			{
+				temp = record[i];
 				record[i] = record[i + 1];
+				record[i + 1] = temp;
 				i++;
 			}
+			--j;
 		}
 		else
 			i++;
 	}
-	return (--j);
+	return (j);
 }
 
 char	*ft_output_final(char *final, char *str)

@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:16:45 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/09 14:43:36 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/11 16:17:18 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_input(char *file_name)
 
 	fd = open(file_name, O_RDONLY, 0777);
 	dup2(fd, STDIN_FILENO);
+	// dup2(STDIN_FILENO, fd);
 	close(fd);
 }
 
@@ -26,7 +27,7 @@ void	ft_output(char *file_name)
 	int	fd;
 
 	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	dup2(fd, STDOUT_FILENO);
+	dup2(STDOUT_FILENO, fd);
 	close(fd);
 }
 
@@ -35,7 +36,7 @@ void	ft_append(char *file_name)
 	int	fd;
 
 	fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
-	dup2(fd, STDOUT_FILENO);
+	dup2(STDOUT_FILENO, fd);
 	close(fd);
 }
 
@@ -72,7 +73,7 @@ void	ft_pipe(void)
 	int		fd_pipe[2];
 
 	pipe(fd_pipe);
-	dup2(fd_pipe[1], STDOUT_FILENO);
+	dup2(STDOUT_FILENO, fd_pipe[1]);
 	pid = fork();
 	if (pid == 0)
 		dup2(fd_pipe[0], STDIN_FILENO);
