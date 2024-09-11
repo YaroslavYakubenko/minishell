@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:14:26 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/09 23:43:26 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/11 22:22:46 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,24 @@ t_token	**parse_token(const char *input)
 		tokens[token_count] = malloc(sizeof(t_token));
 		if (!tokens[token_count])
 			return (NULL);
+		if (input[i] == '|')
+		{
+			if (check_pipe_error(input, i))
+			{
+				printf("Syntax error: Invalid pipe usage\n");
+				free(tokens[token_count]);
+				return (NULL);
+			}
+		}
+		if (input[i] == '>' || input[i] == '<' || input[i] == '|')
+		{
+			if (check_redirect_error(input, i))
+			{
+				printf("Syntax error: Invalid redirection usage\n");
+				free(tokens[token_count]);
+				return (NULL);
+			}
+		}
 		if (parse_special_token(input, &i, tokens, &token_count))
 			continue ;
 		if (parse_qoutes_token(input, &i, tokens, &token_count))

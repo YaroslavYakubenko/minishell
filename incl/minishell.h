@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/11 15:42:10 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/11 22:25:03 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../ft_destructor/ft_alloc.h"
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -96,6 +95,8 @@ char	*create_new_str(const char *input, size_t var_len, const char *pos);
 char	*update_position(char *result, char *new_result, char *pos);
 char	*compress_spaces(char *input);
 char	*expand_and_compress(char *input, t_env *env);
+int	check_pipe_error(const char *input, size_t i);
+int	check_redirect_error(const char *input, size_t i);
 
 // Execution
 void	ft_execute(char **cmd, char **envp);
