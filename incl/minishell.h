@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/11 22:25:03 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/12 22:32:28 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,8 @@ void	ft_wait_pid(pid_t pid_first);
 // Utils
 size_t	ft_strlenn(const char *str);
 char	*allocate_new_input(size_t len);
+void	sigint_handler(int sig);
+void	sigquit_handler(int sig);
+void	eof_handler();
 
 #endif

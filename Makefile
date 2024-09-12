@@ -29,6 +29,7 @@ SRCS			= ${SRCSDIR}main.c \
 				  	${PARSEDIR}parse_quotes.c \
 					${PARSEDIR}parse_spaces.c \
 					${PARSEDIR}checks.c \
+					${UTILDIR}signals.c \
 
 VPATH			= ${SRCSDIR} ${SRCSDIR}parse/ ${SRCSDIR}utils/
 OBJS			= $(SRCS:.c=.o)
