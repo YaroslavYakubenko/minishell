@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
+
 /*   Updated: 2024/09/17 17:45:28 by dyao             ###   ########.fr       */
+
+/*   Updated: 2024/09/12 22:37:22 by yyakuben         ###   ########.fr       */
+
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +43,15 @@ int main (int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	i = 0;
+	signal(SIGINT, sigint_handler); // Ctrl + C
+	signal(SIGQUIT, sigquit_handler); // Ctrl + '\'
 	env_list = init_new_list(envp);
 	while ((input = readline("minishell%")) != NULL)
 	{
 		if (*input)
 			add_history(input);
+		if (input == 0)
+			eof_handler(); // Ctrl + D
 		expanded_input = expand_and_compress(input, env_list);
 		tokens = parse_token(expanded_input);
 		// if (tokens != NULL)

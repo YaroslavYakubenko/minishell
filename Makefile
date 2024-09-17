@@ -2,16 +2,15 @@ NAME 			= minishell
 HDRDIR			= incl/
 
 EXECDIR			= ${SRCSDIR}execution/
-# EXECSRCS		= ${EXECDIR}executor.c
 
 PARSEDIR		= ${SRCSDIR}parse/
-# PARSESRCS		= ${PARSEDIR}ft_input_parse.c \
-				  ${PARSEDIR}ft_init_env.c
 
 UTILDIR			= ${SRCSDIR}utils/
-# UTILSRCS		= ${UTILDIR}ft_utils.c ft_env_utils.c
 
-SUCCES			= @echo "minishell compiled successfully"
+GREEN			= \033[0;92m
+COLOR			= \033[0m
+
+SUCCES			= @echo "$(GREEN)minishell compiled successfully$(COLOR)"
 
 SRCSDIR			= srcs/
 SRCS			= ${SRCSDIR}main.c \
@@ -29,12 +28,8 @@ SRCS			= ${SRCSDIR}main.c \
 				  	${UTILDIR}utils.c \
 				  	${PARSEDIR}parse_quotes.c \
 					${PARSEDIR}parse_spaces.c \
-				#   ${UTILDIR}ft_error_parse_ext.c \
-				#   ${UTILDIR}ft_str_utils.c \
-				#   ${UTILDIR}ft_utils.c \
-				#   ${UTILDIR}ft_init_env.c \
-				#   ${UTILDIR}ft_env_utils.c \
-				#   ${UTILDIR}ft_path_utils.c
+					${PARSEDIR}checks.c \
+					${UTILDIR}signals.c \
 
 VPATH			= ${SRCSDIR} ${SRCSDIR}parse/ ${SRCSDIR}utils/
 OBJS			= $(SRCS:.c=.o)
@@ -43,8 +38,6 @@ CFLAGS 			= -Wall -Wextra -Werror -I$(HDRDIR) -g
 LIBFTDIR		= libft/
 LIBFT			= ${LIBFTDIR}libft.a
 
-ALLOCDIR		= ft_destructor/
-ALLOC			= $(ALLOCDIR)ft_alloc.a
 
 CC 				= @cc
 
@@ -64,7 +57,6 @@ $(ALLOC):
 clean:
 	@rm -f $(OBJS)
 	@make fclean -sC $(LIBFTDIR)
-	@make fclean -sC $(ALLOCDIR)
 
 fclean: clean
 	@rm -f $(NAME)
