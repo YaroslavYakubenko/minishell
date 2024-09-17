@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/11 15:42:10 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/17 19:46:41 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ char	*expand_and_compress(char *input, t_env *env);
 // Execution
 void	ft_execute(char **cmd, char **envp);
 char	*ft_get_evn(char **envp, char *keyword, char *cmd);
-void	ft_input(char *file_name);
-void	ft_output(char *file_name);
-void	ft_append(char *file_name);
-void	ft_heredocs(char *end);
-void	ft_pipe(void);
+void	ft_input(t_token **tokens, int i, char **envp);
+void	ft_output(t_token **tokens, int i);
+void	ft_append(t_token **tokens, int i);
+void	ft_heredocs(t_token **tokens, int i, char **envp);
+void	ft_pipe(t_token **tokens, int i, char **envp);
 void	ft_export(char	**argv, char **evnp);
 void	ft_cd(char *dest_dir);
 int		ft_unset(char **record, char *str, int j);
@@ -114,6 +114,9 @@ void	ft_build_in(char **cmd, char **envp);
 void	ft_start(t_token **tokens, char **evnp);
 void	ft_put_null(char **record);
 void	ft_wait_pid(pid_t pid_first);
+void	ft_check_and_execute(char **cmd, char **envp);
+void	ft_check_and_execute_v2(char **cmd, char **envp);
+char	**ft_creat_cmd(t_token **tokens, int i);
 
 // Utils
 size_t	ft_strlenn(const char *str);
