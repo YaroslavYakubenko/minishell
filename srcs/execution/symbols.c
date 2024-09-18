@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:16:45 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/17 20:05:37 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/18 18:51:22 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,44 +29,52 @@ void	ft_input(t_token **tokens, int i, char **envp)
 	int		fd;
 	int		mark;
 	char	**cmd;
+	pid_t	pid;
 
-	fd = open(tokens[++i]->token, O_RDONLY, 0777);
-	dup2(fd, STDIN_FILENO);
-	mark = ft_check_next_redirection(i, tokens);
-	if (mark == 1)
+	pid = fork();
+	if (pid == 0)
 	{
-		while (tokens[i]->type != 1)
-			i++;
-		ft_pipe(tokens, i, envp);
-	}
-	else if (mark == 3)
-	{
-		while (tokens[i]->type != 3)
-			i++;
-		ft_output(tokens, i);
-	}
-	else if (mark == 4)
-	{
-		while (tokens[i]->type != 4)
-			i++;
-		ft_append(tokens, i);
-	}
-	else if (mark == 0)
-	{
-		i++;
-		if (tokens[i])
+		fd = open(tokens[++i]->token, O_RDONLY, 0777);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		mark = ft_check_next_redirection(i, tokens);
+		if (mark == 1)
 		{
-			cmd = ft_creat_cmd(tokens, i);
-			ft_check_and_execute_v2(cmd, envp);
+			while (tokens[i]->type != 1)
+				i++;
+			ft_pipe(tokens, i, envp);
 		}
-		else
+		else if (mark == 3)
 		{
+			while (tokens[i]->type != 3)
+				i++;
+			ft_output(tokens, i);
+		}
+		else if (mark == 4)
+		{
+			while (tokens[i]->type != 4)
+				i++;
+			ft_append(tokens, i);
+		}
+		else if (mark == 0)
+		{
+			mark = ++i;
 			i = 0;
-			cmd = ft_creat_cmd(tokens, i);
-			ft_check_and_execute_v2(cmd, envp);
+			if (tokens[i]->type == 0)
+			{
+				cmd = ft_creat_cmd(tokens, i);
+				ft_check_and_execute_v2(cmd, envp);
+			}
+			else
+			{
+				i = mark;
+				cmd = ft_creat_cmd(tokens, i);
+				ft_check_and_execute_v2(cmd, envp);
+			}
 		}
 	}
-	close(fd);
+	else
+		ft_wait_pid(pid);
 }
 
 void	ft_output(t_token **tokens, int i)

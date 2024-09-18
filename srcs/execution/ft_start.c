@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:54:41 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/17 20:07:26 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/18 18:51:50 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,15 @@ char	**ft_creat_cmd(t_token **tokens, int i)
 	int		j;
 	char	**cmd;
 
-	while (tokens[i])
-	{
-		if (tokens[i]->type == 0)
-		{
-			j = i;
-			while (tokens[i] && tokens[i]->type == 0)
-				i++;
-			cmd = malloc((i - j + 1) * sizeof(char *));
-			i = j;
-			j = 0;
-			while (tokens[i] && tokens[i]->type == 0)
-				cmd[j++] = ft_strdup(tokens[i++]->token);
-			cmd[j] = NULL;
-		}
-	}
+	j = i;
+	while (tokens[i] && tokens[i]->type == 0)
+		i++;
+	cmd = malloc((i - j + 1) * sizeof(char *));
+	i = j;
+	j = 0;
+	while (tokens[i] && tokens[i]->type == 0)
+		cmd[j++] = ft_strdup(tokens[i++]->token);
+	cmd[j] = NULL;
 	return (cmd);
 }
 
