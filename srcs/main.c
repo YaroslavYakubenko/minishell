@@ -39,7 +39,7 @@ int main (int ac, char **av, char **envp)
 	char	*expanded_input;
 	t_token	**tokens;
 	int		i;
-	
+
 	(void)ac;
 	(void)av;
 	i = 0;
