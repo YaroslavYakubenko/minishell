@@ -69,10 +69,12 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	char			**args;	// An array of command arguments["ls", "-l", NULL]
-	char			*in_rd;	// Input redirection file, e.g., "input.txt"
-	char			*out_rd;// Output redirection file, e.g., "output.txt"
-	int				append;	// Flag for append mode (1 for >>, 0 for >)
-	int				heredoc;
+	int				before_pipe;	// 1 if the command is before a pipe, 0 otherwise
+	int				after_pipe;	// 1 if the command is after a pipe, 0 otherwise
+	char			**input_file;	// Input file for redirection
+	char			**output_file;	// Output file for redirection
+	int				append;	// 1 if the output file should be appended, 0 otherwise
+	int				heredoc;	// 1 if the command is a heredoc, 0 otherwise
 	struct s_cmd	*next;	// Pointer to the next command in case of pipes
 }	t_cmd;
 
