@@ -110,6 +110,8 @@ t_cmd	*init_cmd(void);
 
 // new parse
 t_cmd	*ft_start_parse(char *cmd_line);
+void	ft_give_marks(t_cmd *cmd);
+void	ft_handle_cmd_mark(t_cmd *cmd);
 // help functions
 void	ft_print_cmd(t_cmd *cmd);
 

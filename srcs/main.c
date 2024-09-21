@@ -57,6 +57,8 @@ int main (int ac, char **av, char **envp)
 
 
 		cmd = ft_start_parse(expanded_input);
+		ft_give_marks(cmd);
+		ft_handle_cmd_mark(cmd);
 		ft_print_cmd(cmd);
 
 
@@ -87,4 +89,4 @@ int main (int ac, char **av, char **envp)
 	return (0);
 }
 
-// < in ls -l | wc -c > out | cat << g | echo "Hello World!" >> out | echo Yes $PWD | echo 'Yes $SHLVL'
+// < in ls -l | wc -c > out | cat << g | echo "Hello World!" >> out | echo 'Yes $PWD' | echo 'Yes $SHLVL'
