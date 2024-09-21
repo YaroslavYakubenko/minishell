@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:16:45 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/18 18:51:22 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/21 16:43:59 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,87 +24,42 @@ int	ft_check_next_redirection(int i, t_token **tokens)
 	return (0);
 }
 
-void	ft_input(t_token **tokens, int i, char **envp)
+void	ft_input(char *file_name)
 {
 	int		fd;
-	int		mark;
-	char	**cmd;
-	pid_t	pid;
 
-	pid = fork();
-	if (pid == 0)
-	{
-		fd = open(tokens[++i]->token, O_RDONLY, 0777);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-		mark = ft_check_next_redirection(i, tokens);
-		if (mark == 1)
-		{
-			while (tokens[i]->type != 1)
-				i++;
-			ft_pipe(tokens, i, envp);
-		}
-		else if (mark == 3)
-		{
-			while (tokens[i]->type != 3)
-				i++;
-			ft_output(tokens, i);
-		}
-		else if (mark == 4)
-		{
-			while (tokens[i]->type != 4)
-				i++;
-			ft_append(tokens, i);
-		}
-		else if (mark == 0)
-		{
-			mark = ++i;
-			i = 0;
-			if (tokens[i]->type == 0)
-			{
-				cmd = ft_creat_cmd(tokens, i);
-				ft_check_and_execute_v2(cmd, envp);
-			}
-			else
-			{
-				i = mark;
-				cmd = ft_creat_cmd(tokens, i);
-				ft_check_and_execute_v2(cmd, envp);
-			}
-		}
-	}
-	else
-		ft_wait_pid(pid);
+	fd = open(file_name, O_RDONLY, 0777);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
 }
 
-void	ft_output(t_token **tokens, int i)
+void	ft_output(char *file_name)
 {
 	int	fd;
 
-	fd = open(tokens[++i]->token, O_RDWR | O_CREAT | O_TRUNC, 0777);
+	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	dup2(STDOUT_FILENO, fd);
 	close(fd);
 }
 
-void	ft_append(t_token **tokens, int i)
+void	ft_append(char *file_name)
 {
 	int	fd;
 
-	fd = open(tokens[++i]->token, O_RDWR | O_CREAT | O_APPEND, 0777);
+	fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
 	dup2(STDOUT_FILENO, fd);
 	close(fd);
 }
 
-void	ft_heredocs(t_token **tokens, int i, char **envp)
+void	ft_heredocs(char *end)
 {
 	char	*input;
 	char	*output_str;
 
-	while(*envp);
 	input = readline(">");
 	while (input != NULL)
 	{
-		if (ft_strcmp(input, tokens[++i]->token) == 0)
+		if (ft_strcmp(input, end) == 0)
 		{
 			free(input);
 			break ;
@@ -123,57 +78,3 @@ void	ft_heredocs(t_token **tokens, int i, char **envp)
 	// ft_pipe();
 }
 
-void	ft_pipe(t_token **tokens, int i, char **envp)
-{
-	pid_t	pid;
-	pid_t	pid2;
-	int		j;
-	int		fd_pipe[2];
-	char	**cmd;
-
-	pid2 = fork();
-	if (pid2 == 0)
-	{
-		pipe(fd_pipe);
-		pid = fork();
-		if (pid == 0)
-		{
-			i--;
-			while (tokens[i]->type == 0 && i > 0)
-				i--;
-			j = i;
-			while (tokens[i] && tokens[i]->type == 0)
-				i++;
-			cmd = malloc((i - j + 1) * sizeof(char *));
-			i = j;
-			j = 0;
-			while (tokens[i] && tokens[i]->type == 0)
-				cmd[j++] = ft_strdup(tokens[i++]->token);
-			cmd[j] = NULL;
-			dup2(fd_pipe[1], STDOUT_FILENO);
-			close(fd_pipe[0]);
-			close(fd_pipe[1]);
-			ft_check_and_execute(cmd, envp);
-			free(cmd);
-		}
-		else
-		{
-			j = ++i;
-			while (tokens[i] && tokens[i]->type == 0)
-				i++;
-			cmd = malloc((i - j + 1) * sizeof(char *));
-			i = j;
-			j = 0;
-			while (tokens[i] && tokens[i]->type == 0)
-				cmd[j++] = ft_strdup(tokens[i++]->token);
-			cmd[j] = NULL;
-			dup2(fd_pipe[0], STDIN_FILENO);
-			close(fd_pipe[0]);
-			close(fd_pipe[1]);
-			ft_check_and_execute(cmd, envp);
-			free(cmd);
-		}
-	}
-	else
-		ft_wait_pid(pid2);
-}
