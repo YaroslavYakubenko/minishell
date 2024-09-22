@@ -37,8 +37,9 @@ int main (int ac, char **av, char **envp)
 	t_env	*env_list;
 	char	*input;
 	char	*expanded_input;
-	t_token	**tokens;
+	// t_token	**tokens;
 	int		i;
+	t_cmd	*cmd;
 
 	(void)ac;
 	(void)av;
@@ -53,7 +54,18 @@ int main (int ac, char **av, char **envp)
 		if (input == 0)
 			eof_handler(); // Ctrl + D
 		expanded_input = expand_and_compress(input, env_list);
-		tokens = parse_token(expanded_input);
+
+
+		cmd = ft_start_parse(expanded_input);
+		ft_give_marks(cmd);
+		ft_handle_cmd_mark(cmd);
+		ft_print_cmd(cmd);
+
+
+
+
+
+		// tokens = parse_token(expanded_input);
 		// if (tokens != NULL)
 		// {
 		// 	i = 0;
@@ -64,7 +76,7 @@ int main (int ac, char **av, char **envp)
 		// 		i++;
 		// 	}
 		// }
-		ft_start(tokens, envp);
+		// ft_start(tokens, envp);
 		// if (expanded_input != NULL)
 		// {
 		// 	printf("expanded: %s\n", expanded_input);
@@ -77,4 +89,4 @@ int main (int ac, char **av, char **envp)
 	return (0);
 }
 
-// < in ls -l | wc -c > out | cat << g | echo "Hello World!" >> out | echo "No $PWD" | echo 'Yes $SHLVL'
+// < in ls -l | wc -c > out | cat << g | echo "Hello World!" >> out | echo 'Yes $PWD' | echo 'Yes $SHLVL'

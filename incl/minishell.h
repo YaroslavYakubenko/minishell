@@ -68,11 +68,13 @@ typedef struct s_env
 
 typedef struct s_cmd
 {
-	char			**args;	// An array of command arguments["ls", "-l", NULL]
+	char			**args; // An array of command arguments["ls", "-l", NULL]
+	int				cmd_nbr; // The number of the command in the input, it starts from 1
+	int				pipe_nbr;	// The number of the pipe in the input, it starts from 1
 	int				before_pipe;	// 1 if the command is before a pipe, 0 otherwise
 	int				after_pipe;	// 1 if the command is after a pipe, 0 otherwise
-	char			**input_file;	// Input file for redirection
-	char			**output_file;	// Output file for redirection
+	int				input;	// Input file for redirection
+	int				output;	// Output file for redirection
 	int				append;	// 1 if the output file should be appended, 0 otherwise
 	int				heredoc;	// 1 if the command is a heredoc, 0 otherwise
 	struct s_cmd	*next;	// Pointer to the next command in case of pipes
@@ -103,6 +105,18 @@ char	*compress_spaces(char *input);
 char	*expand_and_compress(char *input, t_env *env);
 int	check_pipe_error(const char *input, size_t i);
 int	check_redirect_error(const char *input, size_t i);
+t_cmd	*init_cmd(void);
+
+
+// new parse
+t_cmd	*ft_start_parse(char *cmd_line);
+void	ft_give_marks(t_cmd *cmd);
+void	ft_handle_cmd_mark(t_cmd *cmd);
+// help functions
+void	ft_print_cmd(t_cmd *cmd);
+
+
+
 
 // Execution
 void	ft_execute(char **cmd, char **envp);
