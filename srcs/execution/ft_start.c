@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:54:41 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/22 00:18:35 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/23 18:59:14 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,11 @@ void print_from_fd(int fd) {
 
 void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
 {
-	t_cmd	*search;
-	t_cmd	*start;
-	t_cmd	*temp;
-	int		i_for_pid;
-	int		i_for_pipe;
+	t_cmd		*search;
+	t_cmd		*start;
+	t_cmd		*temp;
+	int			i_for_pid;
+	static int	i_for_pipe;
 
 	search = cmd;
 	temp = cmd;
@@ -134,123 +134,98 @@ void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
 	i_for_pipe = 0;
 	while (temp)
 	{
-		fprintf(stderr, "test1\n");
 		while (temp->next && !temp->cmd_nbr)
 			temp = temp->next;
-		fprintf(stderr, "test2\n");
 		pids[i_for_pid] = fork();
 		if (pids[i_for_pid] == -1)
 			perror(strerror(errno));
-		fprintf(stderr, "test3\n");
-		fprintf(stderr, "the pid is: %d\n", pids[i_for_pid]);
 		if (pids[i_for_pid] == 0)
 		{
-		fprintf(stderr, "test4\n");
 			if (temp->heredoc)
 			{
-				fprintf(stderr, "test5\n");
 				while (search)
 				{
 					if (search->heredoc && !search->cmd_nbr)
 						break ;
 					search = search->next;
 				}
-				fprintf(stderr, "test6\n");
 				ft_heredocs(search->args[1]);
 				search = start;
 			}								//something wrong with the heredoc, not decided yet
 			if (temp->input)
 			{
-				fprintf(stderr, "test7\n");
 				while (search)
 				{
 					if (search->input && !search->cmd_nbr)
 						break ;
 					search = search->next;
 				}
-				fprintf(stderr, "test8\n");
 				ft_input(search->args[1]);
 				search = start;
 			}
 			if (temp->output)
 			{
-				fprintf(stderr, "test9\n");
 				while (search)
 				{
 					if (search->output && !search->cmd_nbr)
 						break ;
 					search = search->next;
 				}
-				fprintf(stderr, "test10\n");
 				ft_output(search->args[1]);
 				search = start;
 			}
 			if (temp->append)
 			{
-				fprintf(stderr, "test11\n");
 				while (search)
 				{
 					if (search->append && !search->cmd_nbr)
 						break ;
 					search = search->next;
 				}
-				fprintf(stderr, "test12\n");
 				ft_append(search->args[1]);
 				search = start;
 			}
 			if (temp->after_pipe)
 			{
-				fprintf(stderr, "test13\n");
+				fprintf(stderr, "\nafter pipe : the number of i_for_pipe is: %d\n", i_for_pipe);
 				dup2(pipes[i_for_pipe][0], STDIN_FILENO);
-				fprintf(stderr, "test14\n");
-				close(pipes[i_for_pipe][0]);
 				close(pipes[i_for_pipe][1]);
-				// fprintf(stderr, "this is pipes:\n");
-				// print_from_fd(pipes[i_for_pipe][0]);
-				// fprintf(stderr, "this is input:\n");
-				// print_from_fd(STDIN_FILENO);
-				fprintf(stderr, "test15\n");
+				close(pipes[i_for_pipe][0]);
 				i_for_pipe++;
-				// exit(EXIT_SUCCESS);
 			}
 			if (temp->before_pipe)
 			{
-				fprintf(stderr, "test16\n");
+				fprintf(stderr, "\nbefore pipe : the number of i_for_pipe is: %d\n", i_for_pipe);
 				dup2(pipes[i_for_pipe][1], STDOUT_FILENO);
-				fprintf(stderr, "test17\n");
 				close(pipes[i_for_pipe][0]);
 				close(pipes[i_for_pipe][1]);
-				fprintf(stderr, "test18\n");
 			}
-			fprintf(stderr, "test19\n");
 			ft_check_and_execute(temp->args, evnp);
-			fprintf(stderr, "test20\n");
 			exit(EXIT_SUCCESS);
 		}
-		fprintf(stderr, "parent is waiting!\n");
-		ft_wait_pid(pids[i_for_pid], i_for_pid);
-		fprintf(stderr, "parent, test21\n");
+		if (temp->after_pipe)
+		{
+			close(pipes[i_for_pipe][0]);
+			i_for_pipe++;
+		}
+		if (temp->before_pipe)
+		{
+			close(pipes[i_for_pipe][1]);
+		}
 		while (temp->next && !temp->pipe_nbr)
 			temp = temp->next;
-		fprintf(stderr, "test22\n");
 		start = temp->next;
 		if (!temp->next)
     		break ;
 		i_for_pid++;
 	}
 	i_for_pid = 0;
-	fprintf(stderr, "test23\n");
-	fprintf(stderr, "test23\n");
-	fprintf(stderr, "test23\n");
 	while (pids[i_for_pid])
 	{
-	fprintf(stderr, "test23.5\n");
-		// free(pids[i_for_pid]);
+		ft_wait_pid(pids[i_for_pid], i_for_pid);
 		i_for_pid++;
 	}
-	fprintf(stderr, "test24\n");
-	ft_free_double_pointer((int **)pipes);
-	fprintf(stderr, "test25\n");
+	ft_free_double_pointer(pipes);
 }
 
 void	ft_start(t_cmd *cmd, char **evnp)
