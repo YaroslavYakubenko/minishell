@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:16:45 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/21 16:43:59 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/23 19:07:28 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_output(char *file_name)
 	int	fd;
 
 	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	dup2(STDOUT_FILENO, fd);
+	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
 
@@ -47,7 +47,7 @@ void	ft_append(char *file_name)
 	int	fd;
 
 	fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
-	dup2(STDOUT_FILENO, fd);
+	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
 
