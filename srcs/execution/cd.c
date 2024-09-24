@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 12:13:13 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/18 18:52:26 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/24 20:55:19 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,10 @@
 void	ft_cd(char *dest_dir)
 {
 	int	dir;
-	int	i;
 
 	dir = chdir(dest_dir);
 	if (dir == -1)
-	{
-		i = 0;
-		while (strerror(errno)[i])
-			i++;
-		write(2, strerror(errno), i);
-	}
+		perror(strerror(errno));
+	else
+		fprintf(stderr, "Successfully changed directory to: %s\n", dest_dir);
 }

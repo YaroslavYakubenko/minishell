@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:54:41 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/23 19:09:14 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/24 20:56:10 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_check_and_execute(char **cmd, char **envp)
 {
-	if (ft_strcmp(cmd[0], "export") == 0 || ft_strcmp(cmd[0], "unset") == 0)
+	if (ft_strcmp(cmd[0], "export") == 0 || ft_strcmp(cmd[0], "unset") == 0 || ft_strcmp(cmd[0], "env") == 0)
 		ft_export(cmd, envp);
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 		ft_cd(cmd[1]);
@@ -121,11 +121,11 @@ void print_from_fd(int fd) {
 
 void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
 {
-	t_cmd		*search;
-	t_cmd		*start;
-	t_cmd		*temp;
-	int			i_for_pid;
-	static int	i_for_pipe;
+	t_cmd	*search;
+	t_cmd	*start;
+	t_cmd	*temp;
+	int		i_for_pid;
+	int		i_for_pipe;
 
 	search = cmd;
 	temp = cmd;
@@ -187,7 +187,6 @@ void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
 			}
 			if (temp->after_pipe)
 			{
-				fprintf(stderr, "\nafter pipe : the number of i_for_pipe is: %d\n", i_for_pipe);
 				dup2(pipes[i_for_pipe][0], STDIN_FILENO);
 				close(pipes[i_for_pipe][1]);
 				close(pipes[i_for_pipe][0]);
@@ -195,7 +194,6 @@ void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
 			}
 			if (temp->before_pipe)
 			{
-				fprintf(stderr, "\nbefore pipe : the number of i_for_pipe is: %d\n", i_for_pipe);
 				dup2(pipes[i_for_pipe][1], STDOUT_FILENO);
 				close(pipes[i_for_pipe][0]);
 				close(pipes[i_for_pipe][1]);

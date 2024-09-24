@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 18:07:58 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/11 14:23:50 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/24 20:55:46 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,26 +97,22 @@ void	ft_print_double_pointer(char **str)
 void	ft_export(char	**argv, char **evnp)
 {
 	char		**store;
-	static char	*record[255];
 	int			argc;
-	static int	i;
 
 	argc = 0;
-	if (!record[0])
-		ft_put_null(record);
 	while (argv[argc])
 		argc++;
-	if (argc == 1 && ft_strcmp(argv[0], "export") == 0)
+	if (argc == 1 && (ft_strcmp(argv[0], "export") == 0 || ft_strcmp(argv[0], "env") == 0))
 	{
 		store = ft_renew_evnp(evnp);
 		store = ft_sort_the_evnp(store);
 		ft_print_double_pointer(store);
-		ft_print_double_pointer(record);
+		ft_read_and_print();
 	}
 	else if (argc > 1 && ft_strcmp(argv[0], "export") == 0)
-		record[i++] = ft_record(argv[1]);
+		ft_record(argv[1]);
 	else if (argc == 1 && ft_strcmp(argv[0], "unset") == 0)
 		printf("unset: not enough arguments\n");
 	else if (argc > 1 && ft_strcmp(argv[0], "unset") == 0)
-		i = ft_unset(record, argv[1], i);
+		ft_unset(argv[1]);
 }

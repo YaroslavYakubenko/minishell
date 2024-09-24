@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:21:03 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/23 15:31:36 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/24 20:55:31 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	ft_wait_pid(pid_t pid_first, int j)
 	i = waitpid(pid_first, &status, 0);
 	if (i == -1)
 	{
-		perror("Error waiting for ");
-		write(2, &j, 1);
-		perror(" process\n");
+		perror("Error waiting for process\n");
 		exit (EXIT_FAILURE);
 	}
 	if (!(WIFEXITED(status)))

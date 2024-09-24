@@ -17,6 +17,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -103,8 +104,8 @@ char	*create_new_str(const char *input, size_t var_len, const char *pos);
 char	*update_position(char *result, char *new_result, char *pos);
 char	*compress_spaces(char *input);
 char	*expand_and_compress(char *input, t_env *env);
-int		check_pipe_error(const char *input, size_t i);
-int		check_redirect_error(const char *input, size_t i);
+int	check_pipe_error(const char *input, size_t i);
+int	check_redirect_error(const char *input, size_t i);
 t_cmd	*init_cmd(void);
 
 
@@ -128,12 +129,11 @@ void	ft_append(char *file_name);
 void	ft_heredocs(char *end);
 void	ft_export(char	**argv, char **evnp);
 void	ft_cd(char *dest_dir);
-int		ft_unset(char **record, char *str, int j);
-char	*ft_record(char *str);
+void	ft_unset(char *str);
+void	ft_record(char *str);
 int		ft_strcmp(const char *s1, const char *s2);
-void	ft_build_in(char **cmd, char **envp);
 void	ft_start(t_cmd *cmd, char **evnp);
-void	ft_put_null(char **record);
+void	ft_read_and_print(void);
 void	ft_wait_pid(pid_t pid_first, int j);
 void	ft_check_and_execute(char **cmd, char **envp);
 
