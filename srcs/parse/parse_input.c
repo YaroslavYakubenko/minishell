@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:40:27 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/21 19:41:54 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/23 19:28:25 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,25 +194,23 @@ t_cmd	*ft_start_parse(char *cmd_line)
 	while (cmd_line[i])
 	{
 		j = i;
-
-		// Handle redirection and pipes
 		if (cmd_line[i] == '>' && cmd_line[i + 1] == '>')
 		{
-			i += 3;  // Fix: should be i += 2 for '>>'
+			i += 3;
 			while (cmd_line[i] && cmd_line[i] != ' ')
 				i++;
 			i++;
 		}
 		else if (cmd_line[i] == '<' && cmd_line[i + 1] == '<')
 		{
-			i += 3;  // Fix: should be i += 2 for '>>'
+			i += 3;
 			while (cmd_line[i] && cmd_line[i] != ' ')
 				i++;
 			i++;
-		} // Fix: should be i += 2 for '<<'
+		}
 		else if (cmd_line[i] == '>' || cmd_line[i] == '<')
 		{
-			i += 2;  // Fix: should be i += 2 for '>>'
+			i += 2;
 			while (cmd_line[i] && cmd_line[i] != ' ')
 				i++;
 			i++;
@@ -221,36 +219,27 @@ t_cmd	*ft_start_parse(char *cmd_line)
 			i += 2;
 		else
 		{
-			// Regular command until special symbols
 			while (cmd_line[i] && cmd_line[i] != '|' && cmd_line[i] != '<' && cmd_line[i] != '>')
 				i++;
 		}
-
-		// Allocate memory for the command substring
 		cmd = malloc(sizeof(char) * (i - j + 1));
 		if (!cmd)
-			return (NULL); // Error handling
+			return (NULL);
 		ft_strlcpy(cmd, &cmd_line[j], i - j + 1);
-
-		// Initialize command structure
 		new_cmd = init_cmd();
 		if (!new_cmd)
 		{
 			free(cmd);
-			return (NULL); // Error handling
+			return (NULL);
 		}
 		new_cmd->args = ft_deal_cmd(cmd);
-		free(cmd); // Free the temporary command string
-
-		// Add new command to the list
+		free(cmd);
 		if (!cmd_list)
 			cmd_list = new_cmd;
 		else
 			tmp->next = new_cmd;
-
-		tmp = new_cmd; // Move tmp to the end of the list
+		tmp = new_cmd;
 	}
-
 	return (cmd_list);
 }
 

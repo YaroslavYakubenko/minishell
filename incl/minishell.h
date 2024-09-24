@@ -103,8 +103,8 @@ char	*create_new_str(const char *input, size_t var_len, const char *pos);
 char	*update_position(char *result, char *new_result, char *pos);
 char	*compress_spaces(char *input);
 char	*expand_and_compress(char *input, t_env *env);
-int	check_pipe_error(const char *input, size_t i);
-int	check_redirect_error(const char *input, size_t i);
+int		check_pipe_error(const char *input, size_t i);
+int		check_redirect_error(const char *input, size_t i);
 t_cmd	*init_cmd(void);
 
 
