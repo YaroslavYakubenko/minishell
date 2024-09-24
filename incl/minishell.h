@@ -17,6 +17,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -114,6 +115,7 @@ void	ft_give_marks(t_cmd *cmd);
 void	ft_handle_cmd_mark(t_cmd *cmd);
 // help functions
 void	ft_print_cmd(t_cmd *cmd);
+void	print_from_fd(int fd);
 
 
 
@@ -121,23 +123,19 @@ void	ft_print_cmd(t_cmd *cmd);
 // Execution
 void	ft_execute(char **cmd, char **envp);
 char	*ft_get_evn(char **envp, char *keyword, char *cmd);
-void	ft_input(t_token **tokens, int i, char **envp);
-void	ft_output(t_token **tokens, int i);
-void	ft_append(t_token **tokens, int i);
-void	ft_heredocs(t_token **tokens, int i, char **envp);
-void	ft_pipe(t_token **tokens, int i, char **envp);
+void	ft_input(char *file_name);
+void	ft_output(char *file_name);
+void	ft_append(char *file_name);
+void	ft_heredocs(char *end);
 void	ft_export(char	**argv, char **evnp);
 void	ft_cd(char *dest_dir);
-int		ft_unset(char **record, char *str, int j);
-char	*ft_record(char *str);
+void	ft_unset(char *str);
+void	ft_record(char *str);
 int		ft_strcmp(const char *s1, const char *s2);
-void	ft_build_in(char **cmd, char **envp);
-void	ft_start(t_token **tokens, char **evnp);
-void	ft_put_null(char **record);
-void	ft_wait_pid(pid_t pid_first);
+void	ft_start(t_cmd *cmd, char **evnp);
+void	ft_read_and_print(void);
+void	ft_wait_pid(pid_t pid_first, int j);
 void	ft_check_and_execute(char **cmd, char **envp);
-void	ft_check_and_execute_v2(char **cmd, char **envp);
-char	**ft_creat_cmd(t_token **tokens, int i);
 
 // Utils
 size_t	ft_strlenn(const char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:40:27 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/21 14:35:32 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/24 20:50:48 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,7 +296,10 @@ t_cmd	*ft_handle_cmd_mark_v2(t_cmd *start, t_cmd *target)
 	t_cmd	*end;
 	t_cmd	*tmp;
 
-	tmp = start->next;
+	if (start == target)
+		tmp = start;
+	else
+		tmp = start->next;
 	while (tmp->next && !tmp->pipe_nbr)
 		tmp = tmp->next;
 	end = tmp;

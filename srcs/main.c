@@ -59,7 +59,8 @@ int main (int ac, char **av, char **envp)
 		cmd = ft_start_parse(expanded_input);
 		ft_give_marks(cmd);
 		ft_handle_cmd_mark(cmd);
-		ft_print_cmd(cmd);
+		// ft_print_cmd(cmd);
+		ft_start(cmd, envp);
 
 
 
@@ -76,7 +77,6 @@ int main (int ac, char **av, char **envp)
 		// 		i++;
 		// 	}
 		// }
-		// ft_start(tokens, envp);
 		// if (expanded_input != NULL)
 		// {
 		// 	printf("expanded: %s\n", expanded_input);

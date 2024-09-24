@@ -6,13 +6,13 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:21:03 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/11 15:41:59 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/24 20:52:50 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_wait_pid(pid_t pid_first)
+void	ft_wait_pid(pid_t pid_first, int j)
 {
 	int	status;
 	int	i;
@@ -20,11 +20,14 @@ void	ft_wait_pid(pid_t pid_first)
 	i = waitpid(pid_first, &status, 0);
 	if (i == -1)
 	{
-		perror("Error waiting for first process");
+		perror("Error waiting for process\n");
 		exit (EXIT_FAILURE);
 	}
 	if (!(WIFEXITED(status)))
-		perror("First process did not exit normally!");
+	{
+		write(2, &j, 1);
+		perror(" process did not exit normally!\n");
+	}
 }
 
 void	ft_execute(char **cmd, char **envp)

@@ -1,6 +1,8 @@
 NAME 			= minishell
 HDRDIR			= incl/
 
+GET_NEXT_LINEDIR= get_next_line/
+
 EXECDIR			= ${SRCSDIR}execution/
 
 PARSEDIR		= ${SRCSDIR}parse/
@@ -20,8 +22,9 @@ SRCS			= ${SRCSDIR}main.c \
 					${EXECDIR}cd.c \
 					${EXECDIR}export.c \
 					${EXECDIR}export_ults.c \
-					${EXECDIR}build_in.c \
 					${EXECDIR}ft_start.c \
+					${GET_NEXT_LINEDIR}get_next_line.c \
+					${GET_NEXT_LINEDIR}get_next_line_utils.c \
 					${PARSEDIR}parse_env.c \
 					${PARSEDIR}parse_dollar.c \
 				  	${PARSEDIR}parse_token.c \
@@ -58,6 +61,7 @@ $(ALLOC):
 clean:
 	@rm -f $(OBJS)
 	@make fclean -sC $(LIBFTDIR)
+	@rm -f index
 
 fclean: clean
 	@rm -f $(NAME)
