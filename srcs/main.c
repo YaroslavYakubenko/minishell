@@ -37,7 +37,6 @@ int main (int ac, char **av, char **envp)
 	t_env	*env_list;
 	char	*input;
 	char	*expanded_input;
-	// t_token	**tokens;
 	int		i;
 	t_cmd	*cmd;
 
@@ -54,35 +53,11 @@ int main (int ac, char **av, char **envp)
 		if (input == 0)
 			eof_handler(); // Ctrl + D
 		expanded_input = expand_and_compress(input, env_list);
-
-
 		cmd = ft_start_parse(expanded_input);
 		ft_give_marks(cmd);
 		ft_handle_cmd_mark(cmd);
 		// ft_print_cmd(cmd);
 		ft_start(cmd, envp);
-
-
-
-
-
-		// tokens = parse_token(expanded_input);
-		// if (tokens != NULL)
-		// {
-		// 	i = 0;
-		// 	while (tokens[i])
-		// 	{
-		// 		printf("Type: %d\t", tokens[i]->type);
-		// 		printf("Token: %s\n", tokens[i]->token);
-		// 		i++;
-		// 	}
-		// }
-		// if (expanded_input != NULL)
-		// {
-		// 	printf("expanded: %s\n", expanded_input);
-		// 	free(expanded_input);
-		// }
-		free(input);
 	}
 	rl_clear_history();
 	free_env_list(env_list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:40:27 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/23 19:28:25 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:24:35 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,43 @@ void	ft_print_doulbe_pointer(char **str)
 	}
 }
 
+int	ft_get_parts(char *cmd)
+{
+	int	i;
+	int	k;
+
+	i = 0;
+	k = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '\'')
+		{
+			i++;
+			k++;
+			while (cmd[i] && cmd[i] != '\'')
+				i++;
+			i++;
+		}
+		else if (cmd[i] == '\"')
+		{
+			i++;
+			k++;
+			while (cmd[i] && cmd[i] != '\"')
+				i++;
+			i++;
+		}
+		else if(cmd[i] == ' ')
+			i++;
+		else if(cmd[i] != ' ')
+		{
+			k++;
+			while (cmd[i] && cmd[i] != ' ')
+				i++;
+		}
+	}
+	return (k);
+}
+
 char	**ft_deal_cmd(char *cmd)
 {
 	char	**args;
@@ -67,36 +104,11 @@ char	**ft_deal_cmd(char *cmd)
 	else
 	{
 		i = 0;
-		while (cmd[i])
-		{
-			if (cmd[i] == '\'')
-			{
-				i++;
-				k++;
-				while (cmd[i] && cmd[i] != '\'')
-					i++;
-				i++;
-			}
-			else if (cmd[i] == '\"')
-			{
-				i++;
-				k++;
-				while (cmd[i] && cmd[i] != '\"')
-					i++;
-				i++;
-			}
-			else if(cmd[i] == ' ')
-				i++;
-			else if(cmd[i] != ' ')
-			{
-				k++;
-				while (cmd[i] && cmd[i] != ' ')
-					i++;
-			}
-		}
+		k = ft_get_parts(cmd);
 		args = malloc(sizeof(char *) * (k + 1));
 		if (!args)
 			return (NULL);
+		args[k] = NULL;
 		i = 0;
 		k = 0;
 		while (cmd[i])
@@ -179,6 +191,39 @@ char	**ft_deal_cmd(char *cmd)
 	return (args);
 }
 
+int	ft_find_end(char *cmd_line, int i)
+{
+	if (cmd_line[i] == '>' && cmd_line[i + 1] == '>')
+	{
+		i += 3;
+		while (cmd_line[i] && cmd_line[i] != ' ')
+			i++;
+		i++;
+	}
+	else if (cmd_line[i] == '<' && cmd_line[i + 1] == '<')
+	{
+		i += 3;
+		while (cmd_line[i] && cmd_line[i] != ' ')
+			i++;
+		i++;
+	}
+	else if (cmd_line[i] == '>' || cmd_line[i] == '<')
+	{
+		i += 2;
+		while (cmd_line[i] && cmd_line[i] != ' ')
+			i++;
+		i++;
+	}
+	else if (cmd_line[i] == '|')
+		i += 2;
+	else
+	{
+		while (cmd_line[i] && cmd_line[i] != '|' && cmd_line[i] != '<' && cmd_line[i] != '>')
+			i++;
+	}
+	return (i);
+}
+
 t_cmd	*ft_start_parse(char *cmd_line)
 {
 	int		i;
@@ -194,34 +239,7 @@ t_cmd	*ft_start_parse(char *cmd_line)
 	while (cmd_line[i])
 	{
 		j = i;
-		if (cmd_line[i] == '>' && cmd_line[i + 1] == '>')
-		{
-			i += 3;
-			while (cmd_line[i] && cmd_line[i] != ' ')
-				i++;
-			i++;
-		}
-		else if (cmd_line[i] == '<' && cmd_line[i + 1] == '<')
-		{
-			i += 3;
-			while (cmd_line[i] && cmd_line[i] != ' ')
-				i++;
-			i++;
-		}
-		else if (cmd_line[i] == '>' || cmd_line[i] == '<')
-		{
-			i += 2;
-			while (cmd_line[i] && cmd_line[i] != ' ')
-				i++;
-			i++;
-		}
-		else if (cmd_line[i] == '|')
-			i += 2;
-		else
-		{
-			while (cmd_line[i] && cmd_line[i] != '|' && cmd_line[i] != '<' && cmd_line[i] != '>')
-				i++;
-		}
+		i = ft_find_end(cmd_line, i);
 		cmd = malloc(sizeof(char) * (i - j + 1));
 		if (!cmd)
 			return (NULL);

@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:16:45 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/24 20:56:17 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/26 16:24:02 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_redir_heredoc(char *str)
 		dup2(fd_pipe[0], STDIN_FILENO);
 		close(fd_pipe[0]);
 		close(fd_pipe[1]);
-		// print_from_fd(STDIN_FILENO);
 	}
 }
 

@@ -23,6 +23,7 @@ SRCS			= ${SRCSDIR}main.c \
 					${EXECDIR}export.c \
 					${EXECDIR}export_ults.c \
 					${EXECDIR}ft_start.c \
+					${EXECDIR}ft_exit.c \
 					${GET_NEXT_LINEDIR}get_next_line.c \
 					${GET_NEXT_LINEDIR}get_next_line_utils.c \
 					${PARSEDIR}parse_env.c \
