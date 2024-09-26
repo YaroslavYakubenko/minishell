@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:54:41 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/26 16:23:41 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/26 16:47:27 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,9 +377,9 @@ void	ft_free_nods(t_cmd *cmd)
 	t_cmd	*temp;
 	int		i;
 
-	i = 0;
 	while (cmd)
 	{
+		i = 0;
 		temp = cmd->next;
 		while(cmd->args[i])
 		{

@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:40:27 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/26 16:24:35 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/26 16:59:04 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,11 @@ char	**ft_deal_cmd(char *cmd)
 		args = malloc(sizeof(char *) * (k + 1));
 		if (!args)
 			return (NULL);
-		args[k] = NULL;
+		while (k >= 0)
+		{
+			args[k] = NULL;
+			k--;
+		}
 		i = 0;
 		k = 0;
 		while (cmd[i])
@@ -258,6 +262,7 @@ t_cmd	*ft_start_parse(char *cmd_line)
 			tmp->next = new_cmd;
 		tmp = new_cmd;
 	}
+	free(cmd_line);
 	return (cmd_list);
 }
 

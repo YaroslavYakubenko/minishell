@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/09 23:44:58 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:52:25 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ t_env	*create_env_node(char *env_str)
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
+	new_node->name = NULL;
+	new_node->next = NULL;
+	new_node->val = NULL;
 	equal_sign = ft_strchr(env_str, '=');
 	if (!equal_sign)
 	{
