@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/10 17:55:00 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:23:06 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,43 +70,83 @@ char	*replace_var_with_value(const char *input, const char *pos, char *value, si
 	return (new_input);
 }
 
-char	*expand_env_variables(const char *input, t_env *env)
-{
-	char	*result;
-	char	*pos[2];
-	char	*new_result;
-	int		quotes[2];
+// char	*expand_env_variables(const char *input, t_env *env)
+// {
+// 	char	*result;
+// 	char	*pos[2];
+// 	char	*new_result;
+// 	int		quotes[2];
 
-	quotes[0] = 0;
-	quotes[1] = 0;
-	if (!(result = ft_strdup(input)))
-		return (NULL);
-	pos[0] = result;
-	while (*pos[0])
-	{
-		check_quotes(*pos[0], &quotes[0], &quotes[1]);
-		if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
-		{
-			pos[1] = pos[0] + 1;
-			if (*pos[1] == '\0' || *pos[1] == ' ' || *pos[1] == '\'' || *pos[1] == '"')
-			{
-				pos[0]++;
-				continue ;
-			}
-			new_result = process_variable(result, pos[0], env, quotes[0]);
-			if (!new_result)
-			{
-				free(result);
-				return (NULL);
-			}
-			pos[0] = new_result + (pos[0] - result) + 1;
-			free(result);
-			result = new_result;
-		}
+// 	quotes[0] = 0;
+// 	quotes[1] = 0;
+// 	if (!(result = ft_strdup(input)))
+// 		return (NULL);
+// 	pos[0] = result;
+// 	while (*pos[0])
+// 	{
+// 		check_quotes(*pos[0], &quotes[0], &quotes[1]);
+// 		if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
+// 		{
+// 			pos[1] = pos[0] + 1;
+// 			if (*pos[1] == '\0' || *pos[1] == ' ' || *pos[1] == '\'' || *pos[1] == '"')
+// 			{
+// 				pos[0]++;
+// 				continue ;
+// 			}
+// 			new_result = process_variable(result, pos[0], env, quotes[0]);
+// 			if (!new_result)
+// 			{
+// 				free(result);
+// 				return (NULL);
+// 			}
+// 			pos[0] = new_result + (pos[0] - result) + 1;
+// 			free(result);
+// 			result = new_result;
+// 		}
+// 		else
+// 			pos[0]++;
+// 	}
+// 	return (result);
+// }
+
+char *expand_env_variables(const char *input, t_env *env)
+{
+    char *result;
+    char *pos[2];
+    char *new_result;
+    int quotes[2];
+
+    quotes[0] = 0;
+    quotes[1] = 0;
+    result = ft_strdup(input);
+    if (!result)
+        return NULL;
+    pos[0] = result;
+    while (*pos[0])
+    {
+        check_quotes(*pos[0], &quotes[0], &quotes[1]);
+        if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
+        {
+            new_result = process_variable(result, pos[0], env, quotes[0]);
+            if (!new_result)
+            {
+                free(result);
+                return NULL;
+            }
+            pos[0] = new_result + (pos[0] - result);
+            free(result);
+            result = new_result;
+        }
 		else
-			pos[0]++;
+        	pos[0]++;
+    }
+	if (quotes[0] || quotes[1])
+	{
+		printf("Error: syntax error with quotes\n");
+		free(result);
+		return (NULL);
 	}
-	return (result);
+    return result;
 }
 
 char	*create_new_str(const char *input, size_t var_len, const char *pos)
