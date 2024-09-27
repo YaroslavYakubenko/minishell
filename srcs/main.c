@@ -53,7 +53,7 @@ int main (int ac, char **av, char **envp)
 		if (input == 0)
 			eof_handler(); // Ctrl + D
 		expanded_input = expand_and_compress(input, env_list);
-		cmd = ft_start_parse(expanded_input);
+		cmd = ft_start_parse(expanded_input, envp);
 		ft_give_marks(cmd);
 		ft_handle_cmd_mark(cmd);
 		// ft_print_cmd(cmd);

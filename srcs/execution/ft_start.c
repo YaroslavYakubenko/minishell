@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:54:41 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/27 12:31:42 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/27 16:01:08 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void print_from_fd(int fd)
 
 void	handle_heredoc(t_cmd *temp, t_cmd *search, t_cmd *start)
 {
+	search = start;
 	if (temp->heredoc)
 	{
 		while (search)
@@ -136,6 +137,7 @@ void	handle_heredoc(t_cmd *temp, t_cmd *search, t_cmd *start)
 
 void	handle_input(t_cmd *temp, t_cmd *search, t_cmd *start)
 {
+	search = start;
 	if (temp->input)
 	{
 		while (search)
@@ -149,34 +151,62 @@ void	handle_input(t_cmd *temp, t_cmd *search, t_cmd *start)
 	}
 }
 
-void	handle_output(t_cmd *temp, t_cmd *search, t_cmd *start)
+int	handle_output(t_cmd *temp, t_cmd *search, t_cmd *start)
 {
+	pid_t	pid;
+	int		mark;
+
+	mark = 0;
+	search = start;
 	if (temp->output)
 	{
 		while (search)
 		{
 			if (search->output && !search->cmd_nbr)
-				break ;
+			{
+				pid = fork();
+				if (pid == 0)
+				{
+					ft_output(search->args[1]);
+					ft_check_and_execute(temp->args, temp->evnp);
+				}
+				ft_wait_pid(pid, 0);
+			}
 			search = search->next;
 		}
-		ft_output(search->args[1]);
 		search = start;
+		mark = 1;
 	}
+	return (mark);
 }
 
-void	handle_append(t_cmd *temp, t_cmd *search, t_cmd *start)
+int	handle_append(t_cmd *temp, t_cmd *search, t_cmd *start)
 {
-	if (temp->append)
+	pid_t	pid;
+	int		mark;
+
+	mark = 0;
+	search = start;
+	if (temp->output)
 	{
 		while (search)
 		{
 			if (search->append && !search->cmd_nbr)
-				break ;
+			{
+				pid = fork();
+				if (pid == 0)
+				{
+					ft_append(search->args[1]);
+					ft_check_and_execute(temp->args, temp->evnp);
+				}
+				ft_wait_pid(pid, 0);
+			}
 			search = search->next;
 		}
-		ft_append(search->args[1]);
 		search = start;
+		mark = 1;
 	}
+	return (mark);
 }
 
 void	handle_pipes(t_cmd *temp, int **pipes, int *i_for_pipe)
@@ -228,6 +258,7 @@ void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
 	t_cmd	*temp;
 	int		i_for_pid;
 	int		i_for_pipe;
+	int		mark;
 
 	search = cmd;
 	temp = cmd;
@@ -236,6 +267,7 @@ void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
 	i_for_pipe = 0;
 	while (temp)
 	{
+		mark = 0;
 		while (temp->next && !temp->cmd_nbr)
 			temp = temp->next;
 		if (strcmp(cmd->args[0], "cd") == 0)
@@ -247,12 +279,14 @@ void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
 		{
 			handle_heredoc(temp, search, start);
 			handle_input(temp, search, start);
-			handle_output(temp, search, start);
-			handle_append(temp, search, start);
 			handle_pipes(temp, pipes, &i_for_pipe);
-			ft_check_and_execute(temp->args, evnp);
+			mark = handle_append(temp, search, start);
+			mark = handle_output(temp, search, start);
+			if (mark == 0)
+				ft_check_and_execute(temp->args, evnp);
 			exit(EXIT_SUCCESS);
 		}
+		ft_wait_pid(pids[i_for_pid], i_for_pid);
 		handle_parent_pipes(temp, pipes, &i_for_pipe);
 		while (temp->next && !temp->pipe_nbr)
 			temp = temp->next;
@@ -261,7 +295,7 @@ void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
     		break ;
 		i_for_pid++;
 	}
-	wait_for_pids(pids);
+	// wait_for_pids(pids);
 	ft_free_double_pointer_int(pipes);
 }
 

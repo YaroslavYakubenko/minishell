@@ -78,6 +78,7 @@ typedef struct s_cmd
 	int				output;	// Output file for redirection
 	int				append;	// 1 if the output file should be appended, 0 otherwise
 	int				heredoc;	// 1 if the command is a heredoc, 0 otherwise
+	char			**evnp;
 	struct s_cmd	*next;	// Pointer to the next command in case of pipes
 }	t_cmd;
 
@@ -104,13 +105,13 @@ char	*create_new_str(const char *input, size_t var_len, const char *pos);
 char	*update_position(char *result, char *new_result, char *pos);
 char	*compress_spaces(char *input);
 char	*expand_and_compress(char *input, t_env *env);
-int	check_pipe_error(const char *input, size_t i);
-int	check_redirect_error(const char *input, size_t i);
-t_cmd	*init_cmd(void);
+int		check_pipe_error(const char *input, size_t i);
+int		check_redirect_error(const char *input, size_t i);
+t_cmd	*init_cmd(char	**evnp);
 
 
 // new parse
-t_cmd	*ft_start_parse(char *cmd_line);
+t_cmd	*ft_start_parse(char *cmd_line, char **evnp);
 void	ft_give_marks(t_cmd *cmd);
 void	ft_handle_cmd_mark(t_cmd *cmd);
 // help functions

@@ -6,13 +6,13 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:40:27 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/27 11:26:31 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/27 15:56:55 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*init_cmd(void)
+t_cmd	*init_cmd(char **evnp)
 {
 	t_cmd	*cmd;
 
@@ -28,6 +28,7 @@ t_cmd	*init_cmd(void)
 	cmd->output = 0;
 	cmd->append = 0;
 	cmd->heredoc = 0;
+	cmd->evnp = evnp;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -228,7 +229,7 @@ int	ft_find_end(char *cmd_line, int i)
 	return (i);
 }
 
-t_cmd	*ft_start_parse(char *cmd_line)
+t_cmd	*ft_start_parse(char *cmd_line, char **evnp)
 {
 	int		i;
 	int		j;
@@ -240,7 +241,7 @@ t_cmd	*ft_start_parse(char *cmd_line)
 	i = 0;
 	cmd_list = NULL;
 	tmp = NULL;
-	while (cmd_line[i])
+	while (i <= (int)ft_strlen(cmd_line) && cmd_line[i])
 	{
 		j = i;
 		i = ft_find_end(cmd_line, i);
@@ -248,7 +249,7 @@ t_cmd	*ft_start_parse(char *cmd_line)
 		if (!cmd)
 			return (NULL);
 		ft_strlcpy(cmd, &cmd_line[j], i - j + 1);
-		new_cmd = init_cmd();
+		new_cmd = init_cmd(evnp);
 		if (!new_cmd)
 		{
 			free(cmd);
