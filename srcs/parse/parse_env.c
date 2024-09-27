@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/26 16:52:25 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/27 11:36:35 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ char	*process_variable(char *result, char *pos, t_env *env, int in_single_quote)
 	char	*var_value;
 	char	var_name[256];
 	size_t	var_len;
+	t_env	*temp;
 
 	var_len = extract_var_name(pos + 1, var_name);
 	if (in_single_quote)
@@ -98,6 +99,15 @@ char	*process_variable(char *result, char *pos, t_env *env, int in_single_quote)
 	var_value = get_env_val(var_name, env);
 	if (!var_value)
 		return (create_new_str(result, var_len + 1, pos));
+	while (env)
+	{
+		temp = env->next;
+		free(env->name);
+		free(env->next);
+		free(env->val);
+		free(env);
+		env = temp;
+	}
 	return (replace_var_with_value(result, pos, var_value, var_len + 1));
 }
 

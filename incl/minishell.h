@@ -136,7 +136,8 @@ void	ft_start(t_cmd *cmd, char **evnp);
 void	ft_read_and_print(void);
 void	ft_wait_pid(pid_t pid_first, int j);
 void	ft_check_and_execute(char **cmd, char **envp);
-void	ft_exit(void);
+void	ft_exit(t_cmd *cmd);
+void	ft_free_nods(t_cmd *cmd);
 
 // Utils
 size_t	ft_strlenn(const char *str);

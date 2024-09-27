@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:54:41 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/26 16:47:27 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/27 12:31:42 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ int	**ft_creat_pipe(t_cmd *cmd)
 	}
 	if (!i)
 		return (NULL);
-	pipes = malloc(i * sizeof(int *));
+	pipes = malloc((i + 1) * sizeof(int *));
 	if (!pipes)
 		return (NULL);
+	pipes[i] = NULL;
 	while (i > 0)
 	{
 		pipes[i - 1] = malloc(2 * sizeof(int));
@@ -64,9 +65,10 @@ pid_t	*ft_creat_pids(t_cmd *cmd)
 			i++;
 		temp = temp->next;
 	}
-	pids = malloc(i * sizeof(pid_t));
+	pids = ft_calloc(i + 1, sizeof(pid_t));
 	if (!pids)
 		return (NULL);
+	pids[i] = 0;
 	return (pids);
 }
 
@@ -209,7 +211,9 @@ void	handle_parent_pipes(t_cmd *temp, int **pipes, int *i_for_pipe)
 
 void	wait_for_pids(pid_t *pids)
 {
-	int i_for_pid = 0;
+	int i_for_pid;
+
+	i_for_pid = 0;
 	while (pids[i_for_pid])
 	{
 		ft_wait_pid(pids[i_for_pid], i_for_pid);
@@ -259,7 +263,6 @@ void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
 	}
 	wait_for_pids(pids);
 	ft_free_double_pointer_int(pipes);
-	free(pids);
 }
 
 // void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids, char **evnp)
@@ -398,9 +401,10 @@ void	ft_start(t_cmd *cmd, char **evnp)
 	pid_t	*pids;
 
 	if (strcmp(cmd->args[0], "exit") == 0)
-			ft_exit();
+			ft_exit(cmd);
 	pipe = ft_creat_pipe(cmd);
 	pids = ft_creat_pids(cmd);
 	ft_run_cmd(cmd, pipe, pids, evnp);
 	ft_free_nods(cmd);
+	free(pids);
 }

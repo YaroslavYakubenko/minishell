@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:40:27 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/26 16:59:04 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/27 11:26:31 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,7 @@ t_cmd	*ft_start_parse(char *cmd_line)
 			free(cmd);
 			return (NULL);
 		}
+		free(new_cmd->args);
 		new_cmd->args = ft_deal_cmd(cmd);
 		free(cmd);
 		if (!cmd_list)
