@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 18:07:58 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/24 20:55:46 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/28 14:56:37 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	*ft_output_single_evnp(char *evnp)
 	}
 	new_evnp[i] = '\0';
 	output_evnp = getenv(new_evnp);
-	new_evnp = ft_strjoin(new_evnp, "=");
-	new_evnp = ft_strjoin(new_evnp, output_evnp);
+	new_evnp = ft_strjoin_1(new_evnp, "=");
+	new_evnp = ft_strjoin_1(new_evnp, output_evnp);
 	return (new_evnp);
 }
 
@@ -45,7 +45,7 @@ char	**ft_renew_evnp(char **evnp)
 	i = 0;
 	while (evnp[i])
 		i++;
-	new_evnp = malloc(i * sizeof(char *));
+	new_evnp = malloc((i + 1) * sizeof(char *));
 	i = 0;
 	j = 0;
 	while (evnp[i])
@@ -94,21 +94,79 @@ void	ft_print_double_pointer(char **str)
 	}
 }
 
+char	**ft_add_list(char **store)
+{
+	int		fd;
+	int		i;
+	int		j;
+	char	*temp;
+	char	**output;
+
+	fd = open("index", O_RDONLY);
+	if (fd < 0)
+		return (store);
+	i = 0;
+	temp = get_next_line(fd);
+	while (temp)
+	{
+		i++;
+		temp = get_next_line(fd);
+	}
+	close(fd);
+	fd = 0;
+	while (store[fd])
+		fd++;
+	output = malloc((i + fd + 1) * sizeof(char *));
+	if (!output)
+		return (NULL);
+	i = 0;
+	while (store[i])
+	{
+		output[i] = store[i];
+		i++;
+	}
+	fd = open("index", O_RDONLY);
+	temp = get_next_line(fd);
+	while (temp)
+	{
+		j = 0;
+		while (temp[j] != '\n' && temp[j])
+			j++;
+		temp[j] = '\0';
+		output[i++] = temp;
+		temp = get_next_line(fd);
+	}
+	output[i] = NULL;
+	free(store);
+	return (output);
+}
+
+void	ft_print_env(char **evnp)
+{
+	char	**store;
+
+	store = ft_renew_evnp(evnp);
+	ft_print_double_pointer(store);
+	ft_read_and_print();
+}
+
 void	ft_export(char	**argv, char **evnp)
 {
-	char		**store;
-	int			argc;
+	char	**store;
+	int		argc;
 
 	argc = 0;
 	while (argv[argc])
 		argc++;
-	if (argc == 1 && (ft_strcmp(argv[0], "export") == 0 || ft_strcmp(argv[0], "env") == 0))
+	if (argc == 1 && ft_strcmp(argv[0], "export") == 0)
 	{
 		store = ft_renew_evnp(evnp);
+		store = ft_add_list(store);
 		store = ft_sort_the_evnp(store);
 		ft_print_double_pointer(store);
-		ft_read_and_print();
 	}
+	else if (argc == 1 && ft_strcmp(argv[0], "env") == 0)
+		ft_print_env(evnp);
 	else if (argc > 1 && ft_strcmp(argv[0], "export") == 0)
 		ft_record(argv[1]);
 	else if (argc == 1 && ft_strcmp(argv[0], "unset") == 0)
