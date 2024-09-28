@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/27 16:23:40 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/28 17:08:20 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 t_env	*create_env_node(char *env_str)
 {
 	t_env	*new_node;
-	char	*equal_sign;
+	char	*temp;
+	int		i;
+	int		j;
 
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
@@ -23,16 +25,44 @@ t_env	*create_env_node(char *env_str)
 	new_node->name = NULL;
 	new_node->next = NULL;
 	new_node->val = NULL;
-	equal_sign = ft_strchr(env_str, '=');
-	if (!equal_sign)
-	{
-		free(new_node);
+	i = 0;
+	while (env_str[i] && env_str[i] != '=')
+		i++;
+	j = 0;
+	temp = malloc((i + 1) * sizeof(char));
+	if (!temp)
 		return (NULL);
+	while (env_str[j] && env_str[j] != '=')
+	{
+		temp[j] = env_str[j];
+		j++;
 	}
-	new_node->name = ft_strndup(env_str, equal_sign - env_str);
-	new_node->val = ft_strdup(equal_sign + 1);
-	new_node->next = NULL;
+	temp[j] = '\0';
+	new_node->name = temp;
+	j = ++i;
+	while (env_str[i])
+		i++;
+	temp = malloc((i - j + 1) * sizeof(char));
+	if (!temp)
+		return (NULL);
+	i = j;
+	j = 0;
+	while (env_str[i])
+		temp[j++] = env_str[i++];
+	temp[j] = '\0';
+	new_node->val = temp;
 	return (new_node);
+}
+
+void ft_free_double_pointer_char(char **output)
+{
+    int i = 0;
+    while (output[i] != NULL)
+    {
+        free(output[i]);
+        i++;
+    }
+    free(output);
 }
 
 t_env	*init_new_list(char **envp)
@@ -41,12 +71,15 @@ t_env	*init_new_list(char **envp)
 	t_env	*current;
 	t_env	*new_node;
 	int		i;
+	char	**store;
 	
 	i = 0;
 	head = NULL;
-	while (envp[i])
+	store = ft_renew_evnp(envp);
+	store = ft_add_list(store);
+	while (store[i])
 	{
-		new_node = create_env_node(envp[i]);
+		new_node = create_env_node(store[i]);
 		if (!new_node)
 			return (head);
 		if (!head)
@@ -56,6 +89,7 @@ t_env	*init_new_list(char **envp)
 		current = new_node;
 		i++;
 	}
+	ft_free_double_pointer_char(store);
 	return (head);
 }
 

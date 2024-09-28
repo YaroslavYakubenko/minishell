@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 12:14:50 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/28 14:59:27 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/28 16:12:26 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ int	ft_renew_list(char *final)
         if (count++ == 0)
             temp2 = ft_strdup(temp);
         else
-            temp2 = ft_strjoin(temp2, temp);
+            temp2 = ft_strjoin_1(temp2, temp);
         free(temp);
         temp = get_next_line(i);
     }

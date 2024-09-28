@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 18:07:58 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/28 14:56:37 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/28 16:40:39 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ char	**ft_add_list(char **store)
 	while (temp)
 	{
 		i++;
+		free(temp);
 		temp = get_next_line(fd);
 	}
 	close(fd);
@@ -122,7 +123,7 @@ char	**ft_add_list(char **store)
 	i = 0;
 	while (store[i])
 	{
-		output[i] = store[i];
+		output[i] = ft_strdup(store[i]);
 		i++;
 	}
 	fd = open("index", O_RDONLY);
@@ -137,7 +138,7 @@ char	**ft_add_list(char **store)
 		temp = get_next_line(fd);
 	}
 	output[i] = NULL;
-	free(store);
+	ft_free_double_pointer_char(store);
 	return (output);
 }
 

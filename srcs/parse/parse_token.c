@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 22:14:26 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/23 19:09:07 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/28 16:28:41 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ t_token	**parse_token(const char *input)
 void	free_tokens(char **tokens)
 {
 	int	i;
-
 	i = 0;
 	if (tokens == NULL)
 		return ;

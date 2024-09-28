@@ -108,6 +108,8 @@ char	*expand_and_compress(char *input, t_env *env);
 int		check_pipe_error(const char *input, size_t i);
 int		check_redirect_error(const char *input, size_t i);
 t_cmd	*init_cmd(char	**evnp);
+char	**ft_renew_evnp(char **evnp);
+char	**ft_add_list(char **store);
 
 
 // new parse
@@ -139,6 +141,7 @@ void	ft_wait_pid(pid_t pid_first, int j);
 void	ft_check_and_execute(char **cmd, char **envp);
 void	ft_exit(t_cmd *cmd);
 void	ft_free_nods(t_cmd *cmd);
+void	ft_free_double_pointer_char(char **output);
 
 // Utils
 size_t	ft_strlenn(const char *str);

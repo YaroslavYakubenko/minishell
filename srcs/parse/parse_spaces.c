@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:37:59 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/27 15:44:05 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/28 16:16:51 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*compress_spaces(char *input)
 
 char	*expand_and_compress(char *input, t_env *env)
 {
+	t_env	*temp;
 	char	*expanded;
 	char	*compressed;
 
@@ -54,5 +55,13 @@ char	*expand_and_compress(char *input, t_env *env)
 	compressed = compress_spaces(expanded);
 	free(expanded);
 	free(input);
+	while (env)
+	{
+		temp = env->next;
+		free(env->name);
+		free(env->val);
+		free(env);
+		env = temp;
+	}
 	return (compressed);
-}	
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dollar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/27 16:23:06 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/28 16:15:09 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ char *expand_env_variables(const char *input, t_env *env)
 		free(result);
 		return (NULL);
 	}
-    return result;
+    return (result);
 }
 
 char	*create_new_str(const char *input, size_t var_len, const char *pos)

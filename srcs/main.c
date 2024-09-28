@@ -45,9 +45,9 @@ int main (int ac, char **av, char **envp)
 	i = 0;
 	signal(SIGINT, sigint_handler); // Ctrl + C
 	signal(SIGQUIT, sigquit_handler); // Ctrl + '\'
-	env_list = init_new_list(envp);
 	while ((input = readline("minishell%")) != NULL)
 	{
+		env_list = init_new_list(envp);
 		if (*input)
 			add_history(input);
 		if (input == 0)
