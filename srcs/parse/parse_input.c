@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:40:27 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/28 22:15:49 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:59:34 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	handle_quote(char *cmd, int i, char quote_char)
         i++;
     return (i + 1);
 }
+
 int	ft_get_parts(char *cmd)
 {
     int	i;
@@ -117,198 +118,119 @@ int	ft_get_parts(char *cmd)
 // 	return (k);
 // }
 
-static char *create_substring(const char *cmd, int start, int end)
-{
-    char *substr;
-	
-	substr = malloc(sizeof(char) * (end - start + 1));
-    if (!substr)
-        return (NULL);
-    strncpy(substr, &cmd[start], end - start);
-    substr[end - start] = '\0';
-    return (substr);
-}
-
-static char *extract_string(char *cmd, int *i, char quote_char)
-{
-	char	*str;
-    int		l;
-    int		j;
-
-	j = 0;
-	l = *i;
-    (*i)++;
-    while (cmd[*i] && cmd[*i] != quote_char)
-    {
-        (*i)++;
-        j++;
-    }
-    str = malloc(sizeof(char) * (j + 1));
-    if (!str)
-        return (NULL);
-    strncpy(str, &cmd[l], j);
-    str[j] = '\0';
-    (*i)++;
-    return (str);
-}
-
-static void fill_args(char **args, char *cmd)
-{
-	char	*str;
-    int 	i;
-    int 	k;
-
-	i = 0;
-	k = 0;
-    while (cmd[i])
-    {
-        if (cmd[i] == '\'' || cmd[i] == '\"')
-        {
-            str = extract_string(cmd, &i, cmd[i]);
-            if (!str)
-                return;
-            args[k++] = str;
-        }
-        else if (cmd[i] != ' ')
-        {
-            int l = i;
-            while (cmd[i] && cmd[i] != ' ')
-                i++;
-            args[k++] = create_substring(cmd, l, i); // Создание подстроки
-        }
-        else
-            i++;
-    }
-}
-
-char **ft_deal_cmd(char *cmd)
+char	**ft_deal_cmd(char *cmd)
 {
 	char	**args;
-    int		parts_count;
-	
-	parts_count = ft_get_parts(cmd);
-    args = malloc(sizeof(char *) * (parts_count + 1));
-    if (!args)
-        return (NULL);
-    args[parts_count] = NULL;
-    fill_args(args, cmd);
-    return (args);
-}
+	int		i;
+	int		j;
+	int		k;
+	int		l;
 
-
-// char	**ft_deal_cmd(char *cmd)
-// {
-// 	char	**args;
-// 	int		i;
-// 	int		j;
-// 	int		k;
-// 	int		l;
-
-// 	i = 0;
-// 	j = 0;
-// 	k = 0;
-// 	i = 0;
-// 	while (cmd[i])
-// 	{
-// 		if (cmd[i] == '\'' && cmd[i] == '\"')
-// 			j = 1;
-// 		i++;
-// 	}
-// 	if (j == 1)
-// 		args = ft_split(cmd, ' ');
-// 	else
-// 	{
-// 		i = 0;
-// 		k = ft_get_parts(cmd);
-// 		args = malloc(sizeof(char *) * (k + 1));
-// 		if (!args)
-// 			return (NULL);
-// 		while (k >= 0)
-// 		{
-// 			args[k] = NULL;
-// 			k--;
-// 		}
-// 		i = 0;
-// 		k = 0;
-// 		while (cmd[i])
-// 		{
-// 			if (cmd[i] == '\'')
-// 			{
-// 				i++;
-// 				l = i;
-// 				j = 0;
-// 				while (cmd[i] != 39)
-// 				{
-// 					i++;
-// 					j++;
-// 				}
-// 				args[k] = malloc(sizeof(char) * (j + 1));
-// 				if (!args[k])
-// 					return (NULL);
-// 				j = 0;
+	i = 0;
+	j = 0;
+	k = 0;
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '\'' && cmd[i] == '\"')
+			j = 1;
+		i++;
+	}
+	if (j == 1)
+		args = ft_split(cmd, ' ');
+	else
+	{
+		i = 0;
+		k = ft_get_parts(cmd);
+		args = malloc(sizeof(char *) * (k + 1));
+		if (!args)
+			return (NULL);
+		while (k >= 0)
+		{
+			args[k] = NULL;
+			k--;
+		}
+		i = 0;
+		k = 0;
+		while (cmd[i])
+		{
+			if (cmd[i] == '\'')
+			{
+				i++;
+				l = i;
+				j = 0;
+				while (cmd[i] != 39)
+				{
+					i++;
+					j++;
+				}
+				args[k] = malloc(sizeof(char) * (j + 1));
+				if (!args[k])
+					return (NULL);
+				j = 0;
 			
-// 				while (l < i)
-// 				{
-// 					args[k][j] = cmd[l];
-// 					l++;
-// 					j++;
-// 				}
-// 				args[k][j] = '\0';
-// 				k++;
-// 				i++;
-// 			}
-// 			else if (cmd[i] == '\"')
-// 			{
-// 				i++;
-// 				l = i;
-// 				j = 0;
-// 				while (cmd[i] && cmd[i] != 34)
-// 				{
-// 					i++;
-// 					j++;
-// 				}
-// 				args[k] = malloc(sizeof(char) * (j + 1));
-// 				if (!args[k])
-// 					return (NULL);
-// 				j = 0;
-// 				while (l < i)
-// 				{
-// 					args[k][j] = cmd[l];
-// 					l++;
-// 					j++;
-// 				}
-// 				args[k][j] = '\0';
-// 				k++;
-// 				i++;
-// 			}
-// 			else if (cmd[i] == ' ')
-// 				i++;
-// 			else if (cmd[i] != ' ')
-// 			{
-// 				l = i;
-// 				j = 0;
-// 				while (cmd[i] && cmd[i] != ' ')
-// 				{
-// 					i++;
-// 					j++;
-// 				}
-// 				args[k] = malloc(sizeof(char) * (j + 1));
-// 				if (!args[k])
-// 					return (NULL);
-// 				j = 0;
-// 				while (l < i)
-// 				{
-// 					args[k][j] = cmd[l];
-// 					l++;
-// 					j++;
-// 				}
-// 				args[k][j] = '\0';
-// 				k++;
-// 			}
-// 		}
-// 	}
-// 	return (args);
-// }
+				while (l < i)
+				{
+					args[k][j] = cmd[l];
+					l++;
+					j++;
+				}
+				args[k][j] = '\0';
+				k++;
+				i++;
+			}
+			else if (cmd[i] == '\"')
+			{
+				i++;
+				l = i;
+				j = 0;
+				while (cmd[i] && cmd[i] != 34)
+				{
+					i++;
+					j++;
+				}
+				args[k] = malloc(sizeof(char) * (j + 1));
+				if (!args[k])
+					return (NULL);
+				j = 0;
+				while (l < i)
+				{
+					args[k][j] = cmd[l];
+					l++;
+					j++;
+				}
+				args[k][j] = '\0';
+				k++;
+				i++;
+			}
+			else if (cmd[i] == ' ')
+				i++;
+			else if (cmd[i] != ' ')
+			{
+				l = i;
+				j = 0;
+				while (cmd[i] && cmd[i] != ' ')
+				{
+					i++;
+					j++;
+				}
+				args[k] = malloc(sizeof(char) * (j + 1));
+				if (!args[k])
+					return (NULL);
+				j = 0;
+				while (l < i)
+				{
+					args[k][j] = cmd[l];
+					l++;
+					j++;
+				}
+				args[k][j] = '\0';
+				k++;
+			}
+		}
+	}
+	return (args);
+}
 
 int	handle_double_redirect(char *cmd_line, int i)
 {

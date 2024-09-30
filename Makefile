@@ -28,7 +28,6 @@ SRCS			= ${SRCSDIR}main.c \
 					${GET_NEXT_LINEDIR}get_next_line_utils.c \
 					${PARSEDIR}parse_env.c \
 					${PARSEDIR}parse_dollar.c \
-				  	${PARSEDIR}parse_token.c \
 				  	${UTILDIR}utils.c \
 				  	${PARSEDIR}parse_quotes.c \
 					${PARSEDIR}parse_spaces.c \
@@ -62,7 +61,6 @@ $(ALLOC):
 clean:
 	@rm -f $(OBJS)
 	@make fclean -sC $(LIBFTDIR)
-	@rm -f index
 
 fclean: clean
 	@rm -f $(NAME)

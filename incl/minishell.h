@@ -114,11 +114,13 @@ char	**ft_add_list(char **store);
 
 // new parse
 t_cmd	*ft_start_parse(char *cmd_line, char **evnp);
+char	**ft_deal_cmd(char *cmd);
 void	ft_give_marks(t_cmd *cmd);
 void	ft_handle_cmd_mark(t_cmd *cmd);
 // help functions
 void	ft_print_cmd(t_cmd *cmd);
 void	print_from_fd(int fd);
+void	ft_print_doulbe_pointer(char **str);
 
 
 
@@ -142,6 +144,7 @@ void	ft_check_and_execute(char **cmd, char **envp);
 void	ft_exit(t_cmd *cmd);
 void	ft_free_nods(t_cmd *cmd);
 void	ft_free_double_pointer_char(char **output);
+char	*ft_cmd_sub(char *str, char **envp);
 
 // Utils
 size_t	ft_strlenn(const char *str);

@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 15:54:41 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/27 16:01:08 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/30 17:32:31 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -434,8 +434,10 @@ void	ft_start(t_cmd *cmd, char **evnp)
 	int		**pipe;
 	pid_t	*pids;
 
+	if (!cmd)
+		return ;
 	if (strcmp(cmd->args[0], "exit") == 0)
-			ft_exit(cmd);
+		ft_exit(cmd);
 	pipe = ft_creat_pipe(cmd);
 	pids = ft_creat_pids(cmd);
 	ft_run_cmd(cmd, pipe, pids, evnp);

@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:06:49 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/27 11:24:59 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/30 17:49:30 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_exit(t_cmd *cmd)
 {
+	unlink("index");
 	ft_free_nods(cmd);
 	exit(EXIT_SUCCESS);
 }

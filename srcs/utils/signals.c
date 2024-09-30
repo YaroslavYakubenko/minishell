@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 22:28:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/12 22:32:08 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:50:52 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void	sigquit_handler(int sig)
 	write(1, "\b\b  \b\b", 5);
 }
 
-void	eof_handler()
+void	eof_handler(int sig)
 {
+	(void)sig;
 	write(1, "exit\n", 5);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
