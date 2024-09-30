@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:40:27 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/30 16:59:34 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/30 21:14:10 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,145 @@ int	ft_get_parts(char *cmd)
 // 	}
 // 	return (k);
 // }
+
+// int	contains_quotes(char *cmd)
+// {
+//     int i;
+	
+// 	i = 0;
+//     while (cmd[i])
+// 	{
+//         if (cmd[i] == '\'' || cmd[i] == '\"')
+//             return (1);
+//         i++;
+//     }
+//     return (0);
+// }
+
+// char **allocate_args(char *cmd, int *k)
+// {
+// 	char	**args;
+// 	int		i;
+	
+//     i = 0;
+//     *k = ft_get_parts(cmd);
+//     args = malloc(sizeof(char *) * (*k + 1));
+//     if (!args)
+//         return (NULL);
+//     while (i <= *k)
+// 	{
+//         args[i] = NULL;
+//         i++;
+//     }
+//     return (args);
+// }
+
+// char *extract_quoted_string(char *cmd, int *i, char quote)
+// {
+// 	char	*str;
+//     int		l;
+//     int		j;
+// 	int		k;
+	
+// 	l = *i + 1;
+// 	j = 0;
+//     (*i)++;
+//     while (cmd[*i] && cmd[*i] != quote)
+// 	{
+//         (*i)++;
+//         j++;
+//     }
+//     if (cmd[*i] != quote)
+//         return (NULL);
+//     str = malloc(sizeof(char) * (j + 1));
+//     if (!str)
+//         return (NULL);
+//     k = 0;
+//     while (k++ < j)
+//         str[k] = cmd[l + k];
+//     str[j] = '\0';
+//     (*i)++;
+//     return (str);
+// }
+
+// char *extract_unquoted_string(char *cmd, int *i)
+// {
+// 	char	*str;
+//     int 	l;
+//     int 	j;
+// 	int		k;
+	
+// 	j = 0;
+// 	l = *i;
+//     while (cmd[*i] && cmd[*i] != ' ')
+// 	{
+//         (*i)++;
+//         j++;
+//     }
+//     str = malloc(sizeof(char) * (j + 1));
+//     if (!str)
+//         return (NULL);
+//     k = 0;
+//     while (k < j)
+// 	{
+//         str[k] = cmd[l + k];
+//         k++;
+//     }
+//     str[j] = '\0';
+//     return (str);
+// }
+
+// void handle_single_quote(char **args, char *cmd, int *i, int *k)
+// {
+//     args[*k] = extract_quoted_string(cmd, i, '\'');
+//     if (!args[*k])
+//         return ;
+//     (*k)++;
+// }
+
+// void handle_double_quote(char **args, char *cmd, int *i, int *k)
+// {
+//     args[*k] = extract_quoted_string(cmd, i, '\"');
+//     if (!args[*k])
+//         return ;
+//     (*k)++;
+// }
+
+// void handle_unquoted(char **args, char *cmd, int *i, int *k)
+// {
+//     args[*k] = extract_unquoted_string(cmd, i);
+//     if (!args[*k])
+//         return ;
+//     (*k)++;
+// }
+
+// char **ft_deal_cmd(char *cmd)
+// {
+//     char	**args;
+//     int		i;
+//     int		k;
+
+// 	i = 0;
+// 	k = 0;
+//     if (contains_quotes(cmd))
+//         return ft_split(cmd, ' ');
+//     args = allocate_args(cmd, &k);
+//     if (!args)
+//         return (NULL);
+//     while (cmd[i])
+// 	{
+//         if (cmd[i] == '\'')
+//             handle_single_quote(args, cmd, &i, &k);
+//         else if (cmd[i] == '\"')
+//             handle_double_quote(args, cmd, &i, &k);
+//         else if (cmd[i] == ' ')
+//             i++;
+//         else
+//             handle_unquoted(args, cmd, &i, &k);
+//     }
+//     return (args);
+// }
+
 
 char	**ft_deal_cmd(char *cmd)
 {

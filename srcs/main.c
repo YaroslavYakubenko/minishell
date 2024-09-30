@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/30 17:48:26 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/30 20:59:27 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,16 @@ int main (int ac, char **av, char **envp)
 	(void)av;
 	i = 0;
 	signal(SIGINT, sigint_handler); // Ctrl + C
-	signal(SIGQUIT, sigquit_handler); // Ctrl + '\'
-	signal(SIGTERM, eof_handler); // Ctrl + D
-	input = readline("minishell% ");
-	while (input != NULL)
+	signal(SIGQUIT, SIG_IGN); // Ctrl + '\'
+	while (1)
 	{
+		input = readline("minishell% ");
+		if (!input)
+		{
+			free(input);
+			printf("exit\n");
+			exit(0);
+		}
 		env_list = init_new_list(envp);
 		if (*input)
 			add_history(input);
@@ -53,7 +58,6 @@ int main (int ac, char **av, char **envp)
 		ft_give_marks(cmd);
 		ft_handle_cmd_mark(cmd);
 		ft_start(cmd, envp);
-		input = readline("minishell% ");
 	}
 	rl_clear_history();
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 22:28:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/30 17:50:52 by dyao             ###   ########.fr       */
+/*   Updated: 2024/09/30 19:53:17 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 }
 
-void	sigquit_handler(int sig)
-{
-	(void)sig;
-	write(1, "\b\b  \b\b", 5);
-}
+// void	sigquit_handler(int sig)
+// {
+// 	(void)sig;
+// 	write(1, "\b\b  \b\b", 5);
+// }
 
-void	eof_handler(int sig)
-{
-	(void)sig;
-	write(1, "exit\n", 5);
-	exit(EXIT_SUCCESS);
-}
+// void	eof_handler(int sig)
+// {
+// 	(void)sig;
+// 	write(1, "exit\n", 5);
+// 	exit(EXIT_SUCCESS);
+// }
