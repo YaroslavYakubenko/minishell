@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/30 20:59:27 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:15:20 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int main (int ac, char **av, char **envp)
 		cmd = ft_start_parse(expanded_input, envp);
 		ft_give_marks(cmd);
 		ft_handle_cmd_mark(cmd);
-		ft_start(cmd, envp);
+		ft_start(cmd);
+		free_env_list(env_list);
 	}
 	rl_clear_history();
 	return (0);

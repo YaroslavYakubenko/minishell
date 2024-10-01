@@ -1,20 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   symbols_ults.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 15:06:49 by dyao              #+#    #+#             */
-/*   Updated: 2024/10/01 12:39:11 by dyao             ###   ########.fr       */
+/*   Created: 2024/10/01 15:19:05 by dyao              #+#    #+#             */
+/*   Updated: 2024/10/01 15:19:53 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(t_cmd *cmd)
+void	ft_input(char *file_name)
 {
-	unlink("index");
-	ft_free_nods(cmd);
-	exit(EXIT_SUCCESS);
+	int		fd;
+
+	fd = open(file_name, O_RDONLY, 0777);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+}
+
+void	ft_output(char *file_name)
+{
+	int	fd;
+
+	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+}
+
+void	ft_append(char *file_name)
+{
+	int	fd;
+
+	fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
 }

@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   export_ults_6.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 15:37:07 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 13:20:49 by dyao             ###   ########.fr       */
+/*   Created: 2024/10/01 12:38:52 by dyao              #+#    #+#             */
+/*   Updated: 2024/10/01 12:39:38 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-#include <stdlib.h>
-#include <string.h>
-
-char	*ft_strndup(const char *src, size_t n)
+void	ft_print_double_pointer(char **str)
 {
-	size_t	len;
-	char	*dest;
+	int	i;
 
-	len = ft_strnlen(src, n);
-	dest = (char *)malloc(len + 1);
-	if (!dest)
-		return (NULL);
-	ft_memcpy(dest, src, len);
-	dest[len] = '\0';
-	return (dest);
+	if (!str || !str[0])
+		return ;
+	i = 0;
+	while (str[i] != NULL)
+	{
+		if (str[i][0] != '_')
+			printf("%s\n", str[i]);
+		i++;
+	}
+}
+
+void	ft_print_env(char **evnp)
+{
+	char	**store;
+
+	store = ft_renew_evnp(evnp);
+	ft_print_double_pointer(store);
+	ft_read_and_print();
 }

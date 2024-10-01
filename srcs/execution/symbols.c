@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:16:45 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/26 16:24:02 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/01 15:20:07 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,40 +36,24 @@ void	ft_redir_heredoc(char *str)
 	}
 }
 
-void	ft_input(char *file_name)
+char	*ft_deal_input(char *input, char *output_str)
 {
-	int		fd;
-
-	fd = open(file_name, O_RDONLY, 0777);
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-}
-
-void	ft_output(char *file_name)
-{
-	int	fd;
-
-	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-}
-
-void	ft_append(char *file_name)
-{
-	int	fd;
-
-	fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0777);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	if (!output_str)
+		output_str = ft_strdup(input);
+	else
+	{
+		output_str = ft_strjoin_1(output_str, "\n");
+		output_str = ft_strjoin_1(output_str, input);
+	}
+	return (output_str);
 }
 
 void	ft_heredocs(char *end)
 {
 	char	*input;
-	char	*output_str = NULL;
-	int		i;
+	char	*output_str;
 
-	i = 0;
+	output_str = NULL;
 	input = readline("heredoc>");
 	while (input != NULL)
 	{
@@ -78,17 +62,11 @@ void	ft_heredocs(char *end)
 			free(input);
 			break ;
 		}
-		if (i++ == 0)
-			output_str = ft_strdup(input);
-		else
-		{
-			output_str = ft_strjoin(output_str, "\n");
-			output_str = ft_strjoin(output_str, input);
-		}
+		output_str = ft_deal_input(input, output_str);
+		free(input);
 		input = readline("heredoc>");
 	}
-	output_str = ft_strjoin(output_str, "\n");
+	output_str = ft_strjoin_1(output_str, "\n");
 	ft_redir_heredoc(output_str);
 	free (output_str);
 }
-

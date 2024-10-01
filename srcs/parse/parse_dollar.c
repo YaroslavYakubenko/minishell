@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/28 16:15:09 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/01 14:09:07 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,61 @@ char	*replace_var_with_value(const char *input, const char *pos, char *value, si
 	return (new_input);
 }
 
+char *expand_env_variables(const char *input, t_env *env)
+{
+    char *result;
+    char *pos[2];
+    char *new_result;
+    int quotes[2];
+
+    quotes[0] = 0;
+    quotes[1] = 0;
+    result = ft_strdup(input);
+    if (!result)
+        return NULL;
+    pos[0] = result;
+    while (*pos[0])
+    {
+        check_quotes(*pos[0], &quotes[0], &quotes[1]);
+        if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
+        {
+            new_result = process_variable(result, pos[0], env, quotes[0]);
+            if (!new_result)
+            {
+                free(result);
+                return NULL;
+            }
+            pos[0] = new_result + (pos[0] - result);
+            free(result);
+            result = new_result;
+        }
+		else
+        	pos[0]++;
+    }
+	if (quotes[0] || quotes[1])
+	{
+		printf("Error: syntax error with quotes\n");
+		free(result);
+		return (NULL);
+	}
+	return (result);
+}
+
+char	*create_new_str(const char *input, size_t var_len, const char *pos)
+{
+	char	*new_input;
+	size_t	new_len;
+
+	new_len = (pos - input) + ft_strlen(pos + var_len) + 1;
+	new_input = malloc(new_len);
+	if (!new_input)
+		return (NULL);
+	ft_memcpy(new_input, input, pos - input);
+	new_input[pos - input] = '\0';
+	ft_strcat(new_input, pos + var_len);
+	return (new_input);
+}
+
 // char	*expand_env_variables(const char *input, t_env *env)
 // {
 // 	char	*result;
@@ -108,58 +163,3 @@ char	*replace_var_with_value(const char *input, const char *pos, char *value, si
 // 	}
 // 	return (result);
 // }
-
-char *expand_env_variables(const char *input, t_env *env)
-{
-    char *result;
-    char *pos[2];
-    char *new_result;
-    int quotes[2];
-
-    quotes[0] = 0;
-    quotes[1] = 0;
-    result = ft_strdup(input);
-    if (!result)
-        return NULL;
-    pos[0] = result;
-    while (*pos[0])
-    {
-        check_quotes(*pos[0], &quotes[0], &quotes[1]);
-        if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
-        {
-            new_result = process_variable(result, pos[0], env, quotes[0]);
-            if (!new_result)
-            {
-                free(result);
-                return NULL;
-            }
-            pos[0] = new_result + (pos[0] - result);
-            free(result);
-            result = new_result;
-        }
-		else
-        	pos[0]++;
-    }
-	if (quotes[0] || quotes[1])
-	{
-		printf("Error: syntax error with quotes\n");
-		free(result);
-		return (NULL);
-	}
-    return (result);
-}
-
-char	*create_new_str(const char *input, size_t var_len, const char *pos)
-{
-	char	*new_input;
-	size_t	new_len;
-
-	new_len = (pos - input) + ft_strlen(pos + var_len) + 1;
-	new_input = malloc(new_len);
-	if (!new_input)
-		return (NULL);
-	ft_memcpy(new_input, input, pos - input);
-	new_input[pos - input] = '\0';
-	ft_strcat(new_input, pos + var_len);
-	return (new_input);
-}

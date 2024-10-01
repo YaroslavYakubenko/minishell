@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 18:07:58 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/28 16:40:39 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/01 12:39:34 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,78 +79,6 @@ char	**ft_sort_the_evnp(char **store)
 	return (store);
 }
 
-void	ft_print_double_pointer(char **str)
-{
-	int	i;
-
-	if (!str || !str[0])
-		return ;
-	i = 0;
-	while (str[i] != NULL)
-	{
-		if (str[i][0] != '_')
-			printf("%s\n", str[i]);
-		i++;
-	}
-}
-
-char	**ft_add_list(char **store)
-{
-	int		fd;
-	int		i;
-	int		j;
-	char	*temp;
-	char	**output;
-
-	fd = open("index", O_RDONLY);
-	if (fd < 0)
-		return (store);
-	i = 0;
-	temp = get_next_line(fd);
-	while (temp)
-	{
-		i++;
-		free(temp);
-		temp = get_next_line(fd);
-	}
-	close(fd);
-	fd = 0;
-	while (store[fd])
-		fd++;
-	output = malloc((i + fd + 1) * sizeof(char *));
-	if (!output)
-		return (NULL);
-	i = 0;
-	while (store[i])
-	{
-		output[i] = ft_strdup(store[i]);
-		i++;
-	}
-	fd = open("index", O_RDONLY);
-	temp = get_next_line(fd);
-	while (temp)
-	{
-		j = 0;
-		while (temp[j] != '\n' && temp[j])
-			j++;
-		temp[j] = '\0';
-		output[i++] = temp;
-		temp = get_next_line(fd);
-	}
-	output[i] = NULL;
-	ft_free_double_pointer_char(store);
-	return (output);
-}
-
-void	ft_print_env(char **evnp)
-{
-	char	**store;
-
-	store = ft_renew_evnp(evnp);
-	ft_print_double_pointer(store);
-	ft_read_and_print();
-}
-
 void	ft_export(char	**argv, char **evnp)
 {
 	char	**store;
@@ -175,3 +103,51 @@ void	ft_export(char	**argv, char **evnp)
 	else if (argc > 1 && ft_strcmp(argv[0], "unset") == 0)
 		ft_unset(argv[1]);
 }
+
+// char	**ft_add_list(char **store)
+// {
+// 	int		fd;
+// 	int		i;
+// 	int		j;
+// 	char	*temp;
+// 	char	**output;
+
+// 	fd = open("index", O_RDONLY);
+// 	if (fd < 0)
+// 		return (store);
+// 	i = 0;
+// 	temp = get_next_line(fd);
+// 	while (temp)
+// 	{
+// 		i++;
+// 		free(temp);
+// 		temp = get_next_line(fd);
+// 	}
+// 	close(fd);
+// 	fd = 0;
+// 	while (store[fd])
+// 		fd++;
+// 	output = malloc((i + fd + 1) * sizeof(char *));
+// 	if (!output)
+// 		return (NULL);
+// 	i = 0;
+// 	while (store[i])
+// 	{
+// 		output[i] = ft_strdup(store[i]);
+// 		i++;
+// 	}
+// 	fd = open("index", O_RDONLY);
+// 	temp = get_next_line(fd);
+// 	while (temp)
+// 	{
+// 		j = 0;
+// 		while (temp[j] != '\n' && temp[j])
+// 			j++;
+// 		temp[j] = '\0';
+// 		output[i++] = temp;
+// 		temp = get_next_line(fd);
+// 	}
+// 	output[i] = NULL;
+// 	ft_free_double_pointer_char(store);
+// 	return (output);
+// }

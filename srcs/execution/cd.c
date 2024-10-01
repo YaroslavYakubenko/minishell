@@ -6,11 +6,20 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 12:13:13 by dyao              #+#    #+#             */
-/*   Updated: 2024/09/26 16:22:30 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/01 11:32:47 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_run_cd(char *dest_dir)
+{
+	int	dir;
+
+	dir = chdir(dest_dir);
+	if (dir == -1)
+		perror(strerror(errno));
+}
 
 void	ft_cd(char *dest_dir)
 {
@@ -33,15 +42,9 @@ void	ft_cd(char *dest_dir)
 			dir++;
 		}
 		final_dir = ft_strndup(new_dir, dir);
-		dir = chdir(final_dir);
-		if (dir == -1)
-			perror(strerror(errno));
+		ft_run_cd(final_dir);
 		free(final_dir);
 	}
 	else
-	{
-		dir = chdir(dest_dir);
-		if (dir == -1)
-			perror(strerror(errno));
-	}
+		ft_run_cd(dest_dir);
 }

@@ -19,10 +19,20 @@ SRCS			= ${SRCSDIR}main.c \
 					${EXECDIR}execute.c \
 					${EXECDIR}ft_get_path_own.c \
 					${EXECDIR}symbols.c \
+					${EXECDIR}symbols_ults.c \
 					${EXECDIR}cd.c \
 					${EXECDIR}export.c \
 					${EXECDIR}export_ults.c \
+					${EXECDIR}export_ults_1.c \
+					${EXECDIR}export_ults_2.c \
+					${EXECDIR}export_ults_3.c \
+					${EXECDIR}export_ults_4.c \
+					${EXECDIR}export_ults_5.c \
+					${EXECDIR}export_ults_6.c \
 					${EXECDIR}ft_start.c \
+					${EXECDIR}ft_start_ults.c \
+					${EXECDIR}ft_start_ults_1.c \
+					${EXECDIR}ft_start_ults_2.c \
 					${EXECDIR}ft_exit.c \
 					${GET_NEXT_LINEDIR}get_next_line.c \
 					${GET_NEXT_LINEDIR}get_next_line_utils.c \
