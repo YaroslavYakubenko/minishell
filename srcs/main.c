@@ -6,11 +6,9 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 18:49:29 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:37:09 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -26,6 +24,21 @@ void	free_env_list(t_env *env_list)
 		free(tmp->val);
 		free(tmp);
 	}
+}
+
+int	are_quotes_closed(char *input)
+{
+	int	in_single_quote;
+	int	in_double_quote;
+
+	in_single_quote = 0;
+	in_double_quote = 0;
+	while (*input)
+	{
+		check_quotes(*input, &in_single_quote, &in_double_quote);
+		input++;
+	}
+	return (!(in_single_quote || in_double_quote));
 }
 
 int main (int ac, char **av, char **envp)
@@ -53,6 +66,12 @@ int main (int ac, char **av, char **envp)
 		env_list = init_new_list(envp);
 		if (*input)
 			add_history(input);
+		if (!are_quotes_closed(input))
+		{
+			printf("Error: syntax error with quotes\n");
+			free(input);
+			continue ;
+		}
 		expanded_input = expand_and_compress(input, env_list);
 		cmd = ft_start_parse(expanded_input, envp);
 		ft_give_marks(cmd);
