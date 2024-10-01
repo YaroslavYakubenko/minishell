@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 22:28:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/30 19:53:17 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:33:39 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,3 @@ void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
-
-// void	sigquit_handler(int sig)
-// {
-// 	(void)sig;
-// 	write(1, "\b\b  \b\b", 5);
-// }
-
-// void	eof_handler(int sig)
-// {
-// 	(void)sig;
-// 	write(1, "exit\n", 5);
-// 	exit(EXIT_SUCCESS);
-// }

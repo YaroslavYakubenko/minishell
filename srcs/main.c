@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 14:15:20 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/01 18:49:29 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,17 @@ int main (int ac, char **av, char **envp)
 		ft_give_marks(cmd);
 		ft_handle_cmd_mark(cmd);
 		ft_start(cmd);
-		free_env_list(env_list);
+		// free_env_list(env_list);
 	}
 	rl_clear_history();
 	return (0);
 }
+
+// if (quotes[0] || quotes[1])
+// 	{
+// 		printf("Error: syntax error with quotes\n");
+// 		free(result);
+// 		return (NULL);
+// 	}
 
 // < in ls -l | wc -c > out | cat << g | echo "Hello World!" >> out | echo 'Yes $PWD' | echo 'Yes $SHLVL'

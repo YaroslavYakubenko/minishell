@@ -44,6 +44,9 @@ SRCS			= ${SRCSDIR}main.c \
 					${PARSEDIR}checks.c \
 					${UTILDIR}signals.c \
 					${PARSEDIR}parse_input.c \
+					${PARSEDIR}parse_input_v2.c \
+					${PARSEDIR}handle_mark.c \
+					${PARSEDIR}handle_mark_v2.c \
 
 VPATH			= ${SRCSDIR} ${SRCSDIR}parse/ ${SRCSDIR}utils/
 OBJS			= $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:41:13 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/09/10 18:47:47 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:28:13 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,13 @@ char	*allocate_new_input(size_t len)
 		return (NULL);
 	}
 	return (new_input);
+}
+
+char	*update_position(char *result, char *new_result, char *pos)
+{
+	if (new_result == result)
+		return (result + (pos - result) + 1);
+	else
+		return (new_result + (pos - result)
+			+ (ft_strlen(new_result) - ft_strlen(result)));
 }

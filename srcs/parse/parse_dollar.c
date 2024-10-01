@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dollar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 14:09:07 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/01 18:49:17 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ size_t	extract_var_name(const char *pos, char *var_name)
 	size_t	i;
 
 	i = 0;
-	while (pos[i] && pos[i] != ' ' && pos[i] != '\t' && pos[i] != '\n' && pos[i] != '$' && pos[i] != '\'' && pos[i] != '\"')
+	while (pos[i] && pos[i] != ' ' && pos[i] != '\t' && pos[i] != '\n'
+		&& pos[i] != '$' && pos[i] != '\'' && pos[i] != '\"')
 	{
 		var_name[i] = pos[i];
 		i++;
@@ -54,7 +55,8 @@ size_t	extract_var_name(const char *pos, char *var_name)
 	return (i);
 }
 
-char	*replace_var_with_value(const char *input, const char *pos, char *value, size_t var_len)
+char	*replace_var_with_value(const char *input,
+	const char *pos, char *value, size_t var_len)
 {
 	char	*new_input;
 	size_t	new_len;
@@ -70,42 +72,36 @@ char	*replace_var_with_value(const char *input, const char *pos, char *value, si
 	return (new_input);
 }
 
-char *expand_env_variables(const char *input, t_env *env)
+char	*expand_env_variables(const char *input, t_env *env)
 {
-    char *result;
-    char *pos[2];
-    char *new_result;
-    int quotes[2];
+	char	*result;
+	char	*pos[2];
+	char	*new_result;
+	int		quotes[2];
 
-    quotes[0] = 0;
-    quotes[1] = 0;
-    result = ft_strdup(input);
-    if (!result)
-        return NULL;
-    pos[0] = result;
-    while (*pos[0])
-    {
-        check_quotes(*pos[0], &quotes[0], &quotes[1]);
-        if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
-        {
-            new_result = process_variable(result, pos[0], env, quotes[0]);
-            if (!new_result)
-            {
-                free(result);
-                return NULL;
-            }
-            pos[0] = new_result + (pos[0] - result);
-            free(result);
-            result = new_result;
-        }
-		else
-        	pos[0]++;
-    }
-	if (quotes[0] || quotes[1])
-	{
-		printf("Error: syntax error with quotes\n");
-		free(result);
+	quotes[0] = 0;
+	quotes[1] = 0;
+	result = ft_strdup(input);
+	if (!result)
 		return (NULL);
+	pos[0] = result;
+	while (*pos[0])
+	{
+		check_quotes(*pos[0], &quotes[0], &quotes[1]);
+		if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
+		{
+			new_result = process_variable(result, pos[0], env, quotes[0]);
+			if (!new_result)
+			{
+				free(result);
+				return (NULL);
+			}
+			pos[0] = new_result + (pos[0] - result);
+			free(result);
+			result = new_result;
+		}
+		else
+			pos[0]++;
 	}
 	return (result);
 }
@@ -124,42 +120,3 @@ char	*create_new_str(const char *input, size_t var_len, const char *pos)
 	ft_strcat(new_input, pos + var_len);
 	return (new_input);
 }
-
-// char	*expand_env_variables(const char *input, t_env *env)
-// {
-// 	char	*result;
-// 	char	*pos[2];
-// 	char	*new_result;
-// 	int		quotes[2];
-
-// 	quotes[0] = 0;
-// 	quotes[1] = 0;
-// 	if (!(result = ft_strdup(input)))
-// 		return (NULL);
-// 	pos[0] = result;
-// 	while (*pos[0])
-// 	{
-// 		check_quotes(*pos[0], &quotes[0], &quotes[1]);
-// 		if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
-// 		{
-// 			pos[1] = pos[0] + 1;
-// 			if (*pos[1] == '\0' || *pos[1] == ' ' || *pos[1] == '\'' || *pos[1] == '"')
-// 			{
-// 				pos[0]++;
-// 				continue ;
-// 			}
-// 			new_result = process_variable(result, pos[0], env, quotes[0]);
-// 			if (!new_result)
-// 			{
-// 				free(result);
-// 				return (NULL);
-// 			}
-// 			pos[0] = new_result + (pos[0] - result) + 1;
-// 			free(result);
-// 			result = new_result;
-// 		}
-// 		else
-// 			pos[0]++;
-// 	}
-// 	return (result);
-// }

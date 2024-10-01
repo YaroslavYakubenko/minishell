@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 14:33:00 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/01 18:29:15 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,8 @@
 
 typedef struct s_mshell
 {
-	// t_env *env;
 	int	exit_code;
 }	t_mshell;
-
-typedef enum e_token_type
-{
-	_word,
-	_pipe,
-	_redir_in,
-	_redir_out,
-	_append,
-	_heredoc,
-	_null,
-}	t_token_type;
-
-typedef struct s_token
-{
-	char			*token;
-	t_token_type	type;
-}	t_token;
 
 typedef struct s_env
 {
@@ -85,18 +67,6 @@ char	*get_env_val(const char *name, t_env *env);
 char	*replace_var_with_value(const char *input,
 			const char *pos, char *value, size_t var_len);
 char	*expand_env_variables(const char *input, t_env *env);
-t_token	**init_token(size_t len);
-int		is_token(char *str);
-int		parse_special_token(const char *input, size_t *i,
-			t_token **tokens, size_t *token_count);
-int		parse_qoutes_token(const char *input, size_t *i,
-			t_token **tokens, size_t *token_count);
-void	parse_word_token(const char *input, size_t *i,
-			t_token **tokens, size_t *token_count);
-t_token	**parse_token(const char *input);
-void	free_tokens(char **tokens);
-char	*parse_single_quotes(char *input);
-char	*parse_double_quotes(char *input);
 char	*append_var_to_result(char *result, const char *pos, size_t len);
 size_t	extract_var_name(const char *pos, char *var_name);
 void	check_quotes(char c, int *in_single_quote, int *in_double_quote);
@@ -111,6 +81,9 @@ int		check_redirect_error(const char *input, size_t i);
 t_cmd	*init_cmd(char	**evnp);
 char	**ft_renew_evnp(char **evnp);
 char	**ft_add_list(char **store);
+int		handle_quote(char *cmd, int i, char quote_char);
+char	*extract_command(char *cmd_line, int *i);
+int		ft_get_parts(char *cmd);
 
 // new parse
 t_cmd	*ft_start_parse(char *cmd_line, char **evnp);
