@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:51:30 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 18:49:17 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:02:53 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ char	*replace_var_with_value(const char *input,
 char	*expand_env_variables(const char *input, t_env *env)
 {
 	char	*result;
-	char	*pos[2];
-	char	*new_result;
+	char	*pos;
 	int		quotes[2];
 
 	quotes[0] = 0;
@@ -84,24 +83,13 @@ char	*expand_env_variables(const char *input, t_env *env)
 	result = ft_strdup(input);
 	if (!result)
 		return (NULL);
-	pos[0] = result;
-	while (*pos[0])
+	pos = result;
+	while (*pos)
 	{
-		check_quotes(*pos[0], &quotes[0], &quotes[1]);
-		if (*pos[0] == '$' && (quotes[1] || !quotes[0]))
-		{
-			new_result = process_variable(result, pos[0], env, quotes[0]);
-			if (!new_result)
-			{
-				free(result);
-				return (NULL);
-			}
-			pos[0] = new_result + (pos[0] - result);
-			free(result);
-			result = new_result;
-		}
-		else
-			pos[0]++;
+		check_quotes(*pos, &quotes[0], &quotes[1]);
+		if (handle_dollar_sign(&result, &pos, env, quotes))
+			return (result);
+		pos++;
 	}
 	return (result);
 }

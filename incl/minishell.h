@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 18:29:15 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:23:57 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,7 @@ void	handle_parent_pipes(t_cmd *temp, int **pipes, int *i_for_pipe);
 size_t	ft_strlenn(const char *str);
 char	*allocate_new_input(size_t len);
 void	sigint_handler(int sig);
+int		handle_dollar_sign(char **result,
+			char **pos, t_env *env, int quotes[2]);
 
 #endif
