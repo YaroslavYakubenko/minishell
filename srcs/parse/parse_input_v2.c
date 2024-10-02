@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:35:38 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 18:09:46 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:20:09 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,27 +76,29 @@ char	*extract_double_quote(char *cmd, int *i)
 	return (str);
 }
 
-char	*extract_word(char *cmd, int *i)
+char	*process_quotes_in_word(char *cmd, int *i)
 {
-	int		l;
 	int		j;
-	char	*str;
+	char	*result;
+	int		len;
 
-	l = *i;
-	j = 0;
+	j = *i;
+	len = 0;
 	while (cmd[*i] && cmd[*i] != ' ')
 	{
-		(*i)++;
-		j++;
+		if (cmd[*i] == '\'' || cmd[*i] == '\"')
+			skip_quotes(cmd, i);
+		else
+		{
+			(*i)++;
+			len++;
+		}
 	}
-	str = malloc(sizeof(char) * (j + 1));
-	if (!str)
+	result = malloc(sizeof(char) * (len + 1));
+	if (!result)
 		return (NULL);
-	j = 0;
-	while (l < *i)
-		str[j++] = cmd[l++];
-	str[j] = '\0';
-	return (str);
+	fill_result(cmd, j, *i, result);
+	return (result);
 }
 
 char	**ft_deal_cmd(char *cmd)
@@ -120,7 +122,7 @@ char	**ft_deal_cmd(char *cmd)
 		else if (cmd[i] == ' ')
 			i++;
 		else
-			args[k++] = extract_word(cmd, &i);
+			args[k++] = process_quotes_in_word(cmd, &i);
 	}
 	return (args);
 }

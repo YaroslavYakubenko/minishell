@@ -6,53 +6,11 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 19:11:20 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:22:32 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// t_env	*create_env_node(char *env_str)
-// {
-// 	t_env	*new_node;
-// 	char	*temp;
-// 	int		i;
-// 	int		j;
-
-// 	new_node = malloc(sizeof(t_env));
-// 	if (!new_node)
-// 		return (NULL);
-// 	new_node->name = NULL;
-// 	new_node->next = NULL;
-// 	new_node->val = NULL;
-// 	i = 0;
-// 	while (env_str[i] && env_str[i] != '=')
-// 		i++;
-// 	j = 0;
-// 	temp = malloc((i + 1) * sizeof(char));
-// 	if (!temp)
-// 		return (NULL);
-// 	while (env_str[j] && env_str[j] != '=')
-// 	{
-// 		temp[j] = env_str[j];
-// 		j++;
-// 	}
-// 	temp[j] = '\0';
-// 	new_node->name = temp;
-// 	j = ++i;
-// 	while (env_str[i])
-// 		i++;
-// 	temp = malloc((i - j + 1) * sizeof(char));
-// 	if (!temp)
-// 		return (NULL);
-// 	i = j;
-// 	j = 0;
-// 	while (env_str[i])
-// 		temp[j++] = env_str[i++];
-// 	temp[j] = '\0';
-// 	new_node->val = temp;
-// 	return (new_node);
-// }
 
 void	ft_free_double_pointer_char(char **output)
 {

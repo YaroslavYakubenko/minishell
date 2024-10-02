@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 19:23:57 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:20:55 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ char	**ft_add_list(char **store);
 int		handle_quote(char *cmd, int i, char quote_char);
 char	*extract_command(char *cmd_line, int *i);
 int		ft_get_parts(char *cmd);
+char	*process_quotes_in_word(char *cmd, int *i);
+void	skip_quotes(char *cmd, int *i);
+void	fill_result(char *cmd, int start, int end, char *result);
 
 // new parse
 t_cmd	*ft_start_parse(char *cmd_line, char **evnp);

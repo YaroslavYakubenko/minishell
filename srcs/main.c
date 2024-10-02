@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 19:37:09 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/02 17:24:43 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,5 @@ int main (int ac, char **av, char **envp)
 	rl_clear_history();
 	return (0);
 }
-
-// if (quotes[0] || quotes[1])
-// 	{
-// 		printf("Error: syntax error with quotes\n");
-// 		free(result);
-// 		return (NULL);
-// 	}
 
 // < in ls -l | wc -c > out | cat << g | echo "Hello World!" >> out | echo 'Yes $PWD' | echo 'Yes $SHLVL'
