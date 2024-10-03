@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/03 18:32:51 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/03 19:34:41 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int		ft_get_parts(char *cmd);
 char	*process_quotes_in_word(char *cmd, int *i);
 void	skip_quotes(char *cmd, int *i);
 void	fill_result(char *cmd, int start, int end, char *result);
+int	is_empty_or_space_only(const char *input);
 
 // new parse
 t_cmd	*ft_start_parse(char *cmd_line, char **evnp);

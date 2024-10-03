@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:18:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/03 16:18:42 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/03 19:32:18 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,15 @@ char	*ft_be_nice(char *input)
 		i++;
 	}
 	return (input);
+}
+
+int	is_empty_or_space_only(const char *input)
+{
+	while (*input)
+	{
+		if (*input != ' ')
+			return (0);
+		input++;
+	}
+	return (1);
 }
