@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/03 19:34:41 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/03 21:43:16 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ int		ft_get_parts(char *cmd);
 char	*process_quotes_in_word(char *cmd, int *i);
 void	skip_quotes(char *cmd, int *i);
 void	fill_result(char *cmd, int start, int end, char *result);
-int	is_empty_or_space_only(const char *input);
+int		is_empty_or_space_only(const char *input);
+int		has_invalid_pipe_or_redirects(const char *cmd_line);
+int		has_invalid_pipes(const char *cmd_line);
+int		has_invalid_pipe_syntax(const char *cmd_line);
 
 // new parse
 t_cmd	*ft_start_parse(char *cmd_line, char **evnp);
@@ -141,5 +144,6 @@ char	*allocate_new_input(size_t len);
 void	sigint_handler(int sig);
 int		handle_dollar_sign(char **result,
 			char **pos, t_env *env, int quotes[2]);
+int		ft_isspace(int c);
 
 #endif

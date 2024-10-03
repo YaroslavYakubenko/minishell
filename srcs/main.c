@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/03 19:29:00 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/03 22:14:42 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,12 @@ int main (int ac, char **av, char **envp)
 		if (!are_quotes_closed(input))
 		{
 			printf("Error: syntax error with quotes\n");
+			free(input);
+			continue ;
+		}
+		if (has_invalid_pipe_or_redirects(input))
+		{
+			printf("Error: syntax error with pipes or redirects\n");
 			free(input);
 			continue ;
 		}

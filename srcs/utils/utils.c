@@ -6,7 +6,7 @@
 /*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:41:13 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 19:02:32 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/03 20:21:47 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,10 @@ int	handle_dollar_sign(char **result, char **pos, t_env *env, int quotes[2])
 		return (0);
 	}
 	return (0);
+}
+
+int	ft_isspace(int c)
+{
+	return (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\r' || c == '\v' || c == '\f');
 }
