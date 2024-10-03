@@ -6,27 +6,30 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:21:03 by dyao              #+#    #+#             */
-/*   Updated: 2024/10/03 15:40:32 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/03 18:36:39 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_wait_pid(pid_t pid_first, int j)
+void	ft_wait_pid(pid_t *pid_first)
 {
 	int	status;
 	int	i;
+	int	j;
 
-	i = waitpid(pid_first, &status, 0);
-	if (i == -1)
+	j = 0;
+	while (pid_first[j])
 	{
-		perror("Error waiting for process\n");
-		exit (EXIT_FAILURE);
-	}
-	if (!(WIFEXITED(status)))
-	{
-		write(2, &j, 1);
-		perror(" process did not exit normally!\n");
+		i = waitpid(pid_first[j], &status, 0);
+		if (i == -1)
+		{
+			perror("Error waiting for process\n");
+			exit (EXIT_FAILURE);
+		}
+		if (!(WIFEXITED(status)))
+			perror("process did not exit normally!\n");
+		j++;
 	}
 }
 

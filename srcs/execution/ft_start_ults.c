@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:16:53 by dyao              #+#    #+#             */
-/*   Updated: 2024/10/01 14:18:09 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/03 18:35:07 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	handle_output(t_cmd *temp, t_cmd *search, t_cmd *start)
 					ft_output(search->args[1]);
 					ft_check_and_execute(temp->args, temp->evnp);
 				}
-				ft_wait_pid(pid, 0);
+				waitpid(pid, NULL, 0);
 			}
 			search = search->next;
 		}
@@ -92,7 +92,7 @@ int	handle_append(t_cmd *temp, t_cmd *search, t_cmd *start)
 					ft_append(search->args[1]);
 					ft_check_and_execute(temp->args, temp->evnp);
 				}
-				ft_wait_pid(pid, 0);
+				waitpid(pid, NULL, 0);
 			}
 			search = search->next;
 		}

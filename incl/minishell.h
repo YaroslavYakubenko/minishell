@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/02 18:20:55 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:32:51 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_cmd	*ft_start_parse(char *cmd_line, char **evnp);
 char	**ft_deal_cmd(char *cmd);
 void	ft_give_marks(t_cmd *cmd);
 void	ft_handle_cmd_mark(t_cmd *cmd);
+char	*ft_be_nice(char *input);
 // help functions
 void	ft_print_cmd(t_cmd *cmd);
 void	ft_print_doulbe_pointer(char **str);
@@ -111,7 +112,7 @@ void	ft_record(char *str);
 int		ft_strcmp(const char *s1, const char *s2);
 void	ft_start(t_cmd *cmd);
 void	ft_read_and_print(void);
-void	ft_wait_pid(pid_t pid_first, int j);
+void	ft_wait_pid(pid_t *pid_first);
 void	ft_check_and_execute(char **cmd, char **envp);
 void	ft_exit(t_cmd *cmd);
 void	ft_free_nods(t_cmd *cmd);

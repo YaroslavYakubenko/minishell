@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:16:45 by dyao              #+#    #+#             */
-/*   Updated: 2024/10/01 15:20:07 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/03 18:34:22 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_redir_heredoc(char *str)
 	}
 	else if (pid > 0)
 	{
-		ft_wait_pid(pid, 0);
+		waitpid(pid, NULL, 0);
 		dup2(fd_pipe[0], STDIN_FILENO);
 		close(fd_pipe[0]);
 		close(fd_pipe[1]);
