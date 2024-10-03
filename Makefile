@@ -48,6 +48,7 @@ SRCS			= ${SRCSDIR}main.c \
 					${PARSEDIR}handle_mark.c \
 					${PARSEDIR}handle_mark_v2.c \
 					${PARSEDIR}extract_env.c \
+					${PARSEDIR}parse_spaces_v2.c \
 
 VPATH			= ${SRCSDIR} ${SRCSDIR}parse/ ${SRCSDIR}utils/
 OBJS			= $(SRCS:.c=.o)
