@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/02 17:24:43 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:41:39 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,40 @@ int	are_quotes_closed(char *input)
 	return (!(in_single_quote || in_double_quote));
 }
 
+void	ft_print_doulbe_pointer(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		printf("%s\n", str[i]);
+		i++;
+	}
+}
+
+void	ft_print_cmd(t_cmd *cmd)
+{
+	int i;
+
+	i = 1;
+	while (cmd)
+	{
+		printf("this is the %d command: \n", i);
+		printf("cmd_nbr: %d\n", cmd->cmd_nbr);
+		printf("pipe_nbr: %d\n", cmd->pipe_nbr);
+		printf("before_pipe: %d\n", cmd->before_pipe);
+		printf("after_pipe: %d\n", cmd->after_pipe);
+		printf("input: %d\n", cmd->input);
+		printf("output: %d\n", cmd->output);
+		printf("append: %d\n", cmd->append);
+		printf("heredoc: %d\n", cmd->heredoc);
+		ft_print_doulbe_pointer(cmd->args);
+		cmd = cmd->next;
+		i++;
+	}
+}
+
 int main (int ac, char **av, char **envp)
 {
 	t_env	*env_list;
@@ -52,8 +86,8 @@ int main (int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	i = 0;
-	signal(SIGINT, sigint_handler); // Ctrl + C
-	signal(SIGQUIT, SIG_IGN); // Ctrl + '\'
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		input = readline("minishell% ");
