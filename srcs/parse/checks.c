@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 22:10:33 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/04 15:48:00 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/04 21:51:34 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,34 +42,19 @@ void	handle_quotes(const char *cmd_line, int *i,
 	int *in_single_quote, int *in_double_quote)
 {
 	if (cmd_line[*i] == '\'' && !(*in_double_quote))
-	{
 		*in_single_quote = !(*in_single_quote);
-		(*i)++;
-	}
-	else if (cmd_line[*i] == '"' && !(*in_single_quote))
-	{
+	else if (cmd_line[*i] == '\"' && !(*in_single_quote))
 		*in_double_quote = !(*in_double_quote);
-		(*i)++;
-	}
 }
 
 int	check_pipe_or_redirect(const char *cmd_line, int *i)
 {
-	if (cmd_line[*i] == '|' || cmd_line[*i] == '<' || cmd_line[*i] == '>')
-	{
-		if (*i == 0 || cmd_line[*i + 1] == '\0')
-			return (1);
-		if ((cmd_line[*i] == '<' && cmd_line[*i + 1] == '<')
-			|| (cmd_line[*i] == '>' && cmd_line[*i + 1] == '>'))
-			(*i)++;
-		if (ft_isspace((unsigned char)cmd_line[*i + 1]))
-		{
-			while (ft_isspace((unsigned char)cmd_line[*i + 1]))
-				(*i)++;
-			if (cmd_line[*i + 1] == '\0' || cmd_line[*i + 1] == '|')
-				return (1);
-		}
-	}
+	if (cmd_line[*i] == '|' && *i == 0)
+		return (1);
+	if (cmd_line[*i] == '|' && cmd_line[*i + 1] == '|')
+		return (1);
+	if (cmd_line[*i] == '|' && !cmd_line[*i + 1])
+		return (1);
 	return (0);
 }
 

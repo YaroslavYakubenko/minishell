@@ -45,6 +45,7 @@ SRCS			= ${SRCSDIR}main.c \
 					${UTILDIR}signals.c \
 					${PARSEDIR}parse_input.c \
 					${PARSEDIR}parse_input_v2.c \
+					${PARSEDIR}parse_input_v3.c \
 					${PARSEDIR}handle_mark.c \
 					${PARSEDIR}handle_mark_v2.c \
 					${PARSEDIR}extract_env.c \

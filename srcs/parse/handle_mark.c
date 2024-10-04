@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_cd_mark.c                                   :+:      :+:    :+:   */
+/*   handle_mark.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:29:15 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/01 15:30:56 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:32:29 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,13 @@ void	ft_handle_cmd_mark(t_cmd *cmd)
 			end_start = ft_handle_cmd_mark_v2(end_start, tmp);
 		tmp = tmp->next;
 	}
+}
+
+char	*extract_command(char *cmd_line, int *i)
+{
+	int	j;
+
+	j = *i;
+	*i = ft_find_end(cmd_line, *i);
+	return (create_command_substring(cmd_line, j, *i));
 }

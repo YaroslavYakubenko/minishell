@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:21:56 by dyao              #+#    #+#             */
-/*   Updated: 2024/10/03 18:30:50 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/04 22:24:45 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ void	ft_in_child(t_cmd *temp, t_cmd *start, int **pipes, int *i_for_pipe)
 {
 	t_cmd	*search;
 	int		mark;
+	int		mark_2;
 
 	mark = 0;
+	mark_2 = 0;
 	search = start;
 	handle_heredoc(temp, search, start);
 	handle_input(temp, search, start);
 	handle_pipes(temp, pipes, i_for_pipe);
 	mark = handle_append(temp, search, start);
-	mark = handle_output(temp, search, start);
-	if (mark == 0)
+	mark_2 = handle_output(temp, search, start);
+	if (mark == 0 && mark_2 == 0)
 		ft_check_and_execute(temp->args, temp->evnp);
 	exit(EXIT_SUCCESS);
 }

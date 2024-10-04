@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/03 22:14:42 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/04 22:49:37 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	are_quotes_closed(char *input)
 
 void	ft_print_doulbe_pointer(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -55,7 +55,7 @@ void	ft_print_doulbe_pointer(char **str)
 
 void	ft_print_cmd(t_cmd *cmd)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (cmd)
@@ -113,15 +113,11 @@ int main (int ac, char **av, char **envp)
 			continue ;
 		}
 		expanded_input = expand_and_compress(input, env_list);
-		expanded_input = ft_be_nice(expanded_input);
 		cmd = ft_start_parse(expanded_input, envp);
 		ft_give_marks(cmd);
 		ft_handle_cmd_mark(cmd);
 		ft_start(cmd);
-		// free_env_list(env_list);
 	}
 	rl_clear_history();
 	return (0);
 }
-
-// < in ls -l | wc -c > out | cat << g | echo "Hello World!" >> out | echo 'Yes $PWD' | echo 'Yes $SHLVL'

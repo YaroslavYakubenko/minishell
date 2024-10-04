@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_spaces_v2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:18:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/03 19:32:18 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/04 22:50:11 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ char	*ft_be_nice(char *input)
 	{
 		if (input[i] == '>' && input[i + 1] == '>' && input[i + 2] != ' ')
 			input = ft_add_space(input, i + 1);
+		else if (input[i] == '>' && input[i + 1] == '>' && input[i + 2] == ' ')
+			return (input);
 		else if (input[i] == '<' && input[i + 1] == '<' && input[i + 2] != ' ')
 			input = ft_add_space(input, i + 1);
+		else if (input[i] == '<' && input[i + 1] == '<' && input[i + 2] == ' ')
+			return (input);
 		else if (input[i] == '<' && input[i + 1] != ' ')
 			input = ft_add_space(input, i);
 		else if (input[i] == '>' && input[i + 1] != ' ')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 17:40:27 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/03 22:12:43 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/04 22:51:44 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,6 @@ t_cmd	*ft_start_parse(char *cmd_line, char **evnp)
 
 	i = 0;
 	cmd_list = NULL;
-	// if (has_invalid_pipe_syntax(cmd))
-	// {
-	// 	printf("Error: syntax error with pipe or redirections\n");
-	// 	return (NULL);
-	// }
 	if (is_empty_or_space_only(cmd_line))
 		return (NULL);
 	while (i <= (int)ft_strlen(cmd_line) && cmd_line[i])
