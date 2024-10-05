@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:03:20 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/04 22:49:37 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/05 15:52:27 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,48 +75,26 @@ void	ft_print_cmd(t_cmd *cmd)
 	}
 }
 
-int main (int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_env	*env_list;
 	char	*input;
 	char	*expanded_input;
-	int		i;
-	t_cmd	*cmd;
 
 	(void)ac;
 	(void)av;
-	i = 0;
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	setup_signals();
 	while (1)
 	{
-		input = readline("minishell% ");
-		if (!input)
-		{
-			free(input);
-			printf("exit\n");
-			exit(0);
-		}
+		input = get_input();
 		env_list = init_new_list(envp);
-		if (*input)
-			add_history(input);
-		if (!are_quotes_closed(input))
+		if (check_syntax(input))
 		{
-			printf("Error: syntax error with quotes\n");
-			free(input);
-			continue ;
-		}
-		if (has_invalid_pipe_or_redirects(input))
-		{
-			printf("Error: syntax error with pipes or redirects\n");
 			free(input);
 			continue ;
 		}
 		expanded_input = expand_and_compress(input, env_list);
-		cmd = ft_start_parse(expanded_input, envp);
-		ft_give_marks(cmd);
-		ft_handle_cmd_mark(cmd);
-		ft_start(cmd);
+		handle_command(expanded_input, envp);
 	}
 	rl_clear_history();
 	return (0);

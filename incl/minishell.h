@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/04 22:13:26 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/05 15:43:38 by yyakuben         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,10 @@ int		ft_find_end(char *cmd_line, int i);
 char	*create_command_substring(const char *cmd_line, int j, int i);
 int		ft_check_quote(char *cmd);
 int		ft_need_space(char *input);
+char	*get_input(void);
+int		check_syntax(char *input);
+void	handle_command(char *expanded_input, char **evnp);
+int		are_quotes_closed(char *input);
 // help functions
 void	ft_print_cmd(t_cmd *cmd);
 void	ft_print_doulbe_pointer(char **str);
@@ -150,5 +154,6 @@ void	sigint_handler(int sig);
 int		handle_dollar_sign(char **result,
 			char **pos, t_env *env, int quotes[2]);
 int		ft_isspace(int c);
+void	setup_signals(void);
 
 #endif
