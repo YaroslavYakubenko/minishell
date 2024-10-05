@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:32:25 by dyao              #+#    #+#             */
-/*   Updated: 2024/10/01 12:33:06 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/05 17:33:33 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,19 @@ void	copy_store_to_output(char **store, char **output)
 }
 
 void	read_lines_and_add_to_output(char *filename,
-		char **output, int start_index)
+		char **output, char **store)
 {
 	int		fd;
 	int		j;
+	int		i;
 	char	*temp;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return ;
+	i = 0;
+	while (store[i])
+		i++;
 	temp = get_next_line(fd);
 	while (temp)
 	{
@@ -76,10 +80,10 @@ void	read_lines_and_add_to_output(char *filename,
 		while (temp[j] != '\n' && temp[j])
 			j++;
 		temp[j] = '\0';
-		output[start_index++] = temp;
+		output[i++] = temp;
 		temp = get_next_line(fd);
 	}
-	output[start_index] = NULL;
+	output[i] = NULL;
 	close(fd);
 }
 
@@ -95,7 +99,7 @@ char	**ft_add_list(char **store)
 	if (!output)
 		return (NULL);
 	copy_store_to_output(store, output);
-	read_lines_and_add_to_output("index", output, file_line_count);
+	read_lines_and_add_to_output("index", output, store);
 	ft_free_double_pointer_char(store);
 	return (output);
 }

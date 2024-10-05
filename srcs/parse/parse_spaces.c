@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:37:59 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/02 18:23:03 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/05 17:56:42 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char	*expand_and_compress(char *input, t_env *env)
 	{
 		temp = env->next;
 		free(env->name);
-		free(env->val);
+		if (env->val)
+			free(env->val);
 		free(env);
 		env = temp;
 	}
