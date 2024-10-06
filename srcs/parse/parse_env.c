@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 19:56:39 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/05 18:14:10 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/06 18:44:27 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*get_env_val(const char *name, t_env *env)
 			return (env->val);
 		else if (name[0] == '?')
 		{
-			e_code.exit_code = 0;
+			e_code.exit_code = errno;
 			str = ft_itoa(e_code.exit_code);
 			return (str);
 		}
