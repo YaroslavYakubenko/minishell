@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 23:02:53 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/05 15:43:38 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/06 19:12:34 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	ft_start(t_cmd *cmd);
 void	ft_read_and_print(void);
 void	ft_wait_pid(pid_t *pid_first);
 void	ft_check_and_execute(char **cmd, char **envp);
-void	ft_exit(t_cmd *cmd);
+int		ft_exit(t_cmd *cmd);
 void	ft_free_nods(t_cmd *cmd);
 void	ft_free_double_pointer_char(char **output);
 char	*ft_deal_record(int mark, char *str);
