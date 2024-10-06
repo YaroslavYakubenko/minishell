@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input_v3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yyakuben <yyakuben@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 21:13:45 by dyao              #+#    #+#             */
-/*   Updated: 2024/10/05 15:50:09 by yyakuben         ###   ########.fr       */
+/*   Updated: 2024/10/06 17:14:50 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ void	handle_command(char *expanded_input, char **evnp)
 		return ;
 	ft_give_marks(cmd);
 	ft_handle_cmd_mark(cmd);
+	// ft_print_cmd(cmd);
 	ft_start(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 15:50:24 by yyakuben          #+#    #+#             */
-/*   Updated: 2024/10/04 22:47:35 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/06 17:31:36 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	handle_single_redirect(char *cmd_line, int i)
 
 int	handle_normal(char *cmd_line, int i)
 {
-	while (cmd_line[i])
+	while (cmd_line[i] && cmd_line[i] != '|'
+		&& cmd_line[i] != '<' && cmd_line[i] != '>')
 	{
 		if (cmd_line[i] == '\'')
 		{
@@ -52,13 +53,7 @@ int	handle_normal(char *cmd_line, int i)
 			while (cmd_line[i] && cmd_line[i] != '\"')
 				i++;
 		}
-		else
-		{
-			while (cmd_line[i] && cmd_line[i] != '|'
-				&& cmd_line[i] != '<' && cmd_line[i] != '>')
-				i++;
-			return (i);
-		}
+		i++;
 	}
 	return (i);
 }
