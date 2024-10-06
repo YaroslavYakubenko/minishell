@@ -6,7 +6,7 @@
 /*   By: dyao <dyao@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:21:56 by dyao              #+#    #+#             */
-/*   Updated: 2024/10/06 18:39:53 by dyao             ###   ########.fr       */
+/*   Updated: 2024/10/06 18:49:03 by dyao             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_run_cmd(t_cmd *cmd, int **pipes, pid_t *pids)
 		pids[i_for_pid] = fork();
 		if (pids[i_for_pid] == 0)
 			ft_in_child(temp, start, pipes, &i_for_pipe);
-		sleep(1);
+		usleep(100);
 		handle_parent_pipes(temp, pipes, &i_for_pipe);
 		temp = find_next_pipe(temp);
 		start = temp->next;
